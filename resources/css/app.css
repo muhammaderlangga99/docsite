@@ -1,0 +1,192 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/*
+ * Ini adalah isi CSS yang di-generate oleh @tailwindcss/typography.
+ * Kita "hardcode" di sini biar nggak perlu plugin.
+*/
+.prisa {
+  color: var(--tw-prisa-body, #374151) !important;
+  max-width: 65ch !important;
+}
+.prisa [class~="lead"] {
+  color: var(--tw-prisa-lead, #4b5563) !important;
+  font-size: 1.25em !important;
+  line-height: 1.6 !important;
+  margin-top: 1.2em !important;
+  margin-bottom: 1.2em !important;
+}
+.prisa a {
+  color: var(--tw-prisa-links, #111827) !important;
+  text-decoration: underline !important;
+  font-weight: 500 !important;
+}
+.prisa strong {
+  color: var(--tw-prisa-bold, #111827) !important;
+  font-weight: 600 !important;
+}
+.prisa ol {
+  counter-reset: list-counter !important;
+  list-style-type: none !important;
+  margin-top: 1.25em !important;
+  margin-bottom: 1.25em !important;
+  padding-left: 0 !important;
+}
+.prisa ol > li {
+  position: relative !important;
+  counter-increment: list-counter !important;
+  padding-left: 1.75em !important;
+}
+.prisa ol > li::before {
+  content: counter(list-counter) ". " !important;
+  position: absolute !important;
+  left: 0 !important;
+  color: var(--tw-prisa-counters, #6b7280) !important;
+  font-weight: 400 !important;
+}
+.prisa ul {
+  list-style-type: disc !important;
+  margin-top: 1.25em !important;
+  margin-bottom: 1.25em !important;
+  padding-left: 1.75em !important;
+}
+.prisa li {
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+}
+.prisa hr {
+  border-color: var(--tw-prisa-hr, #e5e7eb) !important;
+  border-top-width: 1px !important;
+  margin-top: 3em !important;
+  margin-bottom: 3em !important;
+}
+.prisa blockquote {
+  font-weight: 500 !important;
+  font-style: italic !important;
+  color: var(--tw-prisa-quotes, #111827) !important;
+  border-left-width: 0.25rem !important;
+  border-left-color: var(--tw-prisa-quote-borders, #e5e7eb) !important;
+  quotes: "\201C""\201D""\2018""\2019" !important;
+  margin-top: 1.6em !important;
+  margin-bottom: 1.6em !important;
+  padding-left: 1em !important;
+}
+.prisa blockquote p:first-of-type::before {
+  content: open-quote !important;
+}
+.prisa blockquote p:last-of-type::after {
+  content: close-quote !important;
+}
+.prisa h1 {
+  color: var(--tw-prisa-headings, #111827) !important;
+  font-weight: 800 !important;
+  font-size: 2.25em !important;
+  line-height: 1.1111111 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.8888889em !important;
+}
+.prisa h2 {
+  color: var(--tw-prisa-headings, #111827) !important;
+  font-weight: 700 !important;
+  font-size: 1.5em !important;
+  line-height: 1.3333333 !important;
+  margin-top: 2em !important;
+  margin-bottom: 1em !important;
+}
+.prisa h3 {
+  color: var(--tw-prisa-headings, #111827) !important;
+  font-weight: 600 !important;
+  font-size: 1.25em !important;
+  line-height: 1.6 !important;
+  margin-top: 1.6em !important;
+  margin-bottom: 0.6em !important;
+}
+.prisa h4 {
+  color: var(--tw-prisa-headings, #111827) !important;
+  font-weight: 600 !important;
+  font-size: 1.125em !important;
+  line-height: 1.5555556 !important;
+  margin-top: 1.3333333em !important;
+  margin-bottom: 0.4444444em !important;
+}
+.prisa figure figcaption {
+  color: var(--tw-prisa-captions, #6b7280) !important;
+  font-size: 0.875em !important;
+  line-height: 1.4285714 !important;
+  margin-top: 0.8571429em !important;
+}
+.prisa code {
+  color: var(--tw-prisa-code, #111827) !important;
+  font-weight: 600 !important;
+  font-size: 0.875em !important;
+  background-color: var(--tw-prisa-code-bg, #f3f4f6) !important;
+  border-radius: 0.25rem !important;
+  padding: 0.25em 0.4em !important;
+}
+.prisa pre {
+  color: var(--tw-prisa-pre-code, #e5e7eb) !important;
+  background-color: var(--tw-prisa-pre-bg, #1f2937) !important;
+  overflow-x: auto !important;
+  font-size: 0.875em !important;
+  line-height: 1.7142857 !important;
+  margin-top: 1.7142857em !important;
+  margin-bottom: 1.7142857em !important;
+  border-radius: 0.375rem !important;
+  padding: 0.8571429em 1.1428571em !important;
+}
+.prisa pre code {
+  background-color: transparent !important;
+  border-width: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  font-weight: 400 !important;
+  color: inherit !important;
+}
+.prisa table {
+  width: 100% !important;
+  table-layout: auto !important;
+  text-align: left !important;
+  margin-top: 2em !important;
+  margin-bottom: 2em !important;
+  border-collapse: collapse !important;
+}
+.prisa thead {
+  border-bottom-width: 1px !important;
+  border-bottom-color: var(--tw-prisa-th-borders, #d1d5db) !important;
+}
+.prisa thead th {
+  color: var(--tw-prisa-headings, #111827) !important;
+  font-weight: 600 !important;
+  vertical-align: bottom !important;
+  padding: 0.5em 0.5em 0.5em 0 !important;
+}
+.prisa tbody tr {
+  border-bottom-width: 1px !important;
+  border-bottom-color: var(--tw-prisa-td-borders, #e5e7eb) !important;
+}
+.prisa tbody tr:last-child {
+  border-bottom-width: 0 !important;
+}
+.prisa tbody td {
+  vertical-align: top !important;
+  padding: 0.5em 0.5em 0.5em 0 !important;
+}
+.prisa {
+  font-size: 1rem !important;
+  line-height: 1.75 !important;
+}
+.prisa p {
+  margin-top: 1.25em !important;
+  margin-bottom: 1.25em !important;
+}
+/* ...dan seterusnya... ini adalah versi simpel. 
+Versi lengkapnya ribuan baris, tapi ini udah cukup buat basic styling. */
