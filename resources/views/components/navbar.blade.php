@@ -14,8 +14,8 @@
             </a>
             
             {{-- Navigasi Utama (Hanya Desktop) --}}
-            <div class="hidden md:flex space-x-5 text-sm font-[400] text-gray-500">
-                <a href="{{ Route('docs.show', 'introduction') }}" class="hover:text-gray-300">Docs</a>
+            <div class="hidden md:flex space-x-5 text-sm text-gray-500">
+                <a href="https://docs.cashup.test/docs/introduction" class="hover:text-gray-300">Docs</a>
                 <a href="https://cashup.id" class="hover:text-gray-300">About <sup class="text-xs ml-0.5">↗</sup></a>
                 {{-- <a href="https://cashup.id/contact" class="hover:text-gray-300">Contact <sup class="text-xs ml-0.5">↗</sup></a> --}}
                 <a href="https://dashboard.cashup.id" class="hover:text-gray-300">cashPortal <sup class="text-xs ml-0.5">↗</sup></a>
@@ -24,6 +24,34 @@
 
         {{-- Grup Kanan: Search, Buttons & Toggle Mobile --}}
         <div class="flex items-center space-x-4">
+            @php
+                $user = auth()->user();
+                $displayName = null;
+                if ($user) {
+                    $parts = array_values(array_filter(explode(' ', trim($user->name))));
+                    $displayName = count($parts) ? $parts[count($parts) - 1] : $user->name;
+                }
+            @endphp
+
+            @if($user)
+                <a href="{{ route('dashboard') }}"
+                   class="flex items-center gap-1 lowercase pl-1 pr-3 font-[400] py-1 rounded-full bg-gray-100 border border-gray-200 text-sm text-gray-700 hover:bg-gray-200 transition">
+                    @if($user->avatar)
+                        <img src="{{ $user->avatar }}" alt="Avatar" class="w-7 h-7 rounded-full border border-white">
+                    @else
+                        <span class="w-7 h-7 rounded-full bg-gray-300 flex items-center justify-center text-xs font-semibold">
+                            {{ strtoupper(substr($displayName ?? $user->name, 0, 1)) }}
+                        </span>
+                    @endif
+                    <span class="hidden -translate-y-0.5 sm:inline">{{ $displayName }}</span>
+                </a>
+            @else
+                <a href="{{ route('login') }}"
+                   class="px-3 py-1.5 rounded-full border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-100 transition">
+                    Sign in
+                </a>
+            @endif
+
             {{-- Tombol Toggle Menu (Hanya Mobile) --}}
             <button @click="open = !open" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500" aria-label="Toggle menu">
                 {{-- Ikon Burger (muncul pas 'open' false) --}}
@@ -52,7 +80,7 @@
          >
         
         <a href="https://cashup.id" class="block px-3 py-2 rounded-md text-base font-medium">About</a>
-        <a href="{{ Route('docs.show', 'introduction') }}" class="block px-3 py-2 rounded-md text-base font-medium">Docs</a>
+        <a href="https://docs.cashup.test/docs/introduction" class="block px-3 py-2 rounded-md text-base font-medium">Docs</a>
         <a href="https://dashboard.cashup.id" class="block px-3 py-2 rounded-md text-base font-medium">cashPortal<sup class="text-xs ml-0.5">↗</sup></a>
         
     </div>
