@@ -83,7 +83,7 @@
         {{-- Breadcrumbs lo --}}
         <div class="text-sm text-gray-500 mb-4">
             @if($doc->category)
-                <a href="{{ route('docs.category.show', $doc->category->slug) }}" class="hover:underline">
+                <a href="https://docs.cashup.test/docs/category/{{ $doc->category->slug }}" class="hover:underline">
                     {{ $doc->category->title }}
                 </a>
                 <span class="mx-2">&gt;</span>
@@ -163,7 +163,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {{-- Loop @forelse lo --}}
                 @forelse($category->posts as $post)
-                    <a href="{{ route('docs.show', $post->slug) }}" class="block p-4 border border-zinc-200 rounded-md hover:bg-gray-50 hover:border-gray-400">
+                    <a href="https://docs.cashup.test/docs/{{ $post->slug }}" class="block p-4 border border-zinc-200 rounded-md hover:bg-gray-50 hover:border-gray-400">
                         <h3 class="text-lg font-semibold text-zinc-900">{{ $post->name }}</h3>
                         @php
                             // 1. Ubah dulu konten (yg mungkin Markdown) jadi HTML
