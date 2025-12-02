@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -52,27 +52,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Generate a unique username based on a name (uses last word if available).
-     */
-    public static function generateUniqueUsername(string $name): string
-    {
-        $cleanName = trim($name);
-        $parts = array_values(array_filter(preg_split('/\s+/', $cleanName)));
-        $base = count($parts) ? $parts[count($parts) - 1] : $cleanName;
-        // Keep letters, then lowercase at the end (do not strip uppercase letters).
-        $base = strtolower(preg_replace('/[^a-z0-9]/i', '', $base));
-        if ($base === '') {
-            $base = 'user';
-        }
-
-        do {
-            $username = $base . rand(100, 999);
-        } while (static::where('username', $username)->exists());
-
-        return $username;
-    }
-
-    /**
      * Pastikan user_details di DB bridge ada untuk user ini.
      */
     public function ensureBridgeUserDetail(): void
@@ -102,7 +81,7 @@ class User extends Authenticatable
     public function ensureMasterMobileUser(): void
     {
         if (empty($this->username)) {
-            return;
+            throw new \RuntimeException('Username tidak tersedia untuk sinkronisasi ke master.');
         }
 
         $exists = DB::connection('master')
@@ -114,35 +93,37 @@ class User extends Authenticatable
             return;
         }
 
-        $fullName = trim($this->name ?? '');
-        $parts = array_values(array_filter(preg_split('/\s+/', $fullName)));
-        $firstName = $parts[0] ?? $fullName ?: $this->username;
-        $lastName = isset($parts[1]) ? implode(' ', array_slice($parts, 1)) : null;
-
-        $address = 'Jl. Jenderal Sudirman Kav. 33A';
-        $receiptLine1 = 'Jl. Jenderal Sudirman Kav. 33A';
-        $receiptLine2 = 'Jakarta Pusat, Tanah Abang';
+        [$firstName, $lastName] = $this->splitName();
 
         DB::connection('master')->table('mobile_app_users')->insert([
             'username' => $this->username,
             'merchant_id' => 125,
-            'passwd_hash' => md5('123456'),
+            'passwd_hash' => 'e10adc3949ba59abbe56e057f20f883e',
             'first_name' => $firstName,
             'last_name' => $lastName,
-            'address' => $address,
-            'print_receipt_merchant_name' => 'TOKO TEST',
-            'print_receipt_address_line_1' => $receiptLine1,
-            'print_receipt_address_line_2' => $receiptLine2,
-            'stan' => 0,
-            'invoice_num' => 0,
-            'last_user_data_update_timestamp' => null,
+            'address' => 'ATRIA @SUDIRMAN',
+            'print_receipt_merchant_name' => 'cashUP (Testing)',
+            'print_receipt_address_line_1' => 'Jl. Jenderal Sudirman',
+            'print_receipt_address_line_2' => 'Tanah Abang, Jakarta Pusat',
             'is_payment_application_unattended' => null,
             'lock_flag' => 0,
             'pos_request_type' => '1',
-            'pos_vendor_id' => null,
             'created_at' => now(),
-            'updated_at' => now(),
-            'deleted_at' => null,
         ]);
+    }
+
+    private function splitName(): array
+    {
+        $fullName = trim($this->name ?? '');
+        $parts = array_values(array_filter(preg_split('/\s+/', $fullName)));
+
+        if (count($parts) === 0) {
+            return [$this->username, null];
+        }
+
+        $firstName = $parts[0];
+        $lastName = count($parts) > 1 ? implode(' ', array_slice($parts, 1)) : null;
+
+        return [$firstName, $lastName];
     }
 }

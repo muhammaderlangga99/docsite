@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Throwable;
 
 class GoogleController extends Controller
 {
@@ -26,33 +27,43 @@ class GoogleController extends Controller
             ->first();
 
         if ($user) {
-            $payload = [
+            $user->update([
                 'google_id' => $googleUser->getId(),
                 'name' => $googleUser->getName() ?: $user->name,
                 'avatar' => $googleUser->getAvatar() ?: $user->avatar,
-            ];
-
-            if (empty($user->username)) {
-                $payload['username'] = User::generateUniqueUsername($googleUser->getName() ?: $googleUser->getEmail());
-            }
-
-            $user->update($payload);
+            ]);
         } else {
             $user = User::create([
                 'name' => $googleUser->getName() ?: $googleUser->getEmail(),
                 'email' => $googleUser->getEmail(),
                 'google_id' => $googleUser->getId(),
                 'avatar' => $googleUser->getAvatar(),
-                'username' => User::generateUniqueUsername($googleUser->getName() ?: $googleUser->getEmail()),
                 // Password random biar field tidak null, tapi login tetap via Google.
                 'password' => Hash::make(Str::random(32)),
+                'email_verified_at' => now(),
             ]);
         }
 
-        // Sync external records if missing (only master mobile)
-        $user->ensureMasterMobileUser();
+        // Tandai email verified untuk akun Google kalau belum.
+        if (! $user->hasVerifiedEmail()) {
+            $user->forceFill(['email_verified_at' => now()])->save();
+        }
 
         Auth::login($user, remember: true);
+
+        if (empty($user->username)) {
+            return redirect()->route('username.create');
+        }
+
+        try {
+            $user->ensureMasterMobileUser();
+        } catch (Throwable $e) {
+            report($e);
+
+            return redirect()->route('login')->withErrors([
+                'email' => 'Login Google gagal karena sinkronisasi user. Silakan coba lagi.',
+            ]);
+        }
 
         return redirect('/dashboard');
     }
