@@ -3,6 +3,9 @@
 @section('title', 'Verifikasi Email')
 
 @section('content')
+@php
+    $appUrl = rtrim(config('app.url'), '/');
+@endphp
 <div class="mb-4">
     <h1 class="text-2xl font-semibold text-slate-900 mt-1">Verifikasi email</h1>
     <p class="text-sm text-slate-600 leading-relaxed mt-2">
@@ -22,7 +25,7 @@
 @endif
 
 <div class="space-y-3">
-    <form method="POST" action="{{ route('verification.send') }}">
+    <form method="POST" action="{{ $appUrl }}/email/verification-notification">
         @csrf
         <button type="submit"
                 class="w-full inline-flex items-center justify-center gap-2 h-12 px-4 rounded-xl bg-black text-white text-sm font-semibold transition hover:opacity-90">
@@ -30,7 +33,7 @@
         </button>
     </form>
 
-    <form method="POST" action="{{ route('logout') }}">
+    <form method="POST" action="{{ $appUrl }}/logout">
         @csrf
         <button type="submit"
                 class="w-full inline-flex items-center justify-center gap-2 h-12 px-4 rounded-xl border border-slate-200 text-slate-700 text-sm font-semibold bg-white transition hover:shadow hover:-translate-y-px">

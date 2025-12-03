@@ -4,6 +4,9 @@
     dan Tailwind CSS.
 --}}
 <nav class="bg-white/60 backdrop-blur-lg p-4 border-b border-zinc-100 sticky top-0 z-50" x-data="{ open: false }">
+    @php
+        $appUrl = rtrim(config('app.url'), '/');
+    @endphp
     <div class="container mx-auto flex items-center justify-between">
         
         {{-- Grup Kiri: Logo & Navigasi Desktop --}}
@@ -15,7 +18,7 @@
             
             {{-- Navigasi Utama (Hanya Desktop) --}}
             <div class="hidden md:flex space-x-5 text-sm text-gray-500">
-                <a href="https://docs.cashup.test/docs/introduction" class="hover:text-gray-300">Docs</a>
+                <a href="{{ $appUrl }}/docs/introduction" class="hover:text-gray-300">Docs</a>
                 <a href="https://cashup.id" class="hover:text-gray-300">About <sup class="text-xs ml-0.5">↗</sup></a>
                 {{-- <a href="https://cashup.id/contact" class="hover:text-gray-300">Contact <sup class="text-xs ml-0.5">↗</sup></a> --}}
                 <a href="https://dashboard.cashup.id" class="hover:text-gray-300">cashPortal <sup class="text-xs ml-0.5">↗</sup></a>
@@ -34,7 +37,7 @@
             @endphp
 
             @if($user)
-                <a href="{{ route('dashboard') }}"
+                <a href="{{ $appUrl }}/dashboard"
                    class="flex items-center gap-1 lowercase pl-1 pr-3 font-[400] py-1 rounded-full bg-gray-100 border border-gray-200 text-sm text-gray-700 hover:bg-gray-200 transition">
                     @if($user->avatar)
                         <img src="{{ $user->avatar }}" alt="Avatar" class="w-7 h-7 rounded-full border border-white">
@@ -46,7 +49,7 @@
                     <span class="hidden -translate-y-0.5 sm:inline">{{ $displayName }}</span>
                 </a>
             @else
-                <a href="{{ route('login') }}"
+                <a href="{{ $appUrl }}/login"
                    class="px-3 py-1.5 rounded-full border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-100 transition">
                     Sign in
                 </a>
@@ -80,7 +83,7 @@
          >
         
         <a href="https://cashup.id" class="block px-3 py-2 rounded-md text-base font-medium">About</a>
-        <a href="https://docs.cashup.test/docs/introduction" class="block px-3 py-2 rounded-md text-base font-medium">Docs</a>
+        <a href="{{ $appUrl }}/docs/introduction" class="block px-3 py-2 rounded-md text-base font-medium">Docs</a>
         <a href="https://dashboard.cashup.id" class="block px-3 py-2 rounded-md text-base font-medium">cashPortal<sup class="text-xs ml-0.5">↗</sup></a>
         
     </div>

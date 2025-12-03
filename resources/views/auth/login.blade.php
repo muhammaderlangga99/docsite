@@ -3,6 +3,9 @@
 @section('title', 'Masuk')
 
 @section('content')
+@php
+    $appUrl = rtrim(config('app.url'), '/');
+@endphp
 <div class="mb-6">
     <div class="flex items-center justify-between">
         <h1 class="text-2xl font-semibold text-slate-900">Masuk</h1>
@@ -16,7 +19,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('login') }}" class="space-y-4">
+<form method="POST" action="{{ $appUrl }}/login" class="space-y-4">
     @csrf
     <div class="space-y-2 flex flex-col">
         <label for="email" class="text-sm font-medium text-slate-700">Email</label>
@@ -44,7 +47,7 @@
             <input type="checkbox" name="remember" class="rounded border-slate-300 text-slate-700 focus:ring-black" value="1">
             <span>Ingat saya</span>
         </label>
-        <a href="{{ route('password.request') }}" class="font-semibold text-slate-900 hover:underline">Lupa password?</a>
+        <a href="{{ $appUrl }}/forgot-password" class="font-semibold text-slate-900 hover:underline">Lupa password?</a>
     </div>
 
     <button type="submit"
@@ -52,13 +55,13 @@
         Masuk
     </button>
     <p class="text-sm text-slate-600">Belum punya akun?
-        <a href="{{ route('register') }}" class="font-semibold text-slate-900 hover:underline">Daftar sekarang</a>
+        <a href="{{ $appUrl }}/register" class="font-semibold text-slate-900 hover:underline">Daftar sekarang</a>
     </p>
 </form>
 
 <div class="mt-8">
     <div class="text-center text-sm text-slate-600 mb-3">Atau masuk dengan</div>
-    <a href="{{ route('auth.google.redirect') }}"
+    <a href="{{ $appUrl }}/auth/google"
        class="w-full inline-flex items-center justify-center gap-3 h-12 px-5 rounded-xl border border-slate-200 text-sm font-semibold text-slate-700 bg-white transition hover:shadow hover:-translate-y-px">
         <svg class="w-5 h-5" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path fill="#EA4335" d="M24 9.5c3.12 0 5.89 1.07 8.09 2.83l6.06-6.06C34.32 2.86 29.47 1 24 1 14.64 1 6.44 6.24 2.63 14l7.56 5.87C11.73 14.26 17.33 9.5 24 9.5z"/>

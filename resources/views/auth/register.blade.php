@@ -3,6 +3,9 @@
 @section('title', 'Daftar')
 
 @section('content')
+@php
+    $appUrl = rtrim(config('app.url'), '/');
+@endphp
 <div class="mb-6">
     <div class="flex items-center justify-between">
         <h1 class="text-2xl font-semibold text-slate-900">Daftar</h1>
@@ -16,7 +19,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('register') }}" class="space-y-4">
+<form method="POST" action="{{ $appUrl }}/register" class="space-y-4">
     @csrf
     <div class="space-y-2 flex flex-col">
         <label for="name" class="text-sm font-medium text-slate-700">Nama lengkap</label>
@@ -70,7 +73,7 @@
         Daftar
     </button>
     <p class="text-sm text-slate-600">Sudah punya akun?
-        <a href="{{ route('login') }}" class="font-semibold text-slate-900 hover:underline">Masuk</a>
+        <a href="{{ $appUrl }}/login" class="font-semibold text-slate-900 hover:underline">Masuk</a>
     </p>
 </form>
 @endsection

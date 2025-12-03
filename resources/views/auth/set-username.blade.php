@@ -3,12 +3,15 @@
 @section('title', 'Atur Username')
 
 @section('content')
+@php
+    $appUrl = rtrim(config('app.url'), '/');
+@endphp
 <div class="mb-6">
     <h1 class="text-2xl font-semibold text-slate-900">Atur Username</h1>
     <p class="text-sm text-slate-600 mt-1">Pilih username untuk akun Anda.</p>
 </div>
 
-<form method="POST" action="{{ route('username.store') }}" class="space-y-4">
+<form method="POST" action="{{ $appUrl }}/set-username" class="space-y-4">
     @csrf
     <div class="space-y-2 flex flex-col">
         <label for="username" class="text-sm font-medium text-slate-700">Username</label>

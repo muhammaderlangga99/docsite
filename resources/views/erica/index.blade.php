@@ -3,6 +3,9 @@
 @section('title', 'Erica Credentials')
 
 @section('dashboard-content')
+@php
+    $appUrl = rtrim(config('app.url'), '/');
+@endphp
 <div class="flex items-center justify-between mb-6">
     <div>
         <p class="text-xs uppercase tracking-[0.08em] text-slate-500 mb-1">Credentials</p>
@@ -10,7 +13,7 @@
         <p class="text-sm text-slate-500 mt-1">Generate and manage ECR credentials (Bridge API DB).</p>
     </div>
     @if(! $credentials)
-        <form action="{{ route('erica.generate') }}" method="POST" class="inline-flex items-center gap-2 px-3 py-2 bg-slate-900 text-white rounded-lg text-sm hover:bg-slate-800 transition">
+        <form action="{{ $appUrl }}/erica/generate" method="POST" class="inline-flex items-center gap-2 px-3 py-2 bg-slate-900 text-white rounded-lg text-sm hover:bg-slate-800 transition">
             @csrf
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.5 12h15m0 0-5.25-5.25M19.5 12l-5.25 5.25" />

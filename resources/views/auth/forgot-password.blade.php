@@ -3,6 +3,9 @@
 @section('title', 'Lupa Password')
 
 @section('content')
+@php
+    $appUrl = rtrim(config('app.url'), '/');
+@endphp
 <div class="mb-6">
     <h1 class="text-2xl font-semibold text-slate-900">Lupa password</h1>
     <p class="text-sm text-slate-600 leading-relaxed mt-1">
@@ -16,7 +19,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('password.email') }}" class="space-y-4">
+<form method="POST" action="{{ $appUrl }}/forgot-password" class="space-y-4">
     @csrf
     <div class="space-y-2 flex flex-col">
         <label for="email" class="text-sm font-medium text-slate-700">Email</label>
@@ -36,6 +39,6 @@
 
 <div class="mt-6 text-sm text-slate-600">
     Ingat password?
-    <a href="{{ route('login') }}" class="font-semibold text-slate-900 hover:underline">Kembali ke login</a>
+    <a href="{{ $appUrl }}/login" class="font-semibold text-slate-900 hover:underline">Kembali ke login</a>
 </div>
 @endsection

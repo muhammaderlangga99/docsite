@@ -1,6 +1,7 @@
 <nav class="space-y-4">
     {{-- Helper buat ngecek link aktif --}}
     @php
+        $appUrl = rtrim(config('app.url'), '/');
         // Cek kalo Doc-nya aktif
         $isDocActive = fn($doc) => $doc?->id === $activeDoc?->id;
         // BARU: Cek kalo Category-nya aktif
@@ -13,7 +14,7 @@
     <ul class="space-y-5">
         @foreach($rootDocs as $doc)
             <li>
-                <a href="https://docs.cashup.test/docs/{{ $doc->slug }}" 
+                <a href="{{ $appUrl }}/docs/{{ $doc->slug }}" 
                    class="block text-xs uppercase
                           {{ $isDocActive($doc) ? 'text-blue-700' : 'text-gray-500' }}">
                     {{ $doc->name }}
@@ -35,7 +36,7 @@
             {{-- INI YANG DI-UPGRADE TOTAL --}}
             <div class="flex justify-between items-center">
                 {{-- A. LINK JUDUL KATEGORI (bisa diklik) --}}
-                <a href="https://docs.cashup.test/docs/category/{{ $category->slug }}"
+                <a href="{{ $appUrl }}/docs/category/{{ $category->slug }}"
                    class="text-xs uppercase 
                           {{ $isCategoryActive($category) ? 'text-blue-700' : 'text-gray-500 hover:text-gray-900' }}">
                     {{ $category->title }}
@@ -60,7 +61,7 @@
                 
                 @foreach($category->posts as $doc)
                     <li>
-                        <a href="https://docs.cashup.test/docs/{{ $doc->slug }}" 
+                        <a href="{{ $appUrl }}/docs/{{ $doc->slug }}" 
                            class="block text-xs uppercase
                                   {{ $isDocActive($doc) ? ' text-blue-700' : 'text-gray-600' }}">
                             {{ $doc->name }}
