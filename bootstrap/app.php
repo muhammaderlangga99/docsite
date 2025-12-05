@@ -19,6 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
             'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
             'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+            'profile.complete' => \App\Http\Middleware\EnsureProfileComplete::class,
+            'username.required' => \App\Http\Middleware\EnsureUsernameExists::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

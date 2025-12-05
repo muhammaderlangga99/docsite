@@ -15,7 +15,8 @@ return [
     */
 
     'postmark' => [
-        'key' => env('POSTMARK_API_KEY'),
+        'token' => env('POSTMARK_TOKEN'),
+        'message_stream' => env('POSTMARK_MESSAGE_STREAM_ID', 'outbound'),
     ],
 
     'resend' => [

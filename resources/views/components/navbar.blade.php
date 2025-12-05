@@ -19,9 +19,7 @@
             {{-- Navigasi Utama (Hanya Desktop) --}}
             <div class="hidden md:flex space-x-5 text-sm text-gray-500">
                 <a href="{{ $appUrl }}/docs/introduction" class="hover:text-gray-300">Docs</a>
-                <a href="https://cashup.id" class="hover:text-gray-300">About <sup class="text-xs ml-0.5">↗</sup></a>
-                {{-- <a href="https://cashup.id/contact" class="hover:text-gray-300">Contact <sup class="text-xs ml-0.5">↗</sup></a> --}}
-                <a href="https://dashboard.cashup.id" class="hover:text-gray-300">cashPortal <sup class="text-xs ml-0.5">↗</sup></a>
+                <a href="https://cashup.id" class="hover:text-gray-300">About Us <sup class="text-xs ml-0.5">↗</sup></a>
             </div>
         </div>
 

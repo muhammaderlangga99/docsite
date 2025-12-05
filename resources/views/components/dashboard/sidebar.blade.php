@@ -1,12 +1,11 @@
 @props(['user'])
 
 @php
-    $appUrl = rtrim(config('app.url'), '/');
     $items = [
         [
             'label' => 'Overview',
             'icon' => '<span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>',
-            'url' => $appUrl . '/dashboard',
+            'url' => url('/dashboard'),
             'active' => request()->routeIs('dashboard'),
         ],
     ];
@@ -14,8 +13,8 @@
     $credentialItems = [
         [
             'label' => 'Erica',
-            'icon' => '🪪',
-            'url' => $appUrl . '/erica',
+            'icon' => '',
+            'url' => url('/erica'),
             'active' => request()->routeIs('erica.*'),
         ],
     ];
@@ -60,7 +59,7 @@
     </nav>
 
     <div class="px-6 pb-6 mt-auto">
-        <form action="{{ $appUrl }}/logout" method="POST">
+        <form action="{{ url('/logout') }}" method="POST">
             @csrf
             <button type="submit" class="w-full text-sm font-medium bg-slate-900 text-white py-2.5 rounded-lg hover:bg-slate-800 transition">
                 Logout

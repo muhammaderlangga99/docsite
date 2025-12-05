@@ -9,7 +9,10 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\UsernameController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\DocController;
+use App\Http\Controllers\CreditDebitController;
 use App\Http\Controllers\EricaController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\QrpsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -39,7 +42,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('auth.google.callback');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'username.required'])->group(function () {
     Route::get('/set-username', [UsernameController::class, 'create'])->name('username.create');
     Route::post('/set-username', [UsernameController::class, 'store'])->name('username.store');
 
@@ -57,13 +60,14 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-    Route::middleware('verified')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('dashboard');
-        })->name('dashboard');
+    Route::middleware(['verified', 'profile.complete'])->group(function () {
+        Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
         Route::get('/erica', [EricaController::class, 'index'])->name('erica.index');
         Route::post('/erica/generate', [EricaController::class, 'generate'])->name('erica.generate');
+
+        Route::post('/bindings/credit-debit', CreditDebitController::class)->name('bindings.credit-debit');
+        Route::post('/bindings/qrps', QrpsController::class)->name('bindings.qrps');
     });
 });
 

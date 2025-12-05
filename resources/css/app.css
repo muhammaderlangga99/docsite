@@ -17,6 +17,8 @@
 .prisa {
   color: var(--tw-prisa-body, #374151) !important;
   max-width: 65ch !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
 }
 .prisa [class~="lead"] {
   color: var(--tw-prisa-lead, #4b5563) !important;
@@ -26,7 +28,7 @@
   margin-bottom: 1.2em !important;
 }
 .prisa a {
-  color: var(--tw-prisa-links, #111827) !important;
+  color: #088622 !important;
   text-decoration: underline !important;
   font-weight: 500 !important;
 }
@@ -131,6 +133,8 @@
   background-color: var(--tw-prisa-code-bg, #f3f4f6) !important;
   border-radius: 0.25rem !important;
   padding: 0.25em 0.4em !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
 }
 .prisa pre {
   color: var(--tw-prisa-pre-code, #e5e7eb) !important;
@@ -150,6 +154,108 @@
   padding: 0 !important;
   font-weight: 400 !important;
   color: inherit !important;
+}
+.prisa pre {
+  position: relative;
+}
+.prisa .prisa-code {
+  position: relative;
+  background: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 0.625rem;
+  overflow: hidden;
+  padding-top: 2.75rem;
+}
+.prisa .prisa-code .prisa-lang {
+  position: absolute;
+  top: 0.6rem;
+  left: 1rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #cbd5e1;
+  background: rgba(255,255,255,0.06);
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+}
+.prisa .prisa-code .prisa-copy {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.7rem;
+  font-size: 0.75rem;
+  color: #e2e8f0;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.prisa .prisa-code .prisa-copy:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.15);
+}
+.prisa .prisa-code .prisa-copy.copied {
+  color: #22c55e;
+  border-color: rgba(34,197,94,0.6);
+  background: rgba(34,197,94,0.08);
+}
+.prisa .prisa-code pre {
+  margin: 0 !important;
+  padding: 1rem 0;
+  background: transparent !important;
+  color: inherit !important;
+  overflow: auto !important;
+}
+.prisa .prisa-code .prisa-lines {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  padding: 0 1rem 1rem 1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.prisa .prisa-code .prisa-gutter {
+  color: #64748b;
+  text-align: right;
+  user-select: none;
+  padding-right: 0.5rem;
+  border-right: 1px solid rgba(148,163,184,0.2);
+}
+.prisa .prisa-code .prisa-gutter .prisa-line {
+  display: block;
+  height: 1.5em;
+}
+.prisa .prisa-code .prisa-code-lines {
+  color: #e2e8f0;
+}
+.prisa .prisa-code .prisa-code-lines .prisa-line {
+  display: block;
+  height: 1.5em;
+  white-space: pre;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+.prisa .prisa-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin: 1rem 0;
+  padding: 0.25rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #f8fafc;
+}
+.prisa .prisa-table-wrap table {
+  min-width: 100%;
+  margin: 0 !important;
+}
+.prisa .prisa-table-wrap th,
+.prisa .prisa-table-wrap td {
+  padding: 0.75rem 1rem;
+  min-width: 140px;
+  vertical-align: top;
 }
 .prisa table {
   width: 100% !important;
