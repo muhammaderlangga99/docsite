@@ -56,7 +56,6 @@ class UsernameController extends Controller
             'approved' => 0,
             'is_device_test' => 0,
             'brand_id' => null,
-            'brand_type_id' => null,
             'created_at' => now(),
             'deleted_at' => null,
             'device_type_id' => null,

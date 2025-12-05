@@ -7,7 +7,7 @@
     @php
         $appUrl = rtrim(config('app.url'), '/');
     @endphp
-    <div class="container mx-auto flex items-center justify-between">
+    <div class="container px-20 mx-auto flex items-center justify-between">
         
         {{-- Grup Kiri: Logo & Navigasi Desktop --}}
         <div class="flex items-center space-x-4">

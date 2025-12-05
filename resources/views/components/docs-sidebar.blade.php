@@ -12,7 +12,7 @@
     {{-- 1. LOOPING POSTINGAN INDUK (Root Docs) --}}
     <h3 class="text-xs font-bold uppercase text-gray-500">Guides</h3>
     <ul class="space-y-5">
-        @foreach($rootDocs->whereNull('is_deleted')->where('is_published', 1) as $doc)
+        @foreach($rootDocs->whereNull('deleted_at')->where('is_published', 1) as $doc)
             <li>
                 <a href="{{ $appUrl }}/docs/{{ $doc->slug }}" 
                    class="block text-xs
@@ -23,7 +23,6 @@
         @endforeach
     </ul>
 
-    {{-- 2. LOOPING KATEGORI (Accordion) --}}
     @foreach($categories as $category)
         <div class="space-y-2" 
              x-data="{ 
@@ -59,7 +58,7 @@
                 class="space-y-4 pl-4 border-l border-gray-200" 
                 style="display: none;">
                 
-                @foreach($category->posts->whereNull('is_deleted')->where('is_published', 1) as $doc)
+                @foreach($category->posts->whereNull('deleted_at')->where('is_published', 1) as $doc)
                     <li>
                         <a href="{{ $appUrl }}/docs/{{ $doc->slug }}" 
                            class="block text-xs
