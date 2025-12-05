@@ -76,7 +76,7 @@
             {{-- 4. Tombol Call to Action (CTA) --}}
             <div class="flex sm:flex-row justify-center items-center gap-4 mb-4 px-5">
                 {{-- Tombol Hitam --}}
-                <a href="https://docs.cashup.test/docs/introduction"  class="w-full sm:w-auto bg-black text-white px-5 py-3 rounded-md font-semibold text-md hover:bg-gray-800 transition-colors">
+                <a href="{{ url('docs/introduction') }}"  class="w-full sm:w-auto bg-black text-white px-5 py-3 rounded-md font-semibold text-md hover:bg-gray-800 transition-colors">
                     Get Started
                 </a>
                 {{-- Tombol Putih --}}
