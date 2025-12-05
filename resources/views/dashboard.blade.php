@@ -3,77 +3,80 @@
 @section('title', 'Dashboard')
 
 @section('dashboard-content')
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-        <div>
-            <h1 class="text-2xl font-semibold text-slate-900">Dashboard</h1>
-            <p class="text-sm text-slate-500">Welcome back, {{ auth()->user()->name }}. Here’s a quick snapshot.</p>
+    <div class="space-y-4">
+        <div class="space-y-1">
+            <p class="text-xs uppercase tracking-[0.14em] text-slate-500">Payment Playgrounds</p>
+            <h1 class="text-3xl font-semibold text-slate-900">Pilih metode yang mau diuji</h1>
+            <p class="text-sm text-slate-500">Saat ini tersedia dua kanal: QRPS dan Credit/Debit.</p>
         </div>
-        <div class="inline-flex items-center gap-2 px-3 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            Connected with Google
-        </div>
-    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <div class="p-4 border border-slate-200 rounded-xl shadow-[0_10px_40px_-24px_rgba(15,23,42,0.4)] bg-gradient-to-br from-white to-slate-50">
-            <p class="text-xs uppercase tracking-wide text-slate-500 mb-1">Docs viewed</p>
-            <p class="text-2xl font-semibold text-slate-900">128</p>
-        </div>
-        <div class="p-4 border border-slate-200 rounded-xl shadow-[0_10px_40px_-24px_rgba(15,23,42,0.4)] bg-gradient-to-br from-white to-slate-50">
-            <p class="text-xs uppercase tracking-wide text-slate-500 mb-1">Favorites</p>
-            <p class="text-2xl font-semibold text-slate-900">12</p>
-        </div>
-        <div class="p-4 border border-slate-200 rounded-xl shadow-[0_10px_40px_-24px_rgba(15,23,42,0.4)] bg-gradient-to-br from-white to-slate-50">
-            <p class="text-xs uppercase tracking-wide text-slate-500 mb-1">Alerts</p>
-            <p class="text-2xl font-semibold text-slate-900">3</p>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 p-6 border border-slate-200 rounded-xl bg-white shadow-[0_10px_40px_-24px_rgba(15,23,42,0.4)]">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-lg font-semibold text-slate-900">Recent activity</h2>
-                <a href="#" class="text-sm text-blue-600 hover:text-blue-700">View all</a>
+        @if(session('success'))
+            <div class="border border-emerald-200 bg-emerald-50 text-emerald-800 rounded-xl p-4 text-sm">
+                {{ session('success') }}
             </div>
-            <ul class="divide-y divide-slate-100">
-                <li class="py-3 flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-slate-900">Updated “Payment Webhook”</p>
-                        <p class="text-xs text-slate-500">2 hours ago</p>
-                    </div>
-                    <span class="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700">Published</span>
-                </li>
-                <li class="py-3 flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-slate-900">Commented on “CashPortal API”</p>
-                        <p class="text-xs text-slate-500">Yesterday</p>
-                    </div>
-                    <span class="text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-600">Note</span>
-                </li>
-                <li class="py-3 flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-slate-900">Bookmarked “Settlement Guide”</p>
-                        <p class="text-xs text-slate-500">2 days ago</p>
-                    </div>
-                    <span class="text-xs px-2 py-1 rounded-full bg-amber-50 text-amber-700">Saved</span>
-                </li>
-            </ul>
-        </div>
+        @endif
+        @if(session('error'))
+            <div class="border border-rose-200 bg-rose-50 text-rose-800 rounded-xl p-4 text-sm">
+                {{ session('error') }}
+            </div>
+        @endif
 
-        <div class="p-6 border border-slate-200 rounded-xl bg-white shadow-[0_10px_40px_-24px_rgba(15,23,42,0.4)]">
-            <h2 class="text-lg font-semibold text-slate-900 mb-4">Account</h2>
-            <div class="space-y-3">
-                <div class="flex items-center justify-between text-sm">
-                    <span class="text-slate-600">Name</span>
-                    <span class="font-medium text-slate-900">{{ auth()->user()->name }}</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="group relative overflow-hidden rounded-2xl border border-white/40 bg-gradient-to-br from-white/80 via-white/40 to-slate-100/50 shadow-[0_20px_60px_-28px_rgba(15,23,42,0.35)] backdrop-blur">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,0,0,0.06),transparent_45%)]"></div>
+                <div class="relative p-6 flex flex-col gap-2 text-left">
+                    <div class="flex items-center justify-between">
+                        <span class="text-lg font-semibold text-slate-900">QRPS</span>
+                        @if(!($qrpsReady ?? false))
+                            <form method="POST" action="{{ route('bindings.qrps') }}">
+                                @csrf
+                                <button type="submit" class="inline-flex items-center justify-center w-24 h-10 rounded-xl bg-black/80 text-white text-sm shadow-lg hover:opacity-90 transition">
+                                    Generate
+                                </button>
+                            </form>
+                        @endif
+                    </div>
+                    @if($qrpsReady ?? false)
+                        <span class="relative inline-flex items-center gap-2 text-xs font-semibold text-emerald-700">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_0_6px_rgba(16,185,129,0.15)]"></span>
+                            Active
+                        </span>
+                    @else
+                        <span class="inline-flex items-center gap-2 text-xs font-semibold text-slate-500">
+                            <span class="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
+                            Not Generated
+                        </span>
+                    @endif
+                    <p class="text-sm text-slate-600 leading-relaxed">Scan & pay cepat untuk kanal QR Payment Standard.</p>
                 </div>
-                <div class="flex items-center justify-between text-sm">
-                    <span class="text-slate-600">Email</span>
-                    <span class="font-medium text-slate-900">{{ auth()->user()->email }}</span>
-                </div>
-                <div class="flex items-center justify-between text-sm">
-                    <span class="text-slate-600">Provider</span>
-                    <span class="font-medium text-emerald-700">Google</span>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-2xl border border-white/40 bg-gradient-to-br from-white/80 via-white/40 to-slate-100/50 shadow-[0_20px_60px_-28px_rgba(15,23,42,0.35)] backdrop-blur">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,0,0,0.06),transparent_45%)]"></div>
+                <div class="relative p-6 flex flex-col gap-2 text-left">
+                    <div class="flex items-center justify-between">
+                        <span class="text-lg font-semibold text-slate-900">Credit / Debit</span>
+                        @if(!($creditDebitReady ?? false))
+                            <form method="POST" action="{{ route('bindings.credit-debit') }}">
+                                @csrf
+                                <button type="submit" class="inline-flex items-center justify-center w-24 h-10 rounded-xl bg-black/80 text-white text-sm shadow-lg hover:opacity-90 transition">
+                                    Generate
+                                </button>
+                            </form>
+                        @endif
+                    </div>
+                    @if($creditDebitReady ?? false)
+                        <span class="relative inline-flex items-center gap-2 text-xs font-semibold text-emerald-700">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_0_6px_rgba(16,185,129,0.15)]"></span>
+                            Active
+                        </span>
+                    @else
+                        <span class="inline-flex items-center gap-2 text-xs font-semibold text-slate-500">
+                            <span class="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
+                            Not Generated
+                        </span>
+                    @endif
+                    <p class="text-sm text-slate-600 leading-relaxed">Insert credit/debit (CDCP) dan KEK/DEK untuk username Anda.</p>
                 </div>
             </div>
         </div>

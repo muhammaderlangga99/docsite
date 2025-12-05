@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('users', function (Blueprint $table): void {
+            if (! Schema::hasColumn('users', 'device_id')) {
+                $table->string('device_id', 255)->nullable()->unique()->after('username');
+            }
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('users', function (Blueprint $table): void {
+            if (Schema::hasColumn('users', 'device_id')) {
+                $table->dropUnique(['device_id']);
+                $table->dropColumn('device_id');
+            }
+        });
+    }
+};

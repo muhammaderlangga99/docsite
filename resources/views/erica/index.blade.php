@@ -3,6 +3,9 @@
 @section('title', 'Erica Credentials')
 
 @section('dashboard-content')
+@php
+    $appUrl = rtrim(config('app.url'), '/');
+@endphp
 <div class="flex items-center justify-between mb-6">
     <div>
         <p class="text-xs uppercase tracking-[0.08em] text-slate-500 mb-1">Credentials</p>
@@ -10,7 +13,7 @@
         <p class="text-sm text-slate-500 mt-1">Generate and manage ECR credentials (Bridge API DB).</p>
     </div>
     @if(! $credentials)
-        <form action="{{ route('erica.generate') }}" method="POST" class="inline-flex items-center gap-2 px-3 py-2 bg-slate-900 text-white rounded-lg text-sm hover:bg-slate-800 transition">
+        <form action="{{'/erica/generate'}}" method="POST" class="inline-flex items-center gap-2 px-3 py-2 bg-slate-900 text-white rounded-lg text-sm hover:bg-slate-800 transition">
             @csrf
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.5 12h15m0 0-5.25-5.25M19.5 12l-5.25 5.25" />
@@ -55,6 +58,37 @@
                 <div class="flex items-center justify-between gap-2">
                     <span class="font-semibold text-slate-900 break-all">{{ $credentials['api_key'] }}</span>
                     <button type="button" class="text-xs px-2 py-1 rounded border border-slate-200 text-slate-600 hover:bg-slate-100 copy-btn" data-copy="{{ $credentials['api_key'] }}">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-100">
+            <p class="text-sm font-semibold text-slate-900 mb-3">Endpoint Payment Request</p>
+            <div class="overflow-hidden rounded-xl border border-slate-200 text-xs">
+                <div class="grid grid-cols-12 bg-slate-50 border-b border-slate-200">
+                    <div class="col-span-3 font-semibold text-slate-800 px-3 py-2">Development</div>
+                    <div class="col-span-9 px-3 py-2 bg-slate-900 text-slate-50 break-all">https://tucanos-miniatm.cashlez.com/MmBridgeApi/v1/payment-request</div>
+                </div>
+                <div class="grid grid-cols-12 bg-slate-50 border-b border-slate-200">
+                    <div class="col-span-3 font-semibold text-slate-800 px-3 py-2">Production</div>
+                    <div class="col-span-9 px-3 py-2 bg-slate-900 text-slate-50 break-all">https://oarfish.cashlez.com/MmApiEcrHost/v1/payment-request</div>
+                </div>
+                <div class="grid grid-cols-12 border-b border-slate-200">
+                    <div class="col-span-3 bg-slate-50 font-semibold text-slate-800 px-3 py-2">Method</div>
+                    <div class="col-span-9 bg-slate-900 text-amber-300 font-semibold px-3 py-2">POST</div>
+                </div>
+                <div class="grid grid-cols-12">
+                    <div class="col-span-3 bg-slate-50 font-semibold text-slate-800 px-3 py-2">Header</div>
+                    <div class="col-span-9">
+                        <div class="grid grid-cols-12 border-b border-slate-800/30">
+                            <div class="col-span-6 bg-slate-50 font-semibold text-slate-800 px-3 py-2">Key</div>
+                            <div class="col-span-6 bg-slate-50 font-semibold text-slate-800 px-3 py-2">Value</div>
+                        </div>
+                        <div class="grid grid-cols-12 bg-slate-900 text-slate-50">
+                            <div class="col-span-6 px-3 py-2">ApiKey</div>
+                            <div class="col-span-6 px-3 py-2 font-semibold wrap-anywhere">{{ $credentials['api_key'] }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

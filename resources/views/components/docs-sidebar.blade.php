@@ -1,6 +1,7 @@
 <nav class="space-y-4">
     {{-- Helper buat ngecek link aktif --}}
     @php
+        $appUrl = rtrim(config('app.url'), '/');
         // Cek kalo Doc-nya aktif
         $isDocActive = fn($doc) => $doc?->id === $activeDoc?->id;
         // BARU: Cek kalo Category-nya aktif
@@ -11,11 +12,11 @@
     {{-- 1. LOOPING POSTINGAN INDUK (Root Docs) --}}
     <h3 class="text-xs font-bold uppercase text-gray-500">Guides</h3>
     <ul class="space-y-5">
-        @foreach($rootDocs as $doc)
+        @foreach($rootDocs->whereNull('is_deleted')->where('is_published', 1) as $doc)
             <li>
-                <a href="https://docs.cashup.test/docs/{{ $doc->slug }}" 
-                   class="block text-xs uppercase
-                          {{ $isDocActive($doc) ? 'text-blue-700' : 'text-gray-500' }}">
+                <a href="{{ $appUrl }}/docs/{{ $doc->slug }}" 
+                   class="block text-xs
+                          {{ $isDocActive($doc) ? 'text-green-700' : 'text-gray-500' }}">
                     {{ $doc->name }}
                 </a>
             </li>
@@ -35,9 +36,9 @@
             {{-- INI YANG DI-UPGRADE TOTAL --}}
             <div class="flex justify-between items-center">
                 {{-- A. LINK JUDUL KATEGORI (bisa diklik) --}}
-                <a href="https://docs.cashup.test/docs/category/{{ $category->slug }}"
-                   class="text-xs uppercase 
-                          {{ $isCategoryActive($category) ? 'text-blue-700' : 'text-gray-500 hover:text-gray-900' }}">
+                <a href="{{ $appUrl }}/docs/category/{{ $category->slug }}"
+                   class="text-xs 
+                          {{ $isCategoryActive($category) ? 'text-green-700' : 'text-gray-500 hover:text-gray-900' }}">
                     {{ $category->title }}
                 </a>
                 
@@ -58,11 +59,11 @@
                 class="space-y-4 pl-4 border-l border-gray-200" 
                 style="display: none;">
                 
-                @foreach($category->posts as $doc)
+                @foreach($category->posts->whereNull('is_deleted')->where('is_published', 1) as $doc)
                     <li>
-                        <a href="https://docs.cashup.test/docs/{{ $doc->slug }}" 
-                           class="block text-xs uppercase
-                                  {{ $isDocActive($doc) ? ' text-blue-700' : 'text-gray-600' }}">
+                        <a href="{{ $appUrl }}/docs/{{ $doc->slug }}" 
+                           class="block text-xs
+                                  {{ $isDocActive($doc) ? ' text-green-700' : 'text-gray-600' }}">
                             {{ $doc->name }}
                         </a>
                     </li>

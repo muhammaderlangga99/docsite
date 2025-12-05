@@ -1,7 +1,11 @@
 @extends('layout.app')
 
 {{-- (Opsional) Set judul halaman --}}
-@section('title', 'The Framework for the Web')
+@section('title', 'Introduction | cashUP Docs')
+
+{{-- 
+  Kita bisa nambahin style CSS khusus buat halaman ini.
+  Di contoh ini, kita bikin background grid tipis di hero section.
 
 {{-- 
   Ini adalah CSS khusus buat nambahin background grid tipis

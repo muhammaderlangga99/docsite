@@ -3,6 +3,9 @@
 @section('title', 'Reset Password')
 
 @section('content')
+@php
+    $appUrl = rtrim(config('app.url'), '/');
+@endphp
 <div class="mb-6">
     <p class="text-sm text-slate-500 font-medium">Atur ulang akses</p>
     <h1 class="text-2xl font-semibold text-slate-900">Reset password</h1>
@@ -11,7 +14,7 @@
     </p>
 </div>
 
-<form method="POST" action="{{ route('password.store') }}" class="space-y-4">
+<form method="POST" action="{{ $appUrl }}/reset-password" class="space-y-4">
     @csrf
     <input type="hidden" name="token" value="{{ $token }}">
 
@@ -50,6 +53,6 @@
 
 <div class="mt-6 text-sm text-slate-600">
     Sudah ingat password?
-    <a href="{{ route('login') }}" class="font-semibold text-slate-900 hover:underline">Kembali ke login</a>
+    <a href="{{ $appUrl }}/login" class="font-semibold text-slate-900 hover:underline">Kembali ke login</a>
 </div>
 @endsection
