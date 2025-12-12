@@ -45,44 +45,40 @@
     {{-- Kita pake class .hero-grid-bg yang kita definisiin di atas --}}
     <section class="relative overflow-hidden hero-grid-bg px-3">
         {{-- Kontainer utama --}}
-        <div class="container mx-auto md:py-32 text-center">
+        <div class="container mx-auto md:py-28">
+            <div class="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
+                <div class="w-full md:w-1/2">
+                    <img src="/img/docs-home.png" alt="cashUP Docs" class="w-full max-w-xl mx-auto rounded-3xl ring-1 ring-black/5">
+                </div>
+                <div class="w-full md:w-1/2 space-y-6">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">New</span>
+                        <span class="text-sm text-gray-700">Explore real-time transaction insights with CashPortal.</span>
+                        <a href="https://dashboard.cashup.id" class="bg-black text-white text-xs md:text-sm px-3 py-1.5 rounded-full font-semibold hover:bg-gray-800 transition-colors">
+                            Go to cashPortal  &rarr;
+                        </a>
+                    </div>
 
+                    {{-- 2. Headline Utama --}}
+                    <h1 class="text-4xl lg:text-6xl font-semibold md:font-[700] tracking-tight text-gray-900 leading-tight">
+                        The Payment Integration Platform by <img src="/img/logo-nav.png" class="h-8 md:h-12 inline -translate-y-1" alt="">
+                    </h1>
 
-            <div class="flex flex-wrap justify-center items-center gap-2 md:gap-4 mb-6 mt-10 md:mt-0">
-                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">New</span>
-                <span class="text-sm text-gray-700">Explore real-time transaction insights with CashPortal, your complete reporting dashboard.
-            </span>
-                
-                {{-- Tombol "Find out more" (versi lebih simpel) --}}
-                <a href="https://dashboard.cashup.id" class="bg-black text-white text-sm px-3 py-1 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                    Go to cashPortal  &rarr;
-                </a>
-               
-            </div>
+                    {{-- 3. Sub-headline / Deskripsi --}}
+                    <p class="text-lg md:text-xl text-gray-600 leading-relaxed">
+                        Used by merchants and partners across industries, cashUP provides a robust API that makes it easy to integrate secure and scalable payment solutions into your applications.
+                    </p>
 
-            {{-- 2. Headline Utama --}}
-            <h1 class="text-4xl md:text-6xl font-semibold md:font-[700] tracking-tighter mb-6 text-gray-900 text-center">
-                The Payment Integration Platform by <img src="/img/logo-nav.png" class="h-8 md:h-15 inline -translate-y-1" alt="">
-            </h1>
-
-            {{-- 3. Sub-headline / Deskripsi --}}
-            <p class="text-sm md:text-xl text-gray-600 max-w-2xl mx-auto mb-10">
-                {{-- Used by some of the world's largest companies, Next.js enables you to create 
-                <strong class="text-gray-900">high-quality web applications</strong> 
-                with the power of React components. --}}
-                Used by merchants and partners across industries, cashUP provides a robust API that makes it easy to integrate secure and scalable payment solutions into your applications.
-            </p>
-
-            {{-- 4. Tombol Call to Action (CTA) --}}
-            <div class="flex sm:flex-row justify-center items-center gap-4 mb-4 px-5">
-                {{-- Tombol Hitam --}}
-                <a href="{{ url('docs/introduction') }}"  class="w-full sm:w-auto bg-black text-white px-5 py-3 rounded-md font-semibold text-md hover:bg-gray-800 transition-colors">
-                    Get Started
-                </a>
-                {{-- Tombol Putih --}}
-                <a href="https://cashup.id" class="w-full sm:w-auto bg-white text-black border border-gray-300 px-5 py-3 rounded-md font-semibold text-md hover:bg-gray-50 transition-colors">
-                    About Us
-                </a>
+                    {{-- 4. Tombol Call to Action (CTA) --}}
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="{{ url('docs/introduction') }}"  class="w-full sm:w-auto bg-black text-white px-6 py-3.5 rounded-lg font-semibold text-base hover:bg-gray-800 transition-colors shadow-md">
+                            Get Started
+                        </a>
+                        <a href="https://cashup.id" class="w-full sm:w-auto bg-white text-black border border-gray-200 px-6 py-3.5 rounded-lg font-semibold text-base hover:bg-gray-50 transition-colors shadow-sm">
+                            About Us
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
