@@ -1,5 +1,3 @@
-<nav class="space-y-4">
-    {{-- Helper buat ngecek link aktif --}}
     @php
         $appUrl = rtrim(config('app.url'), '/');
         // Cek kalo Doc-nya aktif
@@ -10,12 +8,12 @@
 
 
     {{-- 1. LOOPING POSTINGAN INDUK (Root Docs) --}}
-    <h3 class="text-xs font-bold uppercase text-gray-500">Guides</h3>
-    <ul class="space-y-5">
+    <h3 class="text-sm font-bold uppercase text-gray-500 mb-3">Guides</h3>
+    <ul class="space-y-5 mb-2.5">
         @foreach($rootDocs->whereNull('deleted_at')->where('is_published', 1) as $doc)
             <li>
                 <a href="{{ $appUrl }}/docs/{{ $doc->slug }}" 
-                   class="block text-xs
+                   class="block text-sm
                           {{ $isDocActive($doc) ? 'text-green-700' : 'text-gray-500' }}">
                     {{ $doc->name }}
                 </a>
@@ -36,7 +34,7 @@
             <div class="flex justify-between items-center">
                 {{-- A. LINK JUDUL KATEGORI (bisa diklik) --}}
                 <a href="{{ $appUrl }}/docs/category/{{ $category->slug }}"
-                   class="text-xs 
+                   class="text-sm 
                           {{ $isCategoryActive($category) ? 'text-green-700' : 'text-gray-500 hover:text-gray-900' }}">
                     {{ $category->title }}
                 </a>
@@ -61,7 +59,7 @@
                 @foreach($category->posts->whereNull('deleted_at')->where('is_published', 1) as $doc)
                     <li>
                         <a href="{{ $appUrl }}/docs/{{ $doc->slug }}" 
-                           class="block text-xs
+                           class="block text-sm
                                   {{ $isDocActive($doc) ? ' text-green-700' : 'text-gray-600' }}">
                             {{ $doc->name }}
                         </a>
