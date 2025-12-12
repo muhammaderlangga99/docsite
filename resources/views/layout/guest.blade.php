@@ -19,15 +19,16 @@
 <body class="min-h-screen bg-[#e6e3ff] text-slate-900">
     <div class="min-h-screen grid lg:grid-cols-2">
         <div class="hidden lg:flex items-center justify-center bg-white px-8 py-10">
-            <div class="w-full h-full max-w-3xl">
-                <div class="h-full w-full rounded-[28px] bg-zinc-100 relative overflow-hidden">
+            <div class="w-full h-full max-w-3xl rounded-4xl flex">
+                {{-- <div class="h-full w-full rounded-[28px] bg-zinc-100 relative overflow-hidden">
                     <div class="absolute inset-6 rounded-3xl border-2 border-dashed border-white/70 flex items-center justify-center bg-zinc-100">
                         <div class="text-center">
                             <p class="text-lg font-semibold text-slate-800">Placeholder gambar</p>
                             <p class="text-sm text-slate-600 mt-1">Isi sendiri dengan foto (ratio mendekati 4:3)</p>
                         </div>
                     </div>
-                </div>
+                </div> --}}
+                <div class="h-10/12 w-10/12 m-auto rounded-[28px] bg-[url('/img/docs-cash.png')] bg-cover bg-center"></div>
             </div>
         </div>
         <div class="flex items-center justify-center bg-white px-6 py-12">

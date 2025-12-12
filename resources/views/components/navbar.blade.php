@@ -7,7 +7,7 @@
     @php
         $appUrl = rtrim(config('app.url'), '/');
     @endphp
-    <div class="container px-20 mx-auto flex items-center justify-between">
+    <div class="container md:px-20 mx-auto flex items-center justify-between">
         
         {{-- Grup Kiri: Logo & Navigasi Desktop --}}
         <div class="flex items-center space-x-4">
@@ -80,9 +80,8 @@
          @click.away="open = false" {{-- Bonus: klik di luar menu bakal nutup --}}
          >
         
-        <a href="https://cashup.id" class="block px-3 py-2 rounded-md text-base font-medium">About</a>
-        <a href="{{ $appUrl }}/docs/introduction" class="block px-3 py-2 rounded-md text-base font-medium">Docs</a>
-        <a href="https://dashboard.cashup.id" class="block px-3 py-2 rounded-md text-base font-medium">cashPortal<sup class="text-xs ml-0.5">↗</sup></a>
+        <a href="https://cashup.id" class="block py-2 rounded-md text-base">About</a>
+        <a href="{{ $appUrl }}/docs/introduction" class="block py-2 rounded-md text-base">Docs</a>
         
     </div>
 </nav>

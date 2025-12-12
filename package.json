@@ -4,7 +4,7 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite --port 3000 --host 127.0.0.1"
     },
     "devDependencies": {
         "@tailwindcss/typography": "^0.5.19",

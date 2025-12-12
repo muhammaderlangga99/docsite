@@ -45,20 +45,12 @@
     {{-- Kita pake class .hero-grid-bg yang kita definisiin di atas --}}
     <section class="relative overflow-hidden hero-grid-bg px-3">
         {{-- Kontainer utama --}}
-        <div class="container mx-auto md:py-28">
+        <div class="container mx-auto ">
             <div class="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
                 <div class="w-full md:w-1/2">
-                    <img src="/img/docs-home.png" alt="cashUP Docs" class="w-full max-w-xl mx-auto rounded-3xl ring-1 ring-black/5">
+                    <img src="/img/docs-home.png" alt="cashUP Docs" class="w-full max-w-xl mx-auto rounded-3xl">
                 </div>
                 <div class="w-full md:w-1/2 space-y-6">
-                    <div class="flex flex-wrap items-center gap-3">
-                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">New</span>
-                        <span class="text-sm text-gray-700">Explore real-time transaction insights with CashPortal.</span>
-                        <a href="https://dashboard.cashup.id" class="bg-black text-white text-xs md:text-sm px-3 py-1.5 rounded-full font-semibold hover:bg-gray-800 transition-colors">
-                            Go to cashPortal  &rarr;
-                        </a>
-                    </div>
-
                     {{-- 2. Headline Utama --}}
                     <h1 class="text-4xl lg:text-6xl font-semibold md:font-[700] tracking-tight text-gray-900 leading-tight">
                         The Payment Integration Platform by <img src="/img/logo-nav.png" class="h-8 md:h-12 inline -translate-y-1" alt="">
@@ -71,10 +63,10 @@
 
                     {{-- 4. Tombol Call to Action (CTA) --}}
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="{{ url('docs/introduction') }}"  class="w-full sm:w-auto bg-black text-white px-6 py-3.5 rounded-lg font-semibold text-base hover:bg-gray-800 transition-colors shadow-md">
+                        <a href="{{ url('docs/introduction') }}"  class="w-full text-center sm:w-auto bg-black text-white px-6 py-3.5 rounded-lg font-semibold text-base hover:bg-gray-800 transition-colors shadow-md">
                             Get Started
                         </a>
-                        <a href="https://cashup.id" class="w-full sm:w-auto bg-white text-black border border-gray-200 px-6 py-3.5 rounded-lg font-semibold text-base hover:bg-gray-50 transition-colors shadow-sm">
+                        <a href="https://cashup.id" class="w-full sm:w-auto bg-white text-center text-black border border-gray-200 px-6 py-3.5 rounded-lg font-semibold text-base hover:bg-gray-50 transition-colors shadow-sm">
                             About Us
                         </a>
                     </div>
