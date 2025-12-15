@@ -43,9 +43,9 @@
 @section('content')
     
     {{-- Kita pake class .hero-grid-bg yang kita definisiin di atas --}}
-    <section class="relative overflow-hidden hero-grid-bg px-3">
+    <section class="relative overflow-hidden hero-grid-bg px-3 h-screen flex">
         {{-- Kontainer utama --}}
-        <div class="container mx-auto ">
+        <div class="container m-auto">
             <div class="flex flex-col md:flex-row items-center gap-10 lg:gap-16">
                 <div class="w-full md:w-1/2">
                     <img src="/img/docs-home.png" alt="cashUP Docs" class="w-full max-w-xl mx-auto rounded-3xl">

@@ -18,6 +18,7 @@ class DashboardController extends Controller
         $creditDebitTid = null;
         $miniAtmTid = null;
         $merchantMid = null;
+        $bnplReady = false;
 
         if ($username) {
             $creditCount = DB::connection('cdcp')
@@ -58,6 +59,11 @@ class DashboardController extends Controller
                 ->where('merchant_id', 125)
                 ->orderByDesc('id')
                 ->value('mid');
+
+            $bnplReady = DB::connection('bnpl')
+                ->table('device_user_detail')
+                ->where('username', $username)
+                ->exists();
         }
 
         return view('dashboard', [
@@ -67,6 +73,7 @@ class DashboardController extends Controller
             'creditDebitTid' => $creditDebitTid,
             'miniAtmTid' => $miniAtmTid,
             'merchantMid' => $merchantMid,
+            'bnplReady' => $bnplReady,
         ]);
     }
 }

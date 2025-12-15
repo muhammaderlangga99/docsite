@@ -223,6 +223,26 @@ return [
             ]) : [],
         ],
 
+        'bnpl' => [
+            'driver' => env('BNPL_DB_CONNECTION', 'mysql'),
+            'url' => env('BNPL_DB_URL'),
+            'host' => env('BNPL_DB_HOST', '127.0.0.1'),
+            'port' => env('BNPL_DB_PORT', '3306'),
+            'database' => env('BNPL_DB_DATABASE', 'midware_bnpl'),
+            'username' => env('BNPL_DB_USERNAME', 'root'),
+            'password' => env('BNPL_DB_PASSWORD', 'root'),
+            'unix_socket' => env('BNPL_DB_SOCKET', ''),
+            'charset' => env('BNPL_DB_CHARSET', 'utf8mb4'),
+            'collation' => env('BNPL_DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('BNPL_MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),

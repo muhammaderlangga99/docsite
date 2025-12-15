@@ -15,6 +15,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\QrpsController;
 use App\Http\Controllers\MiniAtmController;
 use App\Http\Controllers\MiniAtmCredentialController;
+use App\Http\Controllers\BnplController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -71,6 +72,7 @@ Route::middleware(['auth', 'username.required'])->group(function () {
         Route::post('/bindings/credit-debit', CreditDebitController::class)->name('bindings.credit-debit');
         Route::post('/bindings/qrps', QrpsController::class)->name('bindings.qrps');
         Route::post('/bindings/mini-atm', MiniAtmController::class)->name('bindings.mini-atm');
+        Route::post('/bindings/bnpl', BnplController::class)->name('bindings.bnpl');
 
         Route::get('/mini-atm', [MiniAtmCredentialController::class, 'index'])->name('mini-atm.index');
         Route::post('/mini-atm/generate', [MiniAtmCredentialController::class, 'generate'])->name('mini-atm.generate');

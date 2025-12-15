@@ -3,7 +3,7 @@
     Udah pake Alpine.js (x-data, @click, x-show, x-transition)
     dan Tailwind CSS.
 --}}
-<nav class="bg-white/60 backdrop-blur-lg p-4 border-b border-zinc-100 sticky top-0 z-50" x-data="{ open: false }">
+<nav class="bg-white/60 backdrop-blur-lg p-4 border-b border-zinc-100 fixed top-0 z-50 w-full" x-data="{ open: false }">
     @php
         $appUrl = rtrim(config('app.url'), '/');
     @endphp
@@ -36,9 +36,9 @@
 
             @if($user)
                 <a href="{{ $appUrl }}/dashboard"
-                   class="flex items-center gap-1 lowercase pl-1 pr-3 font-[400] py-1 rounded-full bg-gray-100 border border-gray-200 text-sm text-gray-700 hover:bg-gray-200 transition">
+                   class="flex items-center gap-1 lowercase p-1 md:pr-3 font-[400] py-1 rounded-full bg-gray-100 border border-gray-200 text-sm text-gray-700 hover:bg-gray-200 transition">
                     @if($user->avatar)
-                        <img src="{{ $user->avatar }}" alt="Avatar" class="w-7 h-7 rounded-full border border-white">
+                        <img src="{{ $user->avatar }}" alt="Avatar" class="w-7 h-7 rounded-full">
                     @else
                         <span class="w-7 h-7 rounded-full bg-gray-300 flex items-center justify-center text-xs font-semibold">
                             {{ strtoupper(substr($displayName ?? $user->name, 0, 1)) }}

@@ -102,7 +102,7 @@
         </aside>
         
         {{-- KOLOM 2: KONTEN UTAMA (Tengah) --}}
-        <main class="w-full md:w-3/5 px-4"> {{-- <-- Lebarnya diubah jadi 3/5 --}}
+        <main class="w-full md:w-3/5 px-4 mt-16"> {{-- <-- Lebarnya diubah jadi 3/5 --}}
             @yield('doc-content')
         </main>
         

@@ -60,7 +60,7 @@
             <div class="border border-slate-200 rounded-lg p-3 bg-slate-50/70">
                 <p class="text-xs uppercase text-slate-500 tracking-[0.08em] mb-1">Partner</p>
                 <div class="flex items-center justify-between gap-2">
-                    <span class="font-semibold text-slate-900 break-all">{{ $credentials->partner_name }} (ID: {{ $credentials->partner_id }})</span>
+                    <span class="font-semibold text-slate-900 break-all">{{ $credentials->partner_name }}</span>
                     <button type="button" class="text-xs px-2 py-1 rounded border border-slate-200 text-slate-600 hover:bg-slate-100 copy-btn" data-copy="{{ $credentials->partner_id }}">Copy ID</button>
                 </div>
             </div>
