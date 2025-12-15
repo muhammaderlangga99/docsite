@@ -14,6 +14,10 @@ class DashboardController extends Controller
 
         $creditDebitReady = false;
         $qrpsReady = false;
+        $miniAtmReady = false;
+        $creditDebitTid = null;
+        $miniAtmTid = null;
+        $merchantMid = null;
 
         if ($username) {
             $creditCount = DB::connection('cdcp')
@@ -23,15 +27,46 @@ class DashboardController extends Controller
                 ->count();
             $creditDebitReady = $creditCount >= 2;
 
+            if ($creditDebitReady) {
+                $creditDebitTid = DB::connection('cdcp')
+                    ->table('user_detail')
+                    ->where('username', $username)
+                    ->orderByDesc('id')
+                    ->value('tid');
+            }
+
             $qrpsReady = DB::connection('qrps')
                 ->table('device_user_detail')
                 ->where('username', $username)
                 ->exists();
+
+            $miniAtmReady = DB::connection('mini_atm')
+                ->table('user_detail')
+                ->where('username', $username)
+                ->exists();
+
+            if ($miniAtmReady) {
+                $miniAtmTid = DB::connection('mini_atm')
+                    ->table('user_detail')
+                    ->where('username', $username)
+                    ->orderByDesc('id')
+                    ->value('tid');
+            }
+
+            $merchantMid = DB::connection('cdcp')
+                ->table('merchant_mid')
+                ->where('merchant_id', 125)
+                ->orderByDesc('id')
+                ->value('mid');
         }
 
         return view('dashboard', [
             'creditDebitReady' => $creditDebitReady,
             'qrpsReady' => $qrpsReady,
+            'miniAtmReady' => $miniAtmReady,
+            'creditDebitTid' => $creditDebitTid,
+            'miniAtmTid' => $miniAtmTid,
+            'merchantMid' => $merchantMid,
         ]);
     }
 }

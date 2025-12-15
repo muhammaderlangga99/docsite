@@ -13,6 +13,8 @@ use App\Http\Controllers\CreditDebitController;
 use App\Http\Controllers\EricaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\QrpsController;
+use App\Http\Controllers\MiniAtmController;
+use App\Http\Controllers\MiniAtmCredentialController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -68,6 +70,11 @@ Route::middleware(['auth', 'username.required'])->group(function () {
 
         Route::post('/bindings/credit-debit', CreditDebitController::class)->name('bindings.credit-debit');
         Route::post('/bindings/qrps', QrpsController::class)->name('bindings.qrps');
+        Route::post('/bindings/mini-atm', MiniAtmController::class)->name('bindings.mini-atm');
+
+        Route::get('/mini-atm', [MiniAtmCredentialController::class, 'index'])->name('mini-atm.index');
+        Route::post('/mini-atm/generate', [MiniAtmCredentialController::class, 'generate'])->name('mini-atm.generate');
+        Route::post('/mini-atm/regenerate', [MiniAtmCredentialController::class, 'regenerate'])->name('mini-atm.regenerate');
     });
 });
 
