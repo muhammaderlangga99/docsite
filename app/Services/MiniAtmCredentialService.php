@@ -37,10 +37,11 @@ class MiniAtmCredentialService
             ]);
 
             [$privateKey, $publicKey] = $this->generateKeyPair();
+            $cleanPublicKey = $this->cleanPublicKey($publicKey);
 
             $conn->table('partner_token')->updateOrInsert(
                 ['partner_id' => $partnerId],
-                ['pub_key' => $publicKey, 'token' => null]
+                ['pub_key' => $cleanPublicKey, 'token' => null]
             );
 
             return [
@@ -48,7 +49,7 @@ class MiniAtmCredentialService
                 'api_key' => $apiKey,
                 'client_id' => $clientId,
                 'private_key' => $privateKey,
-                'public_key' => $publicKey,
+                'public_key' => $cleanPublicKey,
                 'warning' => 'Private key ini hanya ditampilkan sekali. Harap simpan dengan aman.',
             ];
         }, 3);
@@ -62,16 +63,17 @@ class MiniAtmCredentialService
         return DB::connection('host_to_host')->transaction(function () use ($partnerId) {
             $conn = DB::connection('host_to_host');
             [$privateKey, $publicKey] = $this->generateKeyPair();
+            $cleanPublicKey = $this->cleanPublicKey($publicKey);
 
             $conn->table('partner_token')->updateOrInsert(
                 ['partner_id' => $partnerId],
-                ['pub_key' => $publicKey, 'token' => null]
+                ['pub_key' => $cleanPublicKey, 'token' => null]
             );
 
             return [
                 'partner_id' => $partnerId,
                 'private_key' => $privateKey,
-                'public_key' => $publicKey,
+                'public_key' => $cleanPublicKey,
                 'warning' => 'Private key ini hanya ditampilkan sekali. Harap simpan dengan aman.',
             ];
         }, 3);
@@ -128,5 +130,13 @@ class MiniAtmCredentialService
         }
 
         return [$privateKey, $publicKey];
+    }
+
+    private function cleanPublicKey(string $pem): string
+    {
+        $stripped = preg_replace('/-----BEGIN PUBLIC KEY-----|-----END PUBLIC KEY-----/', '', $pem);
+        $stripped = str_replace(["\r", "\n", ' '], '', (string) $stripped);
+
+        return trim($stripped);
     }
 }

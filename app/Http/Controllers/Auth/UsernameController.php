@@ -54,11 +54,11 @@ class UsernameController extends Controller
         DB::connection('master')->table('device')->insert([
             'approval_datetime' => null,
             'approved' => 0,
-            'is_device_test' => 0,
+            // 'is_device_test' => 0,
             'brand_id' => null,
             'created_at' => now(),
             'deleted_at' => null,
-            'device_type_id' => null,
+            // 'device_type_id' => null,
             'last_dongle_registration_update_timestamp' => null,
             'last_dukpt_key_download_timestamp' => null,
             'merchant_id' => 125,

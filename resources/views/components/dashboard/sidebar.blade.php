@@ -33,7 +33,7 @@
 @endphp
 
 <aside {{ $attributes->class('w-72 bg-white md:w-72 text-slate-900 h-full overflow-y-auto border-r border-zinc-100 flex flex-col') }}>
-    <nav class="px-3 py-4 space-y-1">
+    <nav class="px-3 py-4 space-y-1 sm:mt-16">
         <div class="pt-5 pb-2 px-3 text-[11px] uppercase tracking-[0.08em] text-slate-500">Dashboard</div>
         @foreach($items as $item)
             <a href="{{ $item['url'] }}"

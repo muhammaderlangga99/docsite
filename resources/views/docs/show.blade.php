@@ -171,7 +171,7 @@
                 @forelse($category->posts as $post)
                  {{-- tampilkan yang deleted_at nya null  --}}
                     @if(is_null($post->deleted_at) && $post->is_published == 1)
-                    <a href="{{ url('docs/' . $post->slug) }}" class="block border border-zinc-200 rounded-xl shadow hover:bg-gray-50 hover:border-gray-400">
+                    <a href="{{ url('docs/' . $post->slug) }}" class="block border border-zinc-200 rounded-xl hover:bg-gray-50 hover:border-gray-200">
                         @if($post->thumbnail)
                             <img src="{{ $post->thumbnail }}" alt="{{ $post->name }}" class="w-full h-40 object-cover rounded-md mb-3">
                         @endif

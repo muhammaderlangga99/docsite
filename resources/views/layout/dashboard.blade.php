@@ -3,7 +3,7 @@
 @section('title', $title ?? 'Dashboard')
 
 @section('content')
-<div class="overflow-hidden" x-data="{ sidebarOpen: false }">
+<div class="md:h-screen" style="overflow-y: hidden !important;" x-data="{ sidebarOpen: false }">
     <div class="flex h-full overflow-hidden">
         {{-- Mobile top bar (below global navbar) --}}
         <div class="md:hidden fixed inset-x-0 top-16 z-40 bg-white border-b border-slate-200 flex items-center justify-between px-4 py-3">
@@ -28,7 +28,7 @@
 
         {{-- Main content --}}
         <main class="flex-1 overflow-y-auto pt-16 md:pt-0">
-            <div class="p-6 md:px-10">
+            <div class="p-6 md:px-10 mt-16">
                 @yield('dashboard-content')
             </div>
         </main>
