@@ -183,6 +183,46 @@ return [
             ]) : [],
         ],
 
+        'mini_atm' => [
+            'driver' => env('MINI_ATM_DB_CONNECTION', 'mysql'),
+            'url' => env('MINI_ATM_DB_URL'),
+            'host' => env('MINI_ATM_DB_HOST', '127.0.0.1'),
+            'port' => env('MINI_ATM_DB_PORT', '3306'),
+            'database' => env('MINI_ATM_DB_DATABASE', 'midware_mini_atm'),
+            'username' => env('MINI_ATM_DB_USERNAME', 'root'),
+            'password' => env('MINI_ATM_DB_PASSWORD', 'root'),
+            'unix_socket' => env('MINI_ATM_DB_SOCKET', ''),
+            'charset' => env('MINI_ATM_DB_CHARSET', 'utf8mb4'),
+            'collation' => env('MINI_ATM_DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MINI_ATM_MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        'host_to_host' => [
+            'driver' => env('H2H_DB_CONNECTION', 'mysql'),
+            'url' => env('H2H_DB_URL'),
+            'host' => env('H2H_DB_HOST', '127.0.0.1'),
+            'port' => env('H2H_DB_PORT', '3306'),
+            'database' => env('H2H_DB_DATABASE', 'midware_host_to_host'),
+            'username' => env('H2H_DB_USERNAME', 'root'),
+            'password' => env('H2H_DB_PASSWORD', 'root'),
+            'unix_socket' => env('H2H_DB_SOCKET', ''),
+            'charset' => env('H2H_DB_CHARSET', 'utf8mb4'),
+            'collation' => env('H2H_DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('H2H_MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),
