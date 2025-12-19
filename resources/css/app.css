@@ -294,5 +294,22 @@
   margin-top: 1.25em !important;
   margin-bottom: 1.25em !important;
 }
+/* Isolasi komponen API agar tidak ketimpa typography markdown */
+.prisa .api-card {
+  display: block;
+  max-width: 100%;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: inherit;
+}
+.prisa .api-card pre {
+  margin: 0 !important;
+  background: #f8fafc !important;
+  color: #0f172a !important;
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
 /* ...dan seterusnya... ini adalah versi simpel. 
 Versi lengkapnya ribuan baris, tapi ini udah cukup buat basic styling. */
