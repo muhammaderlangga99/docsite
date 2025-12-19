@@ -163,7 +163,7 @@
 
         {{-- ID #doc-content-area di sini gpp, karena script toc() nggak ke-load --}}
         <div class="prose prose-lg max-w-none" id="doc-content-area">
-            <div>{{ $category->description }}</div>
+            <div class="text-justify">{{ $category->description }}</div>
 
             <h2 class="text-2xl font-bold mb-4 mt-24">Artikel di kategori ini:</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
