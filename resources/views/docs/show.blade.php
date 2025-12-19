@@ -41,7 +41,7 @@
         $index = 0; // Untuk bikin ID unik
 
         // 1. Konversi Markdown ke HTML dulu
-        $htmlContent = Str::markdown($doc->content);
+        $htmlContent = \App\Support\MarkdownComponents::render($doc->content);
 
         // 2. Cari semua H2/H3, inject ID, dan simpan ke $toc_headings
         $content_with_ids = preg_replace_callback(
@@ -96,10 +96,9 @@
 
         <h1 class="text-4xl font-bold mb-2">{{ $doc->name }}</h1>
         <p class="mb-5 text-xs text-zinc-400">Author: {{ $doc->author? $doc->author : 'Unknown' }}</p>
-
         {{-- thumbnail --}}
         @if($doc->thumbnail)
-            <img src="{{ $doc->thumbnail }}" alt="{{ $doc->name }}" class="mb-5 rounded-lg">
+            <img src="{{ $doc->thumbnail }}" alt="{{ $doc->name }}" class="mb-5 rounded-lg w-xl">
         @endif
         {{-- Customisasi 'prisa' kamu, aman. --}}
         <div class="prisa max-w-none" id="doc-content-area">
@@ -160,6 +159,7 @@
         </div>
 
         <h1 class="text-4xl font-bold mb-6">{{ $category->title }}</h1>
+        {{-- Contoh API Example --}}
 
         {{-- ID #doc-content-area di sini gpp, karena script toc() nggak ke-load --}}
         <div class="prose prose-lg max-w-none" id="doc-content-area">
@@ -179,7 +179,7 @@
                             <h3 class="text-lg font-semibold text-zinc-900">{{ $post->name }}</h3>
                             @php
                                 // 1. Ubah dulu konten (yg mungkin Markdown) jadi HTML
-                                $htmlContent = \Illuminate\Support\Str::markdown($post->content);
+                                $htmlContent = \App\Support\MarkdownComponents::render($post->content);
 
                                 // 2. Baru cari <p> pertama di hasil HTML-nya
                                 preg_match('~<p.*?>(.*?)</p>~si', $htmlContent, $p_matches);
