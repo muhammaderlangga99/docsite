@@ -22,7 +22,9 @@
          @click="mobileMenuOpen = false" 
          style="display: none;"></div>
          
-    <div class="flex flex-col md:flex-row gap-8 py-8">
+    <div class="flex flex-col md:flex-row gap-8 py-8 lg:w-[87%] mx-auto">
+        
+        {{-- KOLOM 1: SIDEBAR NAVIGASI (Kiri) --}}
         <aside class="w-full md:w-1/5">
             
             {{-- 1. TOMBOL TRIGGER (Cuma muncul di HP) --}}
