@@ -293,6 +293,7 @@
 .prisa p {
   margin-top: 1.25em !important;
   margin-bottom: 1.25em !important;
+  text-align: justify !important;
 }
 /* Isolasi komponen API agar tidak ketimpa typography markdown */
 .prisa .api-card {
