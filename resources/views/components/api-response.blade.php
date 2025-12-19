@@ -24,10 +24,10 @@
         <span class="text-xs text-slate-500">{{ $label }}</span>
     </div>
     <div>
-        <div class="group api-body relative overflow-auto max-h-[320px] border border-slate-100 bg-slate-50 px-4 py-3">
+        <div class="api-body relative overflow-auto max-h-[320px] border border-slate-100 bg-slate-50 px-4 py-3">
             <button type="button"
                     onclick="navigator.clipboard.writeText(this.nextElementSibling.innerText); this.innerText='Copied'; setTimeout(() => this.innerText='Copy', 1500);"
-                    class="opacity-0 group-hover:opacity-100 transition absolute top-2 right-2 text-[10px] px-2 py-1 z-[999] rounded-md border border-slate-200 bg-white/80 shadow-sm text-slate-600 hover:bg-white">
+                    class="transition absolute top-2 right-2 text-[10px] px-1 py-0.5 z-[999] rounded-md border border-slate-200 bg-white/80 text-slate-600 hover:bg-white">
                 Copy
             </button>
             <pre class="font-mono text-xs leading-6 text-slate-900 whitespace-pre">{{ $bodyText }}</pre>
