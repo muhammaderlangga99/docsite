@@ -5,6 +5,8 @@
     'headers' => [],
     'body' => null,
     'buttonLabel' => 'Test it',
+    'scalarSpec' => null,
+    'scalarOperationId' => null,
 ])
 
 @php
@@ -59,6 +61,10 @@
         @if($buttonLabel)
             <div class="flex justify-end py-1.5 px-1.5 border-t border-slate-100 bg-white">
                 <button type="button"
+                        data-scalar-spec="{{ $scalarSpec }}"
+                        data-scalar-operation-id="{{ $scalarOperationId }}"
+                        data-scalar-method="{{ strtoupper($method) }}"
+                        data-scalar-path="{{ $path }}"
                         class="inline-flex text-xs items-center gap-2 px-2 py-1 rounded-lg bg-red-600 text-white font-mono font-semibold hover:bg-red-700 transition">
                     {{ $buttonLabel }}
                 </button>

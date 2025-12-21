@@ -1,0 +1,1596 @@
+openapi: 3.1.0
+info:
+  title: Cashlez Link API
+  description: API documentation for the Payment Link Generation Service
+  version: "1.0"
+servers:
+- url: http://localhost:8801
+  description: Generated server url
+security:
+- Authorization: []
+paths:
+  /ops-cz/partnerOnboarding:
+    post:
+      tags:
+      - partner-device-management-controller
+      operationId: partnerOnboarding
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PartnerOnboardingRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponsePartnerOnboardingResponse"
+  /ops-cz/getOnlineDeviceIdForUsername:
+    post:
+      tags:
+      - partner-device-management-controller
+      operationId: getOnlineDeviceIdForUsername
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetOnlineDeviceIdForUsernameRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseDeviceUserDetailResponse"
+  /ops-cz/generatePartnerIdFromDeviceId:
+    post:
+      tags:
+      - partner-device-management-controller
+      operationId: generatePartnerIdFromDeviceId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GeneratePartnerIdFromDeviceIdRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseGeneratePartnerIdFromDeviceIdResponse"
+  /ops-cz/generatePartnerApiKey:
+    post:
+      tags:
+      - partner-device-management-controller
+      operationId: generatePartnerApiKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GeneratePartnerApiKeyRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseGeneratePartnerApiKeyResponse"
+  /MmCoreCzLinkHost/internal/payment/va:
+    post:
+      tags:
+      - va-payment-controller
+      operationId: vaPaymentWithLocation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VAPaymentRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponsePaymentVaResponse"
+  /MmCoreCzLinkHost/internal/payment/qris:
+    post:
+      tags:
+      - qr-payment-controller
+      operationId: qrisPaymentWithLocation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QRPaymentRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponsePaymentQrisResponse"
+  /MmCoreCzLinkHost/internal/payment/cnp:
+    post:
+      tags:
+      - cnp-payment-controller
+      operationId: cnpPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CnpGenerateAndInitiateAuthenticationRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseCnpGenerateAndInitiateAuthenticationResponse"
+  /MmCoreCzLinkHost/internal/payment/cnp/initiate:
+    post:
+      tags:
+      - cnp-payment-controller
+      operationId: initiateCnpPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CnpInitiateAuthenticationRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseCnpInitiateAuthenticationResponse"
+  /MmCoreCzLinkHost/internal/payment/cnp/authenticate:
+    post:
+      tags:
+      - cnp-payment-controller
+      operationId: cnpAuthenticate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CnpAuthenticatePayerRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseCnpAuthenticatePayerResponse"
+  /MmCoreCzLinkHost/hello-world/:
+    get:
+      tags:
+      - hello-world-controller
+      operationId: generatePaymentLink
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+    post:
+      tags:
+      - hello-world-controller
+      operationId: generatePaymentLinkPost
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /MmCoreCzLinkHost/api/v1/trx_history/get_trx_summary:
+    post:
+      tags:
+      - trx-history-controller
+      operationId: getSummaryTransaction
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: hit-from
+        in: header
+        required: false
+        schema:
+          type: string
+          default: cz-link
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrxRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseSummaryTrxResponse"
+  /MmCoreCzLinkHost/api/v1/trx_history/get_last_trx_data:
+    post:
+      tags:
+      - trx-history-controller
+      operationId: getLastTrxData
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: hit-from
+        in: header
+        required: false
+        schema:
+          type: string
+          default: cz-link
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrxRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseLastTrxResponse"
+  /MmCoreCzLinkHost/api/v1/trx_history/get_all_success_payment_list:
+    post:
+      tags:
+      - trx-history-controller
+      operationId: getAllSuccessPaymentList
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: hit-from
+        in: header
+        required: false
+        schema:
+          type: string
+          default: cz-link
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrxRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseSuccessTrxResponse"
+  /MmCoreCzLinkHost/api/v1/trx_history/get_all_pending_payment_list:
+    post:
+      tags:
+      - trx-history-controller
+      operationId: getAllPendingPaymentList
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: hit-from
+        in: header
+        required: false
+        schema:
+          type: string
+          default: cz-link
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrxRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponsePendingTrxResponse"
+  /MmCoreCzLinkHost/api/v1/get-application-general-config:
+    post:
+      tags:
+      - general-controller
+      operationId: getApplicationGeneralConfig
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GeneralConfigRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseGeneralConfigResponse"
+  /MmCoreCzLinkHost/api/v1/generate:
+    post:
+      tags:
+      - generate-url-controller
+      operationId: generatePaymentLink_1
+      parameters:
+      - name: Authorization
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: hit-from
+        in: header
+        required: false
+        schema:
+          type: string
+          default: cz-link
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateLinkRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseGenerateLinkResponse"
+  /MmCoreCzLinkHost/internal/payment/va/{orderId}:
+    get:
+      tags:
+      - va-payment-controller
+      operationId: vaPayment
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponsePaymentVaResponse"
+  /MmCoreCzLinkHost/internal/payment/va/{orderId}/{vaAppId}:
+    get:
+      tags:
+      - va-payment-controller
+      operationId: vaPayment_1
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: vaAppId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponsePaymentVaResponse"
+  /MmCoreCzLinkHost/internal/payment/qris/{orderId}:
+    get:
+      tags:
+      - qr-payment-controller
+      operationId: qrisPayment
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponsePaymentQrisResponse"
+  /MmCoreCzLinkHost/internal/payment/qris/{orderId}/{qrAppId}:
+    get:
+      tags:
+      - qr-payment-controller
+      operationId: qrisPayment_1
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: qrAppId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponsePaymentQrisResponse"
+  /MmCoreCzLinkHost/partner/info-order-id/{orderId}:
+    get:
+      tags:
+      - partner-info-controller
+      operationId: getOnlineDeviceIdForUsername_1
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponsePartnerInfoResponse"
+  /MmCoreCzLinkHost/internal/payment/va/list/{orderId}:
+    get:
+      tags:
+      - va-payment-controller
+      operationId: vaAppList
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseListVaAppListResponse"
+  /MmCoreCzLinkHost/internal/payment/status/{orderId}:
+    get:
+      tags:
+      - payment-controller
+      operationId: getPaymentStatus
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponsePaymentStatusResponse"
+  /MmCoreCzLinkHost/internal/payment/qris/list/{orderId}:
+    get:
+      tags:
+      - qr-payment-controller
+      operationId: qrisAppList
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseListQrAppListResponse"
+  /MmCoreCzLinkHost/internal/payment/info/{orderId}:
+    get:
+      tags:
+      - payment-controller
+      operationId: getPaymentInfo
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponsePaymentInfoResponse"
+  /MmCoreCzLinkHost/internal/payment/cnp/valid/{orderId}:
+    get:
+      tags:
+      - cnp-payment-controller
+      operationId: getCnpValid
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponsePaymentCNPStatusResponse"
+  /MmCoreCzLinkHost/internal/payment/cnp/list/{orderId}:
+    get:
+      tags:
+      - cnp-payment-controller
+      operationId: cnpAppList
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/BaseResponseListCnpAppListResponse"
+  /MmCoreCzLinkHost/hello-world/error:
+    get:
+      tags:
+      - hello-world-controller
+      operationId: generatePaymentLinkError
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+components:
+  schemas:
+    PartnerOnboardingRequest:
+      properties:
+        username:
+          type: string
+        partner_name:
+          type: string
+        device_id:
+          type: string
+    BaseResponsePartnerOnboardingResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/PartnerOnboardingResponse"
+        midware_timestamp:
+          type: string
+    PartnerOnboardingResponse:
+      properties:
+        username:
+          type: string
+        partner_id:
+          type: integer
+          format: int64
+        partner_name:
+          type: string
+        partner_code:
+          type: string
+        api_key:
+          type: string
+        device_id:
+          type: string
+        device_generated:
+          type: boolean
+    GetOnlineDeviceIdForUsernameRequest:
+      properties:
+        username:
+          type: string
+        expired_in_seconds:
+          type: integer
+          format: int64
+        partner_id:
+          type: integer
+          format: int64
+    BaseResponseDeviceUserDetailResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/DeviceUserDetailResponse"
+        midware_timestamp:
+          type: string
+    DeviceUserDetailResponse:
+      properties:
+        id:
+          type: integer
+          format: int32
+        username:
+          type: string
+        device_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    GeneratePartnerIdFromDeviceIdRequest:
+      properties:
+        device_id:
+          type: string
+    BaseResponseGeneratePartnerIdFromDeviceIdResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/GeneratePartnerIdFromDeviceIdResponse"
+        midware_timestamp:
+          type: string
+    GeneratePartnerIdFromDeviceIdResponse:
+      properties:
+        partner_code:
+          type: string
+        device_id:
+          type: string
+    GeneratePartnerApiKeyRequest:
+      properties:
+        partner_id:
+          type: integer
+          format: int64
+    BaseResponseGeneratePartnerApiKeyResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/GeneratePartnerApiKeyResponse"
+        midware_timestamp:
+          type: string
+    GeneratePartnerApiKeyResponse:
+      properties:
+        partner_id:
+          type: integer
+          format: int64
+        partner_name:
+          type: string
+        api_key:
+          type: string
+    LocationDto:
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+    VAPaymentRequest:
+      properties:
+        order_id:
+          type: string
+        va_app_id:
+          type: string
+        location:
+          $ref: "#/components/schemas/LocationDto"
+    BaseResponsePaymentVaResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/PaymentVaResponse"
+        midware_timestamp:
+          type: string
+    PaymentVaResponse:
+      properties:
+        va_number:
+          type: string
+        va_pay_app_name:
+          type: string
+        batch_group_name:
+          type: string
+        base_amount:
+          type: integer
+          format: int64
+        invoice_num:
+          type: string
+        issuer:
+          type: string
+    QRPaymentRequest:
+      properties:
+        order_id:
+          type: string
+        qr_app_id:
+          type: string
+        location:
+          $ref: "#/components/schemas/LocationDto"
+    BaseResponsePaymentQrisResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/PaymentQrisResponse"
+        midware_timestamp:
+          type: string
+    PaymentQrisResponse:
+      properties:
+        qr_string:
+          type: string
+        qr_pay_app_name:
+          type: string
+        base_amount:
+          type: integer
+          format: int64
+        invoice_num:
+          type: string
+        issuer:
+          type: string
+    CardDto:
+      properties:
+        number:
+          type: string
+        expiry:
+          $ref: "#/components/schemas/ExpiryDto"
+        cvv:
+          type: string
+    CnpGenerateAndInitiateAuthenticationRequest:
+      properties:
+        order_id:
+          type: string
+        card:
+          $ref: "#/components/schemas/CardDto"
+        cnp_pay_app_id:
+          type: string
+        location:
+          $ref: "#/components/schemas/LocationDto"
+    ExpiryDto:
+      properties:
+        month:
+          type: string
+        year:
+          type: string
+    BaseResponseCnpGenerateAndInitiateAuthenticationResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/CnpGenerateAndInitiateAuthenticationResponse"
+        midware_timestamp:
+          type: string
+    CnpGenerateAndInitiateAuthenticationResponse:
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        version:
+          $ref: "#/components/schemas/VersionDto"
+        result:
+          type: string
+        response:
+          $ref: "#/components/schemas/ResponseDetailsDto"
+        order:
+          $ref: "#/components/schemas/OrderDto"
+        response_code:
+          type: string
+        midware_timestamp:
+          type: string
+        time_of_last_update:
+          type: string
+        time_of_record:
+          type: string
+    OrderDto:
+      properties:
+        authentication_status:
+          type: string
+        creation_time:
+          type: string
+        currency:
+          type: string
+        id:
+          type: string
+        last_updated_time:
+          type: string
+        merchant_category_code:
+          type: string
+        status:
+          type: string
+        total_authorized_amount:
+          type: integer
+          format: int32
+        total_captured_amount:
+          type: integer
+          format: int32
+        total_refunded_amount:
+          type: integer
+          format: int32
+    ResponseDetailsDto:
+      properties:
+        gateway_code:
+          type: string
+        gateway_recommendation:
+          type: string
+    VersionDto:
+      properties:
+        cnp_ver:
+          type: string
+        crypto_ver:
+          type: string
+    Card:
+      properties:
+        number:
+          type: string
+        expiry:
+          $ref: "#/components/schemas/Expiry"
+        cvv:
+          type: string
+    CnpInitiateAuthenticationRequest:
+      properties:
+        order_id:
+          type: string
+        card:
+          $ref: "#/components/schemas/Card"
+    Expiry:
+      properties:
+        month:
+          type: string
+        year:
+          type: string
+    BaseResponseCnpInitiateAuthenticationResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/CnpInitiateAuthenticationResponse"
+        midware_timestamp:
+          type: string
+    CnpInitiateAuthenticationResponse:
+      properties:
+        result:
+          type: string
+        response:
+          $ref: "#/components/schemas/ResponseDetailsDto"
+        order:
+          $ref: "#/components/schemas/OrderDto"
+        response_code:
+          type: string
+        midware_timestamp:
+          type: string
+        time_of_last_update:
+          type: string
+        time_of_record:
+          type: string
+    BrowserDetailsDto:
+      properties:
+        "3DSecureChallengeWindowSize":
+          type: string
+        accept_headers:
+          type: string
+        color_depth:
+          type: integer
+          format: int32
+        java_enabled:
+          type: boolean
+        language:
+          type: string
+        screen_height:
+          type: integer
+          format: int32
+        screen_width:
+          type: integer
+          format: int32
+        time_zone:
+          type: integer
+          format: int32
+    CnpAuthenticatePayerRequest:
+      properties:
+        order_id:
+          type: string
+        device:
+          $ref: "#/components/schemas/DeviceDto"
+    DeviceDto:
+      properties:
+        browser:
+          type: string
+        browser_details:
+          $ref: "#/components/schemas/BrowserDetailsDto"
+    AuthenticationDto:
+      properties:
+        amount:
+          type: integer
+          format: int32
+        method:
+          type: string
+        payer_interaction:
+          type: string
+        redirect:
+          $ref: "#/components/schemas/RedirectDto"
+        time:
+          type: string
+        version:
+          type: string
+        "3ds":
+          $ref: "#/components/schemas/ThreeDsDto"
+        "3ds2":
+          $ref: "#/components/schemas/ThreeDs2Dto"
+    BaseResponseCnpAuthenticatePayerResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/CnpAuthenticatePayerResponse"
+        midware_timestamp:
+          type: string
+    CnpAuthenticatePayerResponse:
+      properties:
+        authentication:
+          $ref: "#/components/schemas/AuthenticationDto"
+        order:
+          $ref: "#/components/schemas/OrderDto"
+        response:
+          $ref: "#/components/schemas/ResponseDetailsDto"
+        result:
+          type: string
+        response_code:
+          type: string
+        midware_timestamp:
+          type: string
+        time_of_last_update:
+          type: string
+        time_of_record:
+          type: string
+    CustomizedHtmlDto:
+      properties:
+        "3ds2":
+          $ref: "#/components/schemas/CustomizedThreeDs2Dto"
+    CustomizedThreeDs2Dto:
+      properties:
+        acs_url:
+          type: string
+        creq:
+          type: string
+    RedirectDto:
+      properties:
+        html:
+          type: string
+        domain_name:
+          type: string
+        customized_html:
+          $ref: "#/components/schemas/CustomizedHtmlDto"
+    ThreeDs2Dto:
+      properties:
+        acs_reference:
+          type: string
+        acs_transaction_id:
+          type: string
+        authentication_scheme:
+          type: string
+        directory_server_id:
+          type: string
+        ds_reference:
+          type: string
+        ds_transaction_id:
+          type: string
+        method_completed:
+          type: boolean
+        method_supported:
+          type: string
+        protocol_version:
+          type: string
+        requestor_id:
+          type: string
+        requestor_name:
+          type: string
+        transaction_status:
+          type: string
+        three_ds_server_transaction_id:
+          type: string
+    ThreeDsDto:
+      properties:
+        transaction_id:
+          type: string
+    TrxRequest:
+      properties:
+        device_timestamp:
+          type: string
+          minLength: 1
+        page:
+          type: integer
+          format: int32
+        page_size:
+          type: integer
+          format: int32
+      required:
+      - device_timestamp
+    BaseResponseSummaryTrxResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/SummaryTrxResponse"
+        midware_timestamp:
+          type: string
+    SummaryTrxResponse:
+      properties:
+        transaction_data:
+          type: array
+          items:
+            $ref: "#/components/schemas/TransactionDataForSummary"
+    TransactionDataForSummary:
+      properties:
+        num_of_trx:
+          type: integer
+          format: int64
+        total_base_amount:
+          type: integer
+          format: int64
+        trx_type:
+          type: string
+    BaseResponseLastTrxResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/LastTrxResponse"
+        midware_timestamp:
+          type: string
+    LastTrxResponse:
+      properties:
+        order_id:
+          type: string
+        base_amount:
+          type: integer
+          format: int64
+        invoice_num:
+          type: integer
+          format: int64
+        host_date:
+          type: string
+        host_time:
+          type: string
+        update_at:
+          type: string
+          format: date-time
+        create_at:
+          type: string
+          format: date-time
+        pos_request_type:
+          type: string
+        pos_cloud_pointer:
+          type: string
+        pos_cloud_push_notif_flag:
+          type: boolean
+        has_been_sent_to_mg:
+          type: boolean
+        merchant:
+          $ref: "#/components/schemas/MerchantResponse"
+        print_receipt:
+          $ref: "#/components/schemas/PrintReceiptDetails"
+        payment_link_status:
+          type: string
+        payment_method:
+          type: string
+        payment_via:
+          type: string
+    MerchantResponse:
+      properties:
+        merchant_id:
+          type: integer
+          format: int64
+        merchant_name:
+          type: string
+        merchant_address_1:
+          type: string
+        merchant_address_2:
+          type: string
+    PrintReceiptDetails:
+      properties:
+        merchant_name:
+          type: string
+        address_line_1:
+          type: string
+        address_line_2:
+          type: string
+    BaseResponseSuccessTrxResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/SuccessTrxResponse"
+        midware_timestamp:
+          type: string
+    PageableResponseDetail:
+      properties:
+        page_number:
+          type: integer
+          format: int32
+        page_size:
+          type: integer
+          format: int32
+        total_elements:
+          type: integer
+          format: int64
+        total_pages:
+          type: integer
+          format: int32
+        isFirst:
+          type: boolean
+          writeOnly: true
+        isLast:
+          type: boolean
+          writeOnly: true
+        last:
+          type: boolean
+        first:
+          type: boolean
+    SuccessTrxResponse:
+      properties:
+        success_payment_list:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrxResponse"
+        merchant:
+          $ref: "#/components/schemas/MerchantResponse"
+        print_receipt:
+          $ref: "#/components/schemas/PrintReceiptDetails"
+        page_detail:
+          $ref: "#/components/schemas/PageableResponseDetail"
+    TrxResponse:
+      properties:
+        order_id:
+          type: string
+        batch_group_id:
+          type: integer
+          format: int32
+        trx_channel_id:
+          type: integer
+          format: int32
+        base_amount:
+          type: integer
+          format: int64
+        invoice_num:
+          type: integer
+          format: int64
+        host_date:
+          type: string
+        host_time:
+          type: string
+        update_at:
+          type: string
+          format: date-time
+        create_at:
+          type: string
+          format: date-time
+        pos_request_type:
+          type: string
+        pos_cloud_pointer:
+          type: string
+        pos_cloud_push_notif_flag:
+          type: boolean
+        has_been_sent_to_mg:
+          type: boolean
+        payment_link_status:
+          type: string
+        payment_method:
+          type: string
+        payment_via:
+          type: string
+    BaseResponsePendingTrxResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/PendingTrxResponse"
+        midware_timestamp:
+          type: string
+    PendingTrxResponse:
+      properties:
+        pending_payment_list:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrxResponse"
+        merchant:
+          $ref: "#/components/schemas/MerchantResponse"
+        print_receipt:
+          $ref: "#/components/schemas/PrintReceiptDetails"
+        page_detail:
+          $ref: "#/components/schemas/PageableResponseDetail"
+    GeneralConfigRequest:
+      properties:
+        device_id:
+          type: string
+          minLength: 1
+      required:
+      - device_id
+    BaseResponseGeneralConfigResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/GeneralConfigResponse"
+        midware_timestamp:
+          type: string
+    GeneralConfigResponse:
+      properties:
+        is_enable:
+          type: boolean
+    GenerateLinkRequest:
+      properties:
+        device_id:
+          type: string
+          minLength: 1
+        device_timestamp:
+          type: string
+          minLength: 1
+        base_amount:
+          type: integer
+          format: int64
+        currency:
+          type: string
+          minLength: 1
+        customer_name:
+          type: string
+        phone_no:
+          type: string
+        webhook_url:
+          type: string
+        redirect_url:
+          type: string
+        callback_url:
+          type: string
+        reference_id:
+          type: string
+      required:
+      - base_amount
+      - currency
+      - device_id
+      - device_timestamp
+    BaseResponseGenerateLinkResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/GenerateLinkResponse"
+        midware_timestamp:
+          type: string
+    GenerateLinkResponse:
+      properties:
+        invoice_num:
+          type: integer
+          format: int64
+        base_amount:
+          type: integer
+          format: int64
+        generated_link:
+          type: string
+        order_id:
+          type: string
+        currency:
+          type: string
+        customer_name:
+          type: string
+    BaseResponsePartnerInfoResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/PartnerInfoResponse"
+        midware_timestamp:
+          type: string
+    PartnerInfoResponse:
+      properties:
+        id:
+          type: integer
+          format: int64
+        partner_name:
+          type: string
+        partner_code:
+          type: string
+        redirect_url:
+          type: string
+        color_theme:
+          type: string
+        logo:
+          type: string
+    BaseResponseListVaAppListResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/VaAppListResponse"
+        midware_timestamp:
+          type: string
+    VaAppListResponse:
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        logo:
+          type: string
+    BaseResponsePaymentStatusResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/PaymentStatusResponse"
+        midware_timestamp:
+          type: string
+    PaymentStatusResponse:
+      properties:
+        trx_type:
+          type: string
+        issuer:
+          type: string
+        redirect_url:
+          type: string
+        reference_id:
+          type: string
+        payment_link_status:
+          type: string
+        amount:
+          type: integer
+          format: int64
+        username:
+          type: string
+        merchant:
+          $ref: "#/components/schemas/MerchantResponse"
+        qris:
+          $ref: "#/components/schemas/PaymentQrisResponse"
+        va:
+          $ref: "#/components/schemas/PaymentVaResponse"
+    BaseResponseListQrAppListResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/QrAppListResponse"
+        midware_timestamp:
+          type: string
+    QrAppListResponse:
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        logo:
+          type: string
+    BaseResponsePaymentInfoResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/PaymentInfoResponse"
+        midware_timestamp:
+          type: string
+    CnpAppListResponse:
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+    PaymentCnpResponse:
+      properties:
+        cnp_order_id:
+          type: string
+        authenticate_payer_response:
+          $ref: "#/components/schemas/CnpAuthenticatePayerResponse"
+    PaymentInfoResponse:
+      properties:
+        trx_type:
+          type: string
+        amount:
+          type: integer
+          format: int64
+        username:
+          type: string
+        merchant:
+          $ref: "#/components/schemas/MerchantResponse"
+        qris:
+          type: string
+        va_number:
+          type: string
+        trx_info:
+          $ref: "#/components/schemas/TrxInfoDto"
+        va_apps:
+          type: array
+          items:
+            $ref: "#/components/schemas/VaAppListResponse"
+        qr_apps:
+          type: array
+          items:
+            $ref: "#/components/schemas/QrAppListResponse"
+        cnp_apps:
+          type: array
+          items:
+            $ref: "#/components/schemas/CnpAppListResponse"
+    TrxHistoryAdditionalResponseData:
+      properties:
+        qris:
+          $ref: "#/components/schemas/PaymentQrisResponse"
+        va:
+          $ref: "#/components/schemas/PaymentVaResponse"
+        cnp:
+          $ref: "#/components/schemas/PaymentCnpResponse"
+        device_id:
+          type: string
+        device_timestamp:
+          type: string
+    TrxInfoDto:
+      properties:
+        order_id:
+          type: string
+        reference_id:
+          type: string
+        created_on:
+          type: string
+        expired_on:
+          type: string
+        customer_name:
+          type: string
+        customer_phone:
+          type: string
+        payment_detail:
+          $ref: "#/components/schemas/TrxHistoryAdditionalResponseData"
+    BaseResponsePaymentCNPStatusResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          $ref: "#/components/schemas/PaymentCNPStatusResponse"
+        midware_timestamp:
+          type: string
+    PaymentCNPStatusResponse:
+      properties:
+        is_enable:
+          type: boolean
+    BaseResponseListCnpAppListResponse:
+      properties:
+        status:
+          type: string
+        response_code:
+          type: string
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/CnpAppListResponse"
+        midware_timestamp:
+          type: string
+  securitySchemes:
+    Authorization:
+      type: apiKey
+      description: Enter your JWT token here (without the 'Bearer ' prefix).
+      name: Authorization
+      in: header

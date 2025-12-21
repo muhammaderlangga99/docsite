@@ -3,6 +3,25 @@
 {{-- Numpang ke layout utama lo --}}
 @extends('layout.app') 
 
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@scalar/api-reference@latest/dist/style.css">
+    <style>
+        .scalar-modal {
+            align-items: center;
+            display: none;
+            justify-content: center;
+            left: 0;
+            top: 0;
+        }
+        .scalar-modal.is-open {
+            display: flex;
+        }
+        .scalar-panel {
+            max-height: 92vh;
+        }
+    </style>
+@endpush
+
 @section('content')
 {{-- 
   ======================================================
@@ -115,4 +134,209 @@
         
     </div>
 </div>
+
+<div class="scalar-modal fixed inset-0 z-[9999] bg-black/60 px-4 py-6" id="scalar-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="scalar-panel relative w-full max-w-6xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3">
+            <div class="text-sm font-semibold text-slate-800" id="scalar-title">API Playground</div>
+            <button type="button" id="scalar-close"
+                    class="inline-flex items-center rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50">
+                Close
+            </button>
+        </div>
+        <div class="h-[78vh] overflow-hidden bg-white" id="scalar-root"></div>
+    </div>
+</div>
 @endsection
+
+@push('scripts')
+    <script type="module">
+        window.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('scalar-modal');
+            const closeBtn = document.getElementById('scalar-close');
+            const root = document.getElementById('scalar-root');
+            const title = document.getElementById('scalar-title');
+            let scalarApp = null;
+            const defaultTrigger = document.querySelector('[data-scalar-spec]');
+
+            if (!modal || !root) return;
+
+            const openModal = async (trigger) => {
+                const specUrl = trigger?.dataset?.scalarSpec;
+                if (!specUrl) {
+                    console.warn('Scalar spec URL is missing.');
+                    return;
+                }
+
+                let operationId = trigger?.dataset?.scalarOperationId || null;
+                const method = trigger?.dataset?.scalarMethod || null;
+                const path = trigger?.dataset?.scalarPath || null;
+
+                title.textContent = 'API Playground';
+                modal.classList.add('is-open');
+                modal.setAttribute('aria-hidden', 'false');
+
+                if (scalarApp) {
+                    root.innerHTML = '';
+                    scalarApp = null;
+                }
+
+                const { createApiReference } = await import('https://esm.sh/@scalar/api-reference@latest');
+                if (!operationId && method && path) {
+                    operationId = await resolveOperationId(specUrl, method, path);
+                }
+
+                scalarApp = createApiReference(root, {
+                    spec: { url: specUrl },
+                    layout: 'modern',
+                    showSidebar: false,
+                    hideModels: true,
+                    darkMode: false,
+                    forceDarkModeState: 'light',
+                });
+
+                if (operationId) {
+                    window.location.hash = `#operation/${operationId}`;
+                }
+
+            };
+
+            const openModalFromHash = async () => {
+                if (!defaultTrigger) return;
+
+                const hash = window.location.hash || '';
+                if (hash.startsWith('#operation/')) {
+                    const operationId = decodeURIComponent(hash.replace('#operation/', '').trim());
+                    if (!operationId) return;
+                    await openModal({
+                        dataset: {
+                            scalarSpec: defaultTrigger.dataset.scalarSpec,
+                            scalarOperationId: operationId,
+                        },
+                    });
+                    return;
+                }
+
+                if (hash.startsWith('#tag/')) {
+                    const parts = hash.split('/').filter(Boolean);
+                    if (parts.length < 4) return;
+                    const method = parts[2];
+                    const path = '/' + parts.slice(3).join('/');
+                    await openModal({
+                        dataset: {
+                            scalarSpec: defaultTrigger.dataset.scalarSpec,
+                            scalarMethod: method,
+                            scalarPath: path,
+                        },
+                    });
+                }
+            };
+
+            const closeModal = () => {
+                modal.classList.remove('is-open');
+                modal.setAttribute('aria-hidden', 'true');
+                root.innerHTML = '';
+                scalarApp = null;
+            };
+
+            document.addEventListener('click', (event) => {
+                const trigger = event.target.closest('[data-scalar-spec]');
+                if (!trigger) return;
+                event.preventDefault();
+                openModal(trigger);
+            });
+
+            closeBtn?.addEventListener('click', closeModal);
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) closeModal();
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+                    closeModal();
+                }
+            });
+            openModalFromHash();
+            const specCache = new Map();
+
+            const resolveOperationId = async (specUrl, method, path) => {
+                const specText = await loadSpec(specUrl);
+                if (!specText) return null;
+
+                const upperMethod = method.toLowerCase();
+                const json = tryParseJson(specText);
+                if (json?.paths?.[path]?.[upperMethod]?.operationId) {
+                    return json.paths[path][upperMethod].operationId;
+                }
+
+                return findOperationIdFromYaml(specText, upperMethod, path);
+            };
+
+            const loadSpec = async (specUrl) => {
+                if (specCache.has(specUrl)) {
+                    return specCache.get(specUrl);
+                }
+                try {
+                    const response = await fetch(specUrl, { credentials: 'same-origin' });
+                    if (!response.ok) return null;
+                    const text = await response.text();
+                    specCache.set(specUrl, text);
+                    return text;
+                } catch (error) {
+                    console.warn('Failed to load spec URL.', error);
+                    return null;
+                }
+            };
+
+            const tryParseJson = (text) => {
+                try {
+                    return JSON.parse(text);
+                } catch (error) {
+                    return null;
+                }
+            };
+
+            const findOperationIdFromYaml = (text, method, path) => {
+                const lines = text.split(/\r?\n/);
+                const pathRegex = new RegExp(`^\\s{2}${escapeRegex(path)}:\\s*$`);
+                let inPath = false;
+                let inMethod = false;
+
+                for (const line of lines) {
+                    if (!inPath && pathRegex.test(line)) {
+                        inPath = true;
+                        inMethod = false;
+                        continue;
+                    }
+
+                    if (inPath) {
+                        if (/^\\s{2}\\S/.test(line)) {
+                            break;
+                        }
+
+                        const methodRegex = new RegExp(`^\\s{4}${method}:\\s*$`, 'i');
+                        if (methodRegex.test(line)) {
+                            inMethod = true;
+                            continue;
+                        }
+
+                        if (inMethod) {
+                            if (/^\\s{4}\\S/.test(line)) {
+                                inMethod = false;
+                                continue;
+                            }
+
+                            const match = line.match(/^\\s{6}operationId:\\s*(.+)\\s*$/);
+                            if (match) {
+                                return match[1].trim();
+                            }
+                        }
+                    }
+                }
+
+                return null;
+            };
+
+            const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');
+        });
+    </script>
+@endpush

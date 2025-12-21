@@ -136,6 +136,10 @@ class MarkdownComponents
             } else {
                 $attributes[$key] = $value;
             }
+
+            if (str_contains($key, '-')) {
+                $attributes[Str::camel($key)] = $attributes[$key];
+            }
         }
 
         return $attributes;
