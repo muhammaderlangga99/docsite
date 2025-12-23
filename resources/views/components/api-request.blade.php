@@ -5,6 +5,7 @@
     'headers' => [],
     'body' => null,
     'buttonLabel' => 'Test it',
+    'buttonUrl' => null,
 ])
 
 @php
@@ -29,6 +30,13 @@
         . ($headerLines ? "\n" . $headerLines : '')
         . ($bodyText ? "\n\n" . $bodyText : '')
     );
+
+    $buttonText = $buttonLabel;
+    $buttonHref = $buttonUrl ?: '#';
+    if (!$buttonUrl && is_string($buttonLabel) && preg_match('/^\s*\[([^\]]+)\]\(([^)]+)\)\s*$/', $buttonLabel, $matches)) {
+        $buttonText = $matches[1];
+        $buttonHref = $matches[2];
+    }
 @endphp
 
 <div class="api-card rounded-lg border border-slate-200 bg-white max-w-md overflow-hidden">
@@ -57,11 +65,13 @@
         </div>
 
         @if($buttonLabel)
-            <div class="flex justify-end py-1.5 px-1.5 border-t border-slate-100 bg-white">
-                <button type="button"
-                        class="inline-flex text-xs items-center gap-2 px-2 py-1 rounded-lg bg-red-600 text-white font-mono font-semibold hover:bg-red-700 transition">
-                    {{ $buttonLabel }}
-                </button>
+            <div class="flex button-label justify-end py-1.5 px-1.5 border-t border-slate-100 bg-white">
+                <a href="{{ $buttonHref }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="inline-flex text-xs items-center gap-2 px-2 py-1 rounded-lg bg-red-600 text-white font-mono font-semibold hover:bg-red-700 transition">
+                    {{ $buttonText }}
+                </a>
             </div>
         @endif
     </div>

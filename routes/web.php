@@ -16,6 +16,7 @@ use App\Http\Controllers\QrpsController;
 use App\Http\Controllers\MiniAtmController;
 use App\Http\Controllers\MiniAtmCredentialController;
 use App\Http\Controllers\BnplController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -89,3 +90,172 @@ Route::get('/docs/category/{category:slug}', [DocController::class, 'showCategor
 // LAMA: Rute buat nampilin Halaman Postingan/Dokumen
 Route::get('/docs/{doc:slug}', [DocController::class, 'show'])
      ->name('docs.show');
+
+Route::get('/api-playground/{spec?}', function ($spec = 'api-docs') {
+    $availableSpecs = [
+        'api-docs' => 'api-docs.yaml',
+        'czlink-api' => 'czlink/api-docs.yaml',
+    ];
+
+    if (!array_key_exists($spec, $availableSpecs)) {
+        abort(404);
+    }
+
+    return view('docs.api-playground', [
+        'specPath' => '/openapi/' . $spec,
+    ]);
+})->name('docs.api-playground');
+
+Route::get('/openapi/{spec}', function ($spec) {
+    $availableSpecs = [
+        'api-docs' => 'api-docs.yaml',
+        'czlink-api' => 'czlink/api-docs.yaml',
+    ];
+
+    if (!array_key_exists($spec, $availableSpecs)) {
+        abort(404);
+    }
+
+    $basePath = public_path('openapi');
+    $filePath = realpath($basePath . DIRECTORY_SEPARATOR . $availableSpecs[$spec]);
+
+    if (!$filePath || !is_file($filePath) || !str_starts_with($filePath, $basePath)) {
+        abort(404);
+    }
+
+    return response()->file($filePath, [
+        'Content-Type' => str_ends_with($filePath, '.yaml') ? 'application/yaml' : 'application/json',
+    ]);
+})->name('openapi.spec');
+
+Route::match(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], '/api-proxy/{path}', function (Request $request, $path) {
+    if ($request->isMethod('options')) {
+        return response('', 204);
+    }
+
+    $allowedPrefixes = [
+        'MmCoreCzLinkHost/',
+        'MmCorePsgsHost/',
+    ];
+
+    $normalizedPath = ltrim($path, '/');
+    $pathInfo = $request->getPathInfo();
+    if (str_ends_with($pathInfo, '/') && !str_ends_with($normalizedPath, '/')) {
+        $normalizedPath .= '/';
+    }
+    $isAllowed = false;
+    foreach ($allowedPrefixes as $prefix) {
+        if (str_starts_with($normalizedPath, $prefix)) {
+            $isAllowed = true;
+            break;
+        }
+    }
+
+    if (!$isAllowed) {
+        abort(404);
+    }
+
+    $baseUrl = 'https://api-link.cashup.id';
+    $targetUrl = rtrim($baseUrl, '/') . '/' . $normalizedPath;
+    $query = http_build_query($request->query());
+    $finalUrl = $query ? $targetUrl . '?' . $query : $targetUrl;
+
+    $excludedHeaders = [
+        'host',
+        'connection',
+        'content-length',
+        'accept-encoding',
+        'origin',
+        'referer',
+        'cookie',
+    ];
+
+    $forwardHeaders = [];
+    foreach ($request->headers->all() as $key => $values) {
+        if (in_array(strtolower($key), $excludedHeaders, true)) {
+            continue;
+        }
+        $forwardHeaders[$key] = implode(', ', $values);
+    }
+
+    $curl = curl_init($finalUrl);
+    if ($curl === false) {
+        abort(500, 'Failed to initialize proxy request.');
+    }
+
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HEADER, true);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $request->method());
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array_map(
+        fn ($key, $value) => $key . ': ' . $value,
+        array_keys($forwardHeaders),
+        $forwardHeaders
+    ));
+
+    $body = $request->getContent();
+    if ($body !== '') {
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $body);
+    }
+
+    $rawResponse = curl_exec($curl);
+    if ($rawResponse === false) {
+        $error = curl_error($curl);
+        curl_close($curl);
+        abort(502, $error ?: 'Proxy request failed.');
+    }
+
+    $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    $headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
+    curl_close($curl);
+
+    $rawHeaders = substr($rawResponse, 0, $headerSize);
+    $responseBody = substr($rawResponse, $headerSize);
+
+    $responseHeaders = [];
+    foreach (preg_split('/\r\n|\r|\n/', trim($rawHeaders)) as $headerLine) {
+        if (stripos($headerLine, 'HTTP/') === 0) {
+            continue;
+        }
+        $parts = explode(':', $headerLine, 2);
+        if (count($parts) !== 2) {
+            continue;
+        }
+        $key = trim($parts[0]);
+        $value = trim($parts[1]);
+        if (in_array(strtolower($key), ['transfer-encoding', 'connection'], true)) {
+            continue;
+        }
+        $responseHeaders[$key] = $value;
+    }
+
+    return response($responseBody, $status)->withHeaders($responseHeaders);
+})->where('path', '.*')->name('api.proxy');
+
+Route::options('/openapi-proxy/{path}', function () {
+    return response('', 204, [
+        'Access-Control-Allow-Origin' => 'https://client.scalar.com',
+        'Access-Control-Allow-Methods' => 'GET, OPTIONS',
+        'Access-Control-Allow-Headers' => 'Origin, Content-Type, Accept, Authorization, Access-Control-Request-Private-Network',
+        'Access-Control-Allow-Private-Network' => 'true',
+        'Vary' => 'Origin',
+        'Access-Control-Max-Age' => '86400',
+    ]);
+})->where('path', '.*');
+
+Route::get('/openapi-proxy/{path}', function ($path) {
+    $basePath = public_path('openapi');
+    $filePath = realpath($basePath . DIRECTORY_SEPARATOR . $path);
+
+    if (!$filePath || !is_file($filePath) || !str_starts_with($filePath, $basePath)) {
+        abort(404);
+    }
+
+    return response()->file($filePath, [
+        'Access-Control-Allow-Origin' => 'https://client.scalar.com',
+        'Access-Control-Allow-Methods' => 'GET, OPTIONS',
+        'Access-Control-Allow-Headers' => 'Origin, Content-Type, Accept, Authorization, Access-Control-Request-Private-Network',
+        'Access-Control-Allow-Private-Network' => 'true',
+        'Vary' => 'Origin',
+        'Access-Control-Max-Age' => '86400',
+    ]);
+})->where('path', '.*');

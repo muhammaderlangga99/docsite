@@ -10,6 +10,7 @@ class MarkdownComponents
     protected const COMPONENT_MAP = [
         'api-request' => 'components.api-request',
         'api-response' => 'components.api-response',
+        'api-playground' => 'components.api-playground',
     ];
 
     /**
@@ -20,7 +21,7 @@ class MarkdownComponents
         $rendered = [];
         $index = 0;
 
-        $withPlaceholders = preg_replace_callback('/\\[(api-request|api-response)(\\s+[^\\]]*)?\\]/', function ($matches) use (&$rendered, &$index) {
+        $withPlaceholders = preg_replace_callback('/\\[(api-request|api-response|api-playground)(\\s+[^\\]]*)?\\]/', function ($matches) use (&$rendered, &$index) {
             $tag = $matches[1];
             $rawAttributes = $matches[2] ?? '';
             $data = static::parseAttributes($rawAttributes);

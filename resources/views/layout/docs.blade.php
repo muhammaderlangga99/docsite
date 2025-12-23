@@ -92,10 +92,6 @@
 
             {{-- 3. SIDEBAR ASLI (Cuma muncul di PC) --}}
             <div class="hidden md:block sticky top-24">
-                {{-- 
-                  Sidebar kamu aslinya udah punya 'sticky top-24' 
-                  di file docs-sidebar.blade.php, jadi kita panggil aja
-                --}}
                 <x-docs-sidebar 
                     :active-doc="$doc ?? null" 
                     :active-category="$category ?? null" 
