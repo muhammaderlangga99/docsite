@@ -32,6 +32,12 @@
   text-decoration: underline !important;
   font-weight: 500 !important;
 }
+
+.prisa .button-label a {
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
 .prisa strong {
   color: var(--tw-prisa-bold, #111827) !important;
   font-weight: 600 !important;

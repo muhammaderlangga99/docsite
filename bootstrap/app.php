@@ -12,6 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web();
+        $middleware->validateCsrfTokens(except: [
+            'api-proxy/*',
+        ]);
 
         $middleware->alias([
             'auth' => \App\Http\Middleware\Authenticate::class,

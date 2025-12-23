@@ -120,10 +120,10 @@
             {{-- Kita pakai @forelse biasa, BUKAN <template x-for> --}}
             <ul class="mt-4 space-y-2 text-sm">
                 @forelse($toc_headings as $heading)
-                    <li>
+                    <li class="">
                         <a href="#{{ $heading['id'] }}"
                            class="block text-gray-500 hover:text-gray-900 transition-colors
-                                  @if($heading['level'] === 'h3') pl-2 text-gray-600 @endif
+                                  @if($heading['level'] === 'h3') pl-4 text-gray-600 @endif
                                  ">
                             {{ $heading['text'] }}
                         </a>
