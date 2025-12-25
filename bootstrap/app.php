@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web();
         $middleware->validateCsrfTokens(except: [
             'api-proxy/*',
+            'api-proxy-cdcp/*',
         ]);
 
         $middleware->alias([

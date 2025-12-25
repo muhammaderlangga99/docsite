@@ -1,0 +1,1554 @@
+openapi: 3.0.0
+info:
+  title: New Collection
+  version: 1.0.0
+  description: ''
+servers:
+  - url: /api-proxy-cdcp
+    description: Docs proxy (CDCP)
+  - url: https://tucanos-miniatm.cashlez.com
+    description: Docs Staging
+paths:
+  /MmCorePsgsHost/v1/login:
+    post:
+      summary: User Device Login
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            {"device_timestamp":"1711600404051","isVisibleUsername":false,"pass_hash":"2941aa79575fc9e500d0caaa727b1a1303be50de1a379110b9e76cb41c4d6d06","username":"iqbal"}
+      responses:
+        '200':
+          description: 200 User Device Login
+          headers:
+            Server:
+              schema:
+                type: string
+              example: nginx/1.14.1
+            Date:
+              schema:
+                type: string
+              example: Thu, 28 Mar 2024 04:58:41 GMT
+            Content-Length:
+              schema:
+                type: integer
+              example: '759'
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  merchant_id:
+                    type: integer
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      psgs_ver:
+                        type: string
+                  token:
+                    type: string
+                  container_env_name:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0000'
+                merchant_address2: Mexico City
+                merchant_address1: Dusun Legupit RT002 RW015
+                midware_timestamp: '1711601921'
+                merchant_name: Weak Days
+                merchant_id: 98
+                message: LOGIN SUCCESS.
+                version:
+                  crypto_ver: v1.5.0
+                  psgs_ver: v1.0.1
+                token: >-
+                  eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpcWJhbCIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4vTW1Db3JlUHNnc0hvc3QvdjEvbG9naW4iLCJpYXQiOjE3MTE2MDE5MjEsImV4cCI6MTcxOTU1MDcyMX0.39cxiARaS7QOx9JB1yLN46hlKkKfcfYQc5gJwIIIae0jBeMcWGuiL7T6YNXnbofrN-9kr5ppoyGZvKkRwutZew
+                container_env_name: swpi-devel.aws-ec2.be1.docker
+                print_receipt_merchant_name: Weak Days IQ
+                print_receipt_address_line_2: Paku Jaya, Kec. Serpong Utara
+                print_receipt_address_line_1: Jl. Kayu Gede III Kel No.99
+                status: OK
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                isVisibleUsername:
+                  type: boolean
+                pass_hash:
+                  type: string
+                username:
+                  type: string
+            example:
+              device_timestamp: '1711600404051'
+              isVisibleUsername: false
+              pass_hash: 2941aa79575fc9e500d0caaa727b1a1303be50de1a379110b9e76cb41c4d6d06
+              username: ittest02
+  /MmCorePsgsHost/v1/get_general_device_key:
+    post:
+      summary: Download General Device Key
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{getToken}}'
+      responses:
+        '200':
+          description: 200 Download General Device Key
+          headers:
+            Server:
+              schema:
+                type: string
+              example: nginx/1.14.1
+            Date:
+              schema:
+                type: string
+              example: Thu, 28 Mar 2024 05:04:49 GMT
+            Content-Length:
+              schema:
+                type: integer
+              example: '3425'
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_env_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  enc_keys:
+                    type: object
+                    properties:
+                      pin_block_mk_universal:
+                        type: string
+                      general_ksn:
+                        type: string
+                      general_ipek:
+                        type: string
+                      amount_ksn:
+                        type: string
+                      amount_ipek:
+                        type: string
+                      pin_block_wk_universal:
+                        type: string
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      psgs_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0011'
+                container_env_name: ''
+                midware_timestamp: '1711602289'
+                enc_keys:
+                  pin_block_mk_universal: >-
+                    C766B95C5EF4EB0DC233D403AB30B8FA07E86862F880CFF02C2552D96BE120A89A327E80DFF2B0E40BDCECC41EDF3915AA173CDAD017DEC38A03A1F3306547F9728E27B342D627017F993D7BF9943DB66BFB8B3951DD7F264DC8FF6C5DB38524DB6EA15A8F4745FDBF290B79E085181C5CBF78EC77E531BA2EDEFC52292BF29E9DBE26BF18A72093BF2101D89A98D02708CB45D2C55ACFCEA5254E9EA28A2CC3D489F04FEC6CDB269FD54B4CE1E3A80487ED892E6C50DC8DA8038EAFF91FECAF28BE5FB83A6D90F3FC04519962770238BC71730B80689598D40914DE1D21FEB5472A4F49DB85B3B318C5931D23C7A4725769EBE32D571F4847C2BC2B928357EA
+                  general_ksn: >-
+                    40B9E0CD63BB90DCF1EA23259C83E2ED120E9BB85BFD47F23C909FFCB5918610DE00DCDCAC9B176036B77D34093465CF8B6BB9FED23F53F03BFB6807BC3A38ADF54E49096816AD1431C2820CDC97A7BA7F76ABF944C5EDE88E39708D6556BA0043261F056B5F1885FC0D7D5DAD742F5C2121239D863264EA1544081214E88ADF39FD945C72CE58813634E9BDE4B3A6647771A61C1C1AF7BAAA1571217AE08C077633A9984821133D5F7B679E6EC0DE6FB03C37EB6FF21CB2EEAE73BDAA4DC4AD38EB109CBB50D9CB023BF1277BA1764254F9F5B41E708EEB580B18BA8C3D60FECCCB8B259DA3030F98E9E4457B2C607BBAE09AC6727DF3C41DE4679392F53724
+                  general_ipek: >-
+                    9A3F4900261DE54B38CD6F6D2FD8822923970384775D531B00BD0F2A3848162A595679C495FDEB20D72E2DB52BADB2841AFFC9C48F758A54D1510FCD698A63E5880916473B15F4EDDA4B1122D7443732884BA3D22E5967693E5DA11584986E44BD66947EF724775F0459226F42D14E6E0414CE4D87BE07362245C984C9015F50E5BE43422A12FCF9B0F7F2E499A46D07F6476F788BEEE24FEFE73F40F22CB8B61098BFBA24A60B13011501C8F1706D8922532BD6F398AD8EDB36C847BEE877F8FE3BD49C331986404D1F9B354953F24754C6F6AD63B4EF8D53D9E8ABA5E8B25F50C9C23FADF6811F3C80ED5D441E2D10C5FA0AF989BA52AED5F96BAC017761A4
+                  amount_ksn: >-
+                    D211CA1955F746CAF760045C201B5893A0CE076684CEA3F0439D5E16DA7D3A00A07C93B8695A12FC4C8CCBF53E01F0489212BB01F5E749C7FC6AD01EC206B62518B79496E3316A6E4435BC690E10D6CC991F82A92EBED4AE49FC1CEBCDC76A55B9486B2150201B4847DAE11B5DC681AE0F5A1FE3DC8C4B32559B900798D6ADDEC0F6A17202E980E15478F5CA0F30B50261801E661BB41CA7BBB1641E49C5D2101FA5634DAF0DBF712370BA45E6D0378C75797FCE87B4EC8192E34F6040C150A44EE4303DA691DAD761E0E156E4405AC7B83700EFEB2512D9B0F83143B7A0A1392BE80B6E9885C239DD179F06E13654B4C7643D7B8592776BBFBC3E4F02AB1E3F
+                  amount_ipek: >-
+                    206420E3CB89CD675CBAC72F7118192ADAA469223D807AD71F9A53DC3FDBBBA9CBA1F42C95B576A87050263811C2D81ED2617E6BF1BBDE135C248BB7183AA766FC0C03A8E76051BF4054194E85161B24AC4FC183A034E392B3237760ED13542968E0171588EAFC12B599C8A9E2F2FAC55849CD6E8BD8D22D2365B3925F3D289C8AECDA443B5981F9A189C8CD150430C119D9A039344E9F0A7EADE4EC4B5DA2FD1E107FC928B6F003B9E752866C2D1DDC7B6881BE116064C5F97D99CD3D5CEFEA2FF44B501FD508100B32F5E93976A08F039A8152B6378EF5A1E4752C07A946C27AAE448878529439B16C360D842F1A41A9C2C0CDA2A449C5A9F2369DB24B9EE2
+                  pin_block_wk_universal: >-
+                    000448AB57DA9C03509A19FD6781DBA1ACCB3898E139D3DB94167AC63E600AE0F0909DDB909C0AF9452C6FE6BA2AAE854E1B9EAA484E966E5B62A6C42A159C2E38F35885AE56E77089AC90F8B31FF9E365480DBF70B8EBDD94A2EA520CCC7DE7EFC33DFB1DEFD3284CA26EBFDA6674790773EAC8C095A39FCCA96573E775215E832FC3DEB22D30C4A64C128BF10684C0B37A44B04347AC4F4F5B6CCB83864A017BE6F61BCC2001A49C6483CD0D3A0E1165B56F5BCD6FCB3AD3E3ECB44F50DE522C7591458E98E704829DCAB8656C29EEEF4AF11AE42EADA3A01317EDFCD1F25B459247DBEBFA41F6BE2E131DAFA9E5D6BB54E13448A78291D4A8D494A206C756
+                message: NOT DEFINE RESPONSE CODE.
+                version:
+                  crypto_ver: v1.5.0
+                  psgs_ver: v1.0.1
+                status: OK
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example: "{\r\n    \"device_id\": \"P551700122061\", // \"0820848892\"\r\n    \"device_timestamp\": \"1748312885\",\r\n    \"pub_key\": \"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCKI48+YWDY8gxZLEdInoQVKu5dc6J72Sng49e8mqWC6p5uI+FHO5zZwcbrXm6NHoNAlXc1QrQTUA+zmwcBGTi91l6BJFBJ1fNt5VEbNgH27Ni/qwKPs18++8iIPhLLwnrq7Wk8yM8ENzN27eZ8SlNv/qf47YdK4CrxUAUUTV/N5QIDAQAB\"\r\n}"
+  /MmCoreCdcpHost/v1/get_cdcp_device_key:
+    post:
+      summary: Download Cdcp Key
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{getToken}}'
+      responses:
+        '200':
+          description: 200 Download Cdcp Key
+          headers:
+            Server:
+              schema:
+                type: string
+              example: nginx/1.14.1
+            Date:
+              schema:
+                type: string
+              example: Thu, 28 Mar 2024 04:50:51 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_env_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  enc_keys:
+                    type: object
+                    properties:
+                      emv_ksn:
+                        type: string
+                      pin_ipek:
+                        type: string
+                      track_ksn:
+                        type: string
+                      emv_ipek:
+                        type: string
+                      pin_ksn:
+                        type: string
+                      track_ipek:
+                        type: string
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      psgs_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0011'
+                container_env_name: ''
+                midware_timestamp: '1711601451'
+                enc_keys:
+                  emv_ksn: >-
+                    B58DA08E7F1771D3FA466C6DBB478D536D99BB8E55A5A5C31F2783C2F4C005CF34B6EE73504F5BEF8FD1072CF8B4EFCA81E28A0472A1A46B6BB03B6B8CBC3E639873440E771D3DDF080869EA7DD9803953D6DDDACBCC2AC6D138175D0EF6D1A584B62F86699C669894D0974E6060709D59278361D3C5F83FE7B9BD34C29C47B3066E7660F2D3379912D68E9FB44AE3C35AFAA50AE140C87BC2F9579CDCD23E4D6DC7FA0C7017C2B482DA76B64D7262AD3AE36AC885BB1DF33CD569302172A56C89B3179265AA4275B3F56F5E76A03A6E7C4D78C1B6DF635AAE12E0521B046D5713605759873CB472FC2426BEE2AD7DDAF07DF96FBAC6181C91F5A195E309B981
+                  pin_ipek: >-
+                    D21F73BD408B9BCF4F6A9C84C0B9E9702DAAB1D077A0BC885D56C793B01E9AC6052FF2ED472D0EE2976C72C6DC455EF8BFE3F6BCA4645D058251852BF114FBF0F666D965AF758536EADCA8B0D8F69572E7B286DCB11F640EADC5FBC25E86E507CBA63DF0FF89289068387203152BA2CCD398F4C7C1E8B7448B3852BDFC4CD6743F04C9452469BEC31B1569063ECDD806AFCF99764B19AB60C84AEAABDEC8C1448529A7BCABE384DA14CACBC0EF51B99DDFB69430EE2DF65ADC600CAFC0DC49FF1CD8830DFD72DCBA15593BAEFBACBC15224EC275C1C2AC7DF45EC7AB2A45FADC13FD2E09222C9D03E2BFF457820A259201AD641EEC4C1D3DD86972214B215DCF
+                  track_ksn: >-
+                    A6AF91535064DE44FDD0432069B725394901A9BD045CFA89B73F2C05EB7DFEC396C4635DD588EB42683A7A21A02459252A8A834D646FBD931DE5FC0F6FBD7EFE0EC5EAC1FDDF843436DDD2E70770EF5768E096A8F97AD71C8890B21D1B920D9BC170B7FF65FE232C0F8481641488B7562C81DD6937CC22BBC08BADC9D00115EF8335175162289DA7288F7F798F6877867F216EC4CEBCB8C48FC521BCE15EB75DEEF2009F971EC0790C4A8F14C63B0DBA001A6DEDB124AE65635440D87EFBF8184F5B011B0EE37FCDB6362E4B4A7089DE6DDE7C6816B715ACC71DE45A65406913115DD3A5413CBD00AE048F9C853C7E6791C9D72D2E02A3B90A666BB932E94C39
+                  emv_ipek: >-
+                    A80696E970791987CD7B16DB8D4AFE2400EA6867B5F583A57EF68E182BEF655E5A3D57D7152FF07A20632E73E93147A71B8328DA271329C34D7CF17608FD79E5CE072DF57CA5C22B8697F8F791B4C76582518B24A9A804462BA26BD152D6DEF20AD9A60212FA65C59BA9308CF7058252C97ACE298D65C4CFF6853233CF04DE474EC7A84E5671F3CF57D3F41C1762152C27FCDC5B4F047683D4F8CDFB5083B1B10EA0D1C6769D2B2653FEC39A6C6BFF2AB581CAFC26934ECF67123E670D91F3237BB483D80281EDD6EBB5E030AB07A11CEBC263EAF021290AED330D6EBFD1C9D4DCBB62E9E1E3313D2F7BDD202C217F8970A2D003451E82631E57F0F0CEC6DDD6
+                  pin_ksn: >-
+                    21DCC8C8931208F15617404C910F8067E3BDA00EDCC03F42799508AC575376FC81F5C160753516F41B2166874DD34CD18FF6684AC01538D714D17A7BA71E042B610C1EA03A0BC04C86F6EBC89A68FBB1E3D59C73111776F2D8B9415896D5F4C34EEBEFB3CD15A59590DBD2806A3DEB727FC7A04CA509B1E93093B4C93EC5775701BD13EC9B71DBC8A19A5FF1299CDEF361532419ECACDC5BF255509EC1191383FF70418BFBC2BADB72F29957060BFF4101F4A6057C054CCE7DE622DEB6BED3A1F1FCAC981E9DC1C80B8896A036299CCE79CC7310E3B3544AB09134B08D61BFE8D237501FD8508D0072A250AC850C2BF5E7C79B60E94E82211D85F6D3B810BE03
+                  track_ipek: >-
+                    D5D641AAAC7E551F4956C76F9F2012C8114CDBFB043241CBBEBFF28384BEF5EDE3875F985A58BB344B73B1053D0438C1ADE54927AB7D8C20F2C99DBDF471C4697BE687F08DB4FDF05CBBC3780F88C44B1F5CD332602F859675C138FDD28A917556A2EBE3B967F36BC50F136DED5A82DAAA9CBBD4241AD094D510334C027E058E6CE0C4E1481232211BDF4D2A62B931D8855B4FAC77CDB4CC63B621E31367E42DDFA7EC84BA2F9D23A4BAFC0A267C86105D1BB885FFAAE76D573AC1337AE16B10807A318F49A3212E43CE747204A56BB4E669F8737280EE9F3B566D0372B3EA5684603C0167DF899AAFA5EB7271A4FFD4F9BDFD095A527222F39086A746E1EB72
+                message: KEY DOWNLOAD SUCCESS.
+                version:
+                  crypto_ver: v1.5.0
+                  psgs_ver: v1.0.1
+                status: OK
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example: |-
+              {
+                  "device_id": "P551700122061", //"0820848892",
+                  "device_timestamp": "1748312885",
+                  "pub_key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCKI48+YWDY8gxZLEdInoQVKu5dc6J72Sng49e8mqWC6p5uI+FHO5zZwcbrXm6NHoNAlXc1QrQTUA+zmwcBGTi91l6BJFBJ1fNt5VEbNgH27Ni/qwKPs18++8iIPhLLwnrq7Wk8yM8ENzN27eZ8SlNv/qf47YdK4CrxUAUUTV/N5QIDAQAB"
+              }
+  /MmCorePsgsHost/v1/get_application_general_config:
+    post:
+      summary: App Config Rules
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{getToken}}'
+      responses:
+        '200':
+          description: 200 App Config Rules
+          headers:
+            Server:
+              schema:
+                type: string
+              example: nginx/1.14.1
+            Date:
+              schema:
+                type: string
+              example: Thu, 28 Mar 2024 05:12:28 GMT
+            Content-Length:
+              schema:
+                type: integer
+              example: '400'
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_env_name:
+                    type: string
+                  pos_request_type:
+                    type: string
+                    format: utc-millisec
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      psgs_ver:
+                        type: string
+                  is_payment_application_unattended:
+                    type: boolean
+                  status:
+                    type: string
+                  app_gen_config:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        is_enable:
+                          type: boolean
+                        payment_method:
+                          type: string
+              example:
+                response_code: '0020'
+                container_env_name: ''
+                pos_request_type: '1'
+                midware_timestamp: '1711602748'
+                message: GET APPLICATION GENERAL CONFIG SUCCESS.
+                version:
+                  crypto_ver: v1.5.0
+                  psgs_ver: v1.0.1
+                is_payment_application_unattended: false
+                status: OK
+                app_gen_config:
+                  - is_enable: true
+                    payment_method: cdcp
+                  - is_enable: true
+                    payment_method: qrps
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                settlement_session_num:
+                  type: integer
+            example:
+              device_timestamp: '1748312885'
+              settlement_session_num: 0
+  /MmCoreCdcpHost/v1/additional_service/get_all_success_sale_list:
+    post:
+      summary: Get Additional Service Sale List
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjenBhcnRuZXJzaGlwMiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4vTW1Db3JlUHNnc0hvc3QvdjEvbG9naW4iLCJpYXQiOjE3NTQ2NTU5MzQsImV4cCI6MTc2MjYwNDczNH0.COA3yk-AHSAyPeeAsNcYV89PEjDPd48qEOF_hjUyaW-B1J8gsWOEnqkTcQ_WCtzOvI9ks7FHKRYRrApUNAtRVA
+      responses:
+        '200':
+          description: 200 Get Additional Service Sale List
+          headers:
+            Server:
+              schema:
+                type: string
+              example: nginx/1.14.1
+            Date:
+              schema:
+                type: string
+              example: Sun, 03 Nov 2024 10:26:40 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_env_name:
+                    type: string
+                  success_sale_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        approval_code:
+                          type: string
+                          format: color
+                        is_debit_flag:
+                          type: boolean
+                        batch_group:
+                          type: string
+                        trx_host_date:
+                          type: string
+                          format: utc-millisec
+                        entry_mode:
+                          type: string
+                          format: color
+                        rrn:
+                          type: string
+                          format: utc-millisec
+                        trx_host_time:
+                          type: string
+                          format: color
+                        masked_pan:
+                          type: string
+                        invoice_num:
+                          type: string
+                          format: color
+                        bin_result:
+                          type: string
+                        base_amount:
+                          type: integer
+                        trx_type:
+                          type: string
+                        tip_amount:
+                          type: integer
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      cdcp_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0030'
+                container_env_name: ''
+                success_sale_list:
+                  - approval_code: '343455'
+                    is_debit_flag: true
+                    batch_group: BNI_DEBIT
+                    trx_host_date: '1031'
+                    entry_mode: '051'
+                    rrn: '000000000502'
+                    trx_host_time: '133139'
+                    masked_pan: 194634******3670
+                    invoice_num: '000360'
+                    bin_result: BNI_PRIVATE_DEBIT_BIN4
+                    base_amount: 4
+                    trx_type: SALE
+                    tip_amount: 0
+                  - approval_code: '766232'
+                    is_debit_flag: true
+                    batch_group: BNI_DEBIT
+                    trx_host_date: '1031'
+                    entry_mode: '051'
+                    rrn: '000000000501'
+                    trx_host_time: '132829'
+                    masked_pan: 466160******7771
+                    invoice_num: '000359'
+                    bin_result: BTPN_DEBIT_BIN1
+                    base_amount: 4
+                    trx_type: SALE
+                    tip_amount: 0
+                  - approval_code: '586497'
+                    is_debit_flag: false
+                    batch_group: BNI_CREDIT
+                    trx_host_date: '1022'
+                    entry_mode: '072'
+                    rrn: '000011000499'
+                    trx_host_time: '152815'
+                    masked_pan: 532092******3579
+                    invoice_num: '000357'
+                    bin_result: MASTERCARD_BIN2
+                    base_amount: 1
+                    trx_type: SALE
+                    tip_amount: 0
+                  - approval_code: '444367'
+                    is_debit_flag: false
+                    batch_group: BNI_CREDIT
+                    trx_host_date: '1021'
+                    entry_mode: '052'
+                    rrn: '000011000482'
+                    trx_host_time: '131950'
+                    masked_pan: 542879******6244
+                    invoice_num: '000342'
+                    bin_result: MASTERCARD_BIN2
+                    base_amount: 1
+                    trx_type: SALE
+                    tip_amount: 0
+                  - approval_code: '312808'
+                    is_debit_flag: false
+                    batch_group: BNI_CREDIT
+                    trx_host_date: '1021'
+                    entry_mode: '072'
+                    rrn: '000011000478'
+                    trx_host_time: '131025'
+                    masked_pan: 546318******1082
+                    invoice_num: '000338'
+                    bin_result: MASTERCARD_BIN2
+                    base_amount: 1009
+                    trx_type: SALE
+                    tip_amount: 0
+                  - approval_code: '882177'
+                    is_debit_flag: true
+                    batch_group: BNI_DEBIT
+                    trx_host_date: '1018'
+                    entry_mode: '051'
+                    rrn: '000000000458'
+                    trx_host_time: '094005'
+                    masked_pan: 426254******5494
+                    invoice_num: '000319'
+                    bin_result: PERMATA_DEBIT_BIN4
+                    base_amount: 1000
+                    trx_type: SALE
+                    tip_amount: 0
+                  - approval_code: '345707'
+                    is_debit_flag: false
+                    batch_group: BNI_CREDIT
+                    trx_host_date: '1017'
+                    entry_mode: '072'
+                    rrn: '000021000439'
+                    trx_host_time: '190743'
+                    masked_pan: 542879******6244
+                    invoice_num: '000302'
+                    bin_result: MASTERCARD_BIN2
+                    base_amount: 1
+                    trx_type: SALE
+                    tip_amount: 0
+                  - approval_code: '345612'
+                    is_debit_flag: false
+                    batch_group: BNI_CREDIT
+                    trx_host_date: '1017'
+                    entry_mode: '072'
+                    rrn: '000021000438'
+                    trx_host_time: '190708'
+                    masked_pan: 542879******6244
+                    invoice_num: '000301'
+                    bin_result: MASTERCARD_BIN2
+                    base_amount: 1
+                    trx_type: SALE
+                    tip_amount: 0
+                  - approval_code: '556877'
+                    is_debit_flag: false
+                    batch_group: BNI_CREDIT
+                    trx_host_date: '1017'
+                    entry_mode: '052'
+                    rrn: '000021000437'
+                    trx_host_time: '190129'
+                    masked_pan: 532092******3579
+                    invoice_num: '000300'
+                    bin_result: MASTERCARD_BIN2
+                    base_amount: 1
+                    trx_type: SALE
+                    tip_amount: 0
+                midware_timestamp: '1730629600'
+                message: SUCCESS TO GET ALL SUCCESS SALE LIST.
+                version:
+                  crypto_ver: v1.5.0
+                  cdcp_ver: v1.0.3
+                status: OK
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1754626201'
+  /MmCoreCdcpHost/v1/settlement:
+    post:
+      summary: Settlement
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tbGlvbmRlL01tQ29yZVBzZ3NIb3N0L3YxL2xvZ2luIiwiaWF0IjoxNzU2MzcwMjEwLCJleHAiOjE3NjQzMTkwMTB9.ovAFRFp0fwPuTy8njAYJz5aHHI0kaPRYpOT_wPK4_Ylpl-Mzn1ImGb4sBWzyh3hjljNR6dZpxKKXCg6O3vJFqA
+      responses:
+        '200':
+          description: 200 Settlement
+          headers:
+            Server:
+              schema:
+                type: string
+              example: nginx/1.14.1
+            Date:
+              schema:
+                type: string
+              example: Thu, 28 Mar 2024 05:16:55 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  is_debit_flag:
+                    type: boolean
+                  card_expiry_date:
+                    type: string
+                    format: utc-millisec
+                  card_holder_name:
+                    type: string
+                  batch_group:
+                    type: string
+                  mid:
+                    type: string
+                    format: utc-millisec
+                  tid:
+                    type: string
+                    format: utc-millisec
+                  host_date:
+                    type: string
+                    format: utc-millisec
+                  pos_request_type:
+                    type: string
+                    format: utc-millisec
+                  invoice_num:
+                    type: string
+                    format: color
+                  base_amount:
+                    type: integer
+                  approval_code:
+                    type: string
+                    format: color
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  message:
+                    type: string
+                  batch_num:
+                    type: string
+                    format: color
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      cdcp_ver:
+                        type: string
+                  rrn:
+                    type: string
+                    format: utc-millisec
+                  container_env_name:
+                    type: string
+                  masked_pan:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  bin_result:
+                    type: string
+                  host_time:
+                    type: string
+                    format: color
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0020'
+                is_debit_flag: true
+                card_expiry_date: '2502'
+                card_holder_name: ''
+                batch_group: BNI_DEBIT
+                mid: '123456789012345'
+                tid: '12345672'
+                host_date: '0328'
+                pos_request_type: '1'
+                invoice_num: '000049'
+                base_amount: 100
+                approval_code: '164422'
+                midware_timestamp: '1711603015'
+                message: SALE APPROVED.
+                batch_num: '000001'
+                version:
+                  crypto_ver: v1.5.0
+                  cdcp_ver: v1.0.3
+                rrn: '000000000023'
+                container_env_name: ''
+                masked_pan: 466160******6294
+                print_receipt_merchant_name: Weak Days IQ
+                bin_result: BTPN_DEBIT_BIN1
+                host_time: '121655'
+                print_receipt_address_line_2: Paku Jaya, Kec. Serpong Utara
+                print_receipt_address_line_1: Jl. Kayu Gede III Kel No.99
+                status: OK
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                pos_cloud_pointer:
+                  type: string
+                pos_request_type:
+                  type: string
+            example:
+              device_timestamp: '1711600404051'
+              pos_cloud_pointer: ''
+              pos_request_type: ''
+  /MmCoreCdcpHost/v1/sale/sale_trx:
+    post:
+      summary: Cdcp Sale
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 Cdcp Sale
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  is_debit_flag:
+                    type: boolean
+                  card_expiry_date:
+                    type: string
+                    format: utc-millisec
+                  card_holder_name:
+                    type: string
+                  batch_group:
+                    type: string
+                  mid:
+                    type: string
+                    format: utc-millisec
+                  tid:
+                    type: string
+                    format: utc-millisec
+                  host_date:
+                    type: string
+                    format: utc-millisec
+                  pos_request_type:
+                    type: string
+                    format: utc-millisec
+                  invoice_num:
+                    type: string
+                    format: color
+                  payment_pointer:
+                    type: string
+                  base_amount:
+                    type: string
+                  approval_code:
+                    type: string
+                    format: color
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  message:
+                    type: string
+                  batch_num:
+                    type: string
+                    format: color
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      cdcp_ver:
+                        type: string
+                  rrn:
+                    type: string
+                    format: utc-millisec
+                  masked_pan:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  bin_result:
+                    type: string
+                  host_time:
+                    type: string
+                    format: color
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0020'
+                is_debit_flag: false
+                card_expiry_date: '2612'
+                card_holder_name: 'JUMADI JANJAYA/          '
+                batch_group: BNI_CREDIT
+                mid: '111101234012100'
+                tid: '20000120'
+                host_date: '0724'
+                pos_request_type: '1'
+                invoice_num: '000251'
+                payment_pointer: CDCP-tokodika-000251
+                base_amount: '{{$body ''base_amount_plain'' ''postman''}}'
+                approval_code: '288163'
+                midware_timestamp: '1690215056'
+                message: SALE APPROVED.
+                batch_num: '000009'
+                version:
+                  crypto_ver: v1.5.0
+                  cdcp_ver: v1.0.3
+                rrn: '000000000148'
+                masked_pan: 488950******1913
+                print_receipt_merchant_name: Toko Dika
+                bin_result: VISA_BIN1
+                host_time: '231056'
+                print_receipt_address_line_2: Bali
+                print_receipt_address_line_1: Jalan Pemuda No.11
+                status: OK
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount_ksn_index:
+                  type: string
+                base_amount_enc:
+                  type: string
+                base_amount_hash:
+                  type: string
+                device_id:
+                  type: string
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                emv_ksn_index:
+                  type: string
+                emv_req_enc:
+                  type: string
+                emv_req_len:
+                  type: integer
+                entry_mode:
+                  type: string
+                  format: color
+                is_refund:
+                  type: boolean
+                pin_ksn_index:
+                  type: string
+                pinblock_enc:
+                  type: string
+                pos_cloud_pointer:
+                  type: string
+                pos_request_type:
+                  type: string
+                  format: utc-millisec
+                track_2_enc:
+                  type: string
+                track_2_hash:
+                  type: string
+                track_2_len:
+                  type: integer
+                track_ksn_index:
+                  type: string
+                trx_mode:
+                  type: integer
+            example:
+              amount_ksn_index: BE4C4
+              base_amount_enc: DBEDE56EE36AEEA8
+              base_amount_hash: >-
+                874809f1ed1ad45dbd1801b92eca0a7e980b7de6f94ac50890474ee9d7fe436d08971ed971ab06a458184331c9820d69bf80ed428d680e14761be7310374f154
+              device_id: F20MP1106001819
+              device_timestamp: '1690215055840'
+              emv_ksn_index: D0F9A
+              emv_req_enc: >-
+                f66c9daa8ab408e1bc66cda8707a016a980fb26347aba63af946e93c797d7ca7247619f479647a351ef11e787aedf95ddf0bab04bd8dda8934d7ac9bd45f4316af016449d8c9ab7cacb1325019499a772fcde3f9b281bc0804e548257fb5cd5f31da7b9dfdf000a5b74556cc4a7aa62aede48b7ae91f86fac4f3394642ad319ee7ce3586617f9b4170a7439115593e1097891548de4f3db532b7f5d10462cc838bc6477371637d45
+              emv_req_len: 324
+              entry_mode: '051'
+              is_refund: false
+              pin_ksn_index: '51E32'
+              pinblock_enc: 17dcec6c4c0588fe
+              pos_cloud_pointer: DRC-tokodika-1690215056607
+              pos_request_type: '1'
+              track_2_enc: fd9eb05b439a7cd954bf40590f6bafed
+              track_2_hash: >-
+                4d659d86c18d6cc3b79653e49fd5dbe0e4461b06bc3f8a28652c964e115770f6d36f18fa1220099fdeb5b461792f9074a33d97cbd452c4162223f6d17be01465
+              track_2_len: 32
+              track_ksn_index: D3797
+              trx_mode: 1
+  /MmCoreCdcpHost/v1/void/void_trx:
+    post:
+      summary: Void Transaction
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 Void Transaction
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  is_debit_flag:
+                    type: boolean
+                  card_expiry_date:
+                    type: string
+                    format: utc-millisec
+                  card_holder_name:
+                    type: string
+                  batch_group:
+                    type: string
+                  trx_host_date:
+                    type: string
+                    format: utc-millisec
+                  mid:
+                    type: string
+                    format: utc-millisec
+                  void_host_date:
+                    type: string
+                    format: utc-millisec
+                  tid:
+                    type: string
+                    format: utc-millisec
+                  trx_host_time:
+                    type: string
+                    format: color
+                  invoice_num:
+                    type: string
+                    format: color
+                  base_amount:
+                    type: integer
+                  payment_pointer:
+                    type: string
+                  approval_code:
+                    type: string
+                    format: color
+                  void_host_time:
+                    type: string
+                    format: color
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  message:
+                    type: string
+                  batch_num:
+                    type: string
+                    format: color
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      cdcp_ver:
+                        type: string
+                  rrn:
+                    type: string
+                    format: utc-millisec
+                  masked_pan:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  bin_result:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0031'
+                is_debit_flag: false
+                card_expiry_date: '2612'
+                card_holder_name: JUMADI JANJAYA
+                batch_group: BNI_CREDIT
+                trx_host_date: '0724'
+                mid: '111101234012100'
+                void_host_date: '0724'
+                tid: '20000120'
+                trx_host_time: '232540'
+                invoice_num: '000252'
+                base_amount: 1000
+                payment_pointer: CDCP-tokodika-000252
+                approval_code: '948014'
+                void_host_time: '232907'
+                midware_timestamp: '1690216147'
+                message: VOID APPROVED.
+                batch_num: '000010'
+                version:
+                  crypto_ver: v1.5.0
+                  cdcp_ver: v1.0.3
+                rrn: '000000000149'
+                masked_pan: 488950******1913
+                print_receipt_merchant_name: Toko Dika
+                bin_result: VISA_BIN1
+                print_receipt_address_line_2: Bali
+                print_receipt_address_line_1: Jalan Pemuda No.11
+                status: OK
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                invoice_num:
+                  type: string
+                  format: color
+                pass_hash:
+                  type: string
+                pos_cloud_pointer:
+                  type: string
+                pos_request_type:
+                  type: string
+                  format: utc-millisec
+                settlement_session_num:
+                  type: integer
+            example:
+              device_timestamp: '1690216147748'
+              invoice_num: '252'
+              pass_hash: f1ec3bd161403198ee514480fb926e4e36316f846097f2ddcbcb242451e45610
+              pos_cloud_pointer: ''
+              pos_request_type: '1'
+              settlement_session_num: 0
+  /MmCoreCdcpHost/v1/additional_service/get_all_success_void_list:
+    post:
+      summary: History Void Transaction
+      responses:
+        '200':
+          description: 200 History Void Transaction
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_env_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      cdcp_ver:
+                        type: string
+                  status:
+                    type: string
+                  success_void_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        approval_code:
+                          type: string
+                          format: color
+                        is_debit_flag:
+                          type: boolean
+                        void_host_time:
+                          type: string
+                          format: color
+                        batch_group:
+                          type: string
+                        trx_host_date:
+                          type: string
+                          format: utc-millisec
+                        entry_mode:
+                          type: string
+                          format: color
+                        void_host_date:
+                          type: string
+                          format: utc-millisec
+                        rrn:
+                          type: string
+                          format: utc-millisec
+                        trx_host_time:
+                          type: string
+                          format: color
+                        masked_pan:
+                          type: string
+                        invoice_num:
+                          type: string
+                          format: color
+                        bin_result:
+                          type: string
+                        base_amount:
+                          type: integer
+                        trx_type:
+                          type: string
+                        tip_amount:
+                          type: integer
+              example:
+                response_code: '0033'
+                container_env_name: cz-stag.dc.sword.docker
+                midware_timestamp: '1732888500'
+                message: SUCCESS TO GET ALL SUCCESS VOID LIST.
+                version:
+                  crypto_ver: v1.5.0
+                  cdcp_ver: v1.0.3
+                status: OK
+                success_void_list:
+                  - approval_code: '170031'
+                    is_debit_flag: false
+                    void_host_time: '231736'
+                    batch_group: BNI_CREDIT
+                    trx_host_date: '0319'
+                    entry_mode: '052'
+                    void_host_date: '0319'
+                    rrn: '000000000008'
+                    trx_host_time: '231717'
+                    masked_pan: 536510******8391
+                    invoice_num: '000034'
+                    bin_result: MASTERCARD_BIN2
+                    base_amount: 15000
+                    trx_type: VOID_SALE
+                    tip_amount: 0
+                  - approval_code: '127053'
+                    is_debit_flag: false
+                    void_host_time: '230955'
+                    batch_group: BNI_CREDIT
+                    trx_host_date: '0319'
+                    entry_mode: '052'
+                    void_host_date: '0319'
+                    rrn: '000000000007'
+                    trx_host_time: '230645'
+                    masked_pan: 536510******8391
+                    invoice_num: '000033'
+                    bin_result: MASTERCARD_BIN2
+                    base_amount: 15000
+                    trx_type: VOID_SALE
+                    tip_amount: 0
+                  - approval_code: '425234'
+                    is_debit_flag: false
+                    void_host_time: '225949'
+                    batch_group: BNI_CREDIT
+                    trx_host_date: '0319'
+                    entry_mode: '052'
+                    void_host_date: '0319'
+                    rrn: '000000000006'
+                    trx_host_time: '225913'
+                    masked_pan: 536510******8391
+                    invoice_num: '000032'
+                    bin_result: MASTERCARD_BIN2
+                    base_amount: 1000
+                    trx_type: VOID_SALE
+                    tip_amount: 0
+                  - approval_code: '850548'
+                    is_debit_flag: false
+                    void_host_time: '232607'
+                    batch_group: BNI_CREDIT
+                    trx_host_date: '0319'
+                    entry_mode: '051'
+                    void_host_date: '0319'
+                    rrn: '000000000005'
+                    trx_host_time: '203813'
+                    masked_pan: 488950******1913
+                    invoice_num: '000031'
+                    bin_result: VISA_BIN1
+                    base_amount: 15000
+                    trx_type: VOID_SALE
+                    tip_amount: 0
+                  - approval_code: '123529'
+                    is_debit_flag: false
+                    void_host_time: '233104'
+                    batch_group: BNI_CREDIT
+                    trx_host_date: '0319'
+                    entry_mode: '051'
+                    void_host_date: '0319'
+                    rrn: '000000000004'
+                    trx_host_time: '203219'
+                    masked_pan: 488950******1913
+                    invoice_num: '000030'
+                    bin_result: VISA_BIN1
+                    base_amount: 1000
+                    trx_type: VOID_SALE
+                    tip_amount: 0
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                settlement_session_num:
+                  type: integer
+            example:
+              device_timestamp: '1690215394826'
+              settlement_session_num: 0
+  /MmCoreCdcpHost/v1/void/reversal:
+    post:
+      summary: Reversal Void Transaction
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 Reversal Void Transaction
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_env_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_version:
+                        type: string
+                      cdcp_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0000'
+                container_env_name: cash-prod.octopus.be1.docker
+                midware_timestamp: '1751257925'
+                message: reversal success
+                version:
+                  crypto_version: v1.5.0
+                  cdcp_ver: v1.0.3
+                status: OK
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                invoice_num:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1732893113164'
+              invoice_num: '12345678'
+  /MmCorePsgsHost/v1/void/save_customer_signature:
+    post:
+      summary: Void Save Customer Sign
+      responses:
+        '200':
+          description: 200 Void Save Customer Sign
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                  container_env_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      cdcp_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: 00B0
+                container_env_name: cz-stag.dc.sword.docker
+                midware_timestamp: '1751258188'
+                message: SUCCESS TO SUBMIT CUSTOMER SIGNATURE
+                version:
+                  crypto_ver: v1.5.0
+                  cdcp_ver: v1.0.3
+                status: OK
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                approval_code:
+                  type: string
+                  format: color
+                customer_signature:
+                  type: string
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                invoice_num:
+                  type: string
+                  format: color
+                rrn:
+                  type: string
+                  format: utc-millisec
+                settlement_session_num:
+                  type: integer
+            example:
+              approval_code: '814751'
+              customer_signature: iAHbJhbdKBWUHAKNXXKAKJSQINkalm019383+_
+              device_timestamp: '1751258196196'
+              invoice_num: '000304'
+              rrn: '000000000059'
+              settlement_session_num: 0
+  /MmCorePsgsHost/v1/void/print_receipt:
+    post:
+      summary: Void Print Receipt
+      responses:
+        '200':
+          description: 200 Void Print Receipt
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_env_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  print_receipt_merchant_copy:
+                    type: string
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      cdcp_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0040'
+                container_env_name: cz-stag.dc.sword.docker
+                midware_timestamp: '17511258189'
+                print_receipt_merchant_copy: ivahjadwnaiOQIAMCbFGAJQ&61527
+                message: FIRST COPY
+                version:
+                  crypto_ver: v1.5.0
+                  cdcp_ver: v1.0.3
+                status: OK
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                approval_code:
+                  type: string
+                  format: color
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                invoice_num:
+                  type: string
+                  format: color
+                rrn:
+                  type: string
+                  format: utc-millisec
+                settlement_session_num:
+                  type: integer
+            example:
+              approval_code: '814751'
+              device_timestamp: '175125890745'
+              invoice_num: '000304'
+              rrn: '00000000059'
+              settlement_session_num: 0
+  /MmCoreCdcpHost/v1/additional_service/sale_invoice_check:
+    post:
+      summary: Sale Invoice Check
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjenBhcnRuZXJzaGlwMiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4vTW1Db3JlUHNnc0hvc3QvdjEvbG9naW4iLCJpYXQiOjE3NTc1NjYzNzgsImV4cCI6MTc2NTQyODc3OH0.UG8KoIcwML_FANFfe6X5C3M_ItS3qD_DzZW2mIkKivO-vuXrJdNDu6pUj0TVMsLOUgdolRxxMVcknkm5VswRcQ
+      responses: {}
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                invoice_num:
+                  type: string
+                  format: color
+            example:
+              device_timestamp: '1690215057289'
+              invoice_num: '000090'
+  /MmCorePsgsHost/v1/get_token:
+    post:
+      summary: No Login
+      responses: {}
+      tags:
+        - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_id:
+                  type: string
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                pub_key:
+                  type: string
+            example:
+              device_id: P551700121971
+              device_timestamp: '1690214153370'
+              pub_key: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoAbzmT3nnqHOcQ7Dntx9\r\nuld2/piIXQ3kiRo10ms4mzWvPQ85KMqXpWqQZOSf3TsB1hO2HtKeyWgqHRJllr8a\r\n6dS031rvxv9qQKJJIEfzsD1ZRTfP0A4WCJhpWs0B6nAfNbZ8va5W5WKDvl5UjCcr\r\nOL7Aq8d4bIHqYK3tugp/nxZUY3SL8hsF/xu1Mm4o86cVs5x4xxqHE5obre6edztO\r\nbS4m6kLtNmiYqU3zHfZgBsqEltWJE6SA7m3CA0mRByvihi/g4mYsgI+moYmk9+Bz\r\n/f1xjO6nIQINgU5VXzBE+mq1eVfGKSJOG03wy5jTjfuKcoSaETXDnI17Axbxecxt\r\newIDAQAB"
