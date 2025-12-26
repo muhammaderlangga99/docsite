@@ -4,31 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Services\MiniAtmCredentialService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class MiniAtmCredentialController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, MiniAtmCredentialService $service)
     {
         $user = $request->user();
         $credentials = null;
 
         if ($user?->username) {
-            $credentials = DB::connection('host_to_host')
-                ->table('partner as p')
-                ->join('client as c', 'c.partner_id', '=', 'p.id')
-                ->leftJoin('partner_token as pt', 'pt.partner_id', '=', 'p.id')
-                ->where('p.name', $user->username)
-                ->orderByDesc('p.id')
-                ->select([
-                    'p.id as partner_id',
-                    'p.name as partner_name',
-                    'p.api_key',
-                    'c.id as client_id',
-                    'pt.pub_key',
-                ])
-                ->first();
+            $credentials = $service->getLatestCredentialsForUser($user->username);
         }
 
         return view('mini-atm.index', [
@@ -79,11 +65,7 @@ class MiniAtmCredentialController extends Controller
                 ->with('mini_atm_error', 'Partner tidak ditemukan untuk pengguna ini.');
         }
 
-        $owned = DB::connection('host_to_host')
-            ->table('partner')
-            ->where('id', $partnerId)
-            ->where('name', $user->username)
-            ->exists();
+        $owned = $service->isPartnerOwnedByUser($partnerId, $user->username);
 
         if (! $owned) {
             return redirect()

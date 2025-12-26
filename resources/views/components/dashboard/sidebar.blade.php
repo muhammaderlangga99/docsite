@@ -23,12 +23,6 @@
             'url' => url('/mini-atm'),
             'active' => request()->routeIs('mini-atm.*'),
         ],
-        [
-            'label' => 'CashLink Credentials',
-            'icon' => '',
-            'url' => url('/cashlink'),
-            'active' => request()->routeIs('cashlink.*'),
-        ],
     ];
 @endphp
 
@@ -108,7 +102,7 @@
                     <dl class="space-y-2 text-xs text-slate-700">
                         <div class="flex justify-between gap-3">
                             <dt class="text-slate-500">Password</dt>
-                            <dd class="font-semibold text-slate-900">12345678</dd>
+                            <dd class="font-semibold text-slate-900">123456</dd>
                         </div>
                         <div class="flex justify-between gap-3">
                             <dt class="text-slate-500">Device ID</dt>
