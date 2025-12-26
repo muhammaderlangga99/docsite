@@ -23,8 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // URL::forceRootUrl(config('app.url')); // https://docs.cashup.id
-        // URL::forceScheme('https');
+        URL::forceRootUrl(config('app.url')); // https://docs.cashup.id
+        URL::forceScheme('https');
 
         View::share('merchantMid', Cache::remember('merchant_mid_125', now()->addMinutes(10), function () {
             return DB::connection('cdcp')
