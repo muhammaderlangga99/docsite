@@ -1,5 +1,5 @@
 @props([
-    'spec' => '/openapi/api-docs.yaml',
+    'spec' => '/openapi/' . config('openapi.default', 'api-docs'),
     'theme' => 'light',
     'height' => '720px',
     'hideModels' => true,
@@ -12,10 +12,6 @@
 @endphp
 
 @once
-    @push('scripts')
-        <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.40.9"></script>
-    @endpush
-
     @push('styles')
         <style>
             .scalar-playground {
@@ -32,20 +28,12 @@
 @endonce
 
 <div class="scalar-playground mt-16" style="--scalar-playground-height: {{ $height }};">
-    <div id="{{ $scalarId }}" class="scalar-playground-target"></div>
+    <div
+        id="{{ $scalarId }}"
+        class="scalar-playground-target"
+        data-scalar-playground
+        data-spec-url="{{ $specUrl }}"
+        data-theme="{{ $theme }}"
+        data-hide-models="{{ $hideModels ? 'true' : 'false' }}"
+    ></div>
 </div>
-
-<script>
-    (function () {
-        if (!window.Scalar || !window.Scalar.createApiReference) {
-            return;
-        }
-
-        window.Scalar.createApiReference('#' + @json($scalarId), {
-            url: @json($specUrl),
-            theme: @json($theme),
-            hideModels: @json($hideModels),
-        });
-
-    })();
-</script>

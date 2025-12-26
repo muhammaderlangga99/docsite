@@ -4,10 +4,10 @@ info:
   description: API documentation for the Payment Link Generation Service
   version: "1.0"
 servers:
-  - url: /api-proxy
+  - url: /czlink-proxy
     description: Docs proxy
   - url: https://api-link.cashup.id
-    description: Staging
+    description: API utama
 security:
 - Authorization: []
 paths:

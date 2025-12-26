@@ -4,18 +4,22 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Database\Connection;
 use RuntimeException;
 use Throwable;
 
 class MiniAtmCredentialService
 {
+    private const MERCHANT_ID = 125;
+    private const PRIVATE_KEY_WARNING = 'Private key ini hanya ditampilkan sekali. Harap simpan dengan aman.';
+
     /**
      * Generate partner, client, and partner_token, and return credentials + private key.
      */
     public function generateCredentials(string $username): array
     {
-        return DB::connection('host_to_host')->transaction(function () use ($username) {
-            $conn = DB::connection('host_to_host');
+        return $this->connection()->transaction(function () use ($username) {
+            $conn = $this->connection();
             $apiKey = $this->generateApiKey();
 
             $partnerId = $conn->table('partner')->insertGetId([
@@ -31,7 +35,7 @@ class MiniAtmCredentialService
             $conn->table('client')->insert([
                 'id' => $clientId,
                 'partner_id' => $partnerId,
-                'merchant_id' => 125,
+                'merchant_id' => self::MERCHANT_ID,
                 'state' => 'Active',
                 'updated_at' => now(),
             ]);
@@ -50,9 +54,27 @@ class MiniAtmCredentialService
                 'client_id' => $clientId,
                 'private_key' => $privateKey,
                 'public_key' => $cleanPublicKey,
-                'warning' => 'Private key ini hanya ditampilkan sekali. Harap simpan dengan aman.',
+                'warning' => self::PRIVATE_KEY_WARNING,
             ];
-        }, 3);
+        });
+    }
+
+    public function getLatestCredentialsForUser(string $username): ?object
+    {
+        return $this->connection()
+            ->table('partner as p')
+            ->join('client as c', 'c.partner_id', '=', 'p.id')
+            ->leftJoin('partner_token as pt', 'pt.partner_id', '=', 'p.id')
+            ->where('p.name', $username)
+            ->orderByDesc('p.id')
+            ->select([
+                'p.id as partner_id',
+                'p.name as partner_name',
+                'p.api_key',
+                'c.id as client_id',
+                'pt.pub_key',
+            ])
+            ->first();
     }
 
     /**
@@ -60,8 +82,8 @@ class MiniAtmCredentialService
      */
     public function regenerateKey(int $partnerId): array
     {
-        return DB::connection('host_to_host')->transaction(function () use ($partnerId) {
-            $conn = DB::connection('host_to_host');
+        return $this->connection()->transaction(function () use ($partnerId) {
+            $conn = $this->connection();
             [$privateKey, $publicKey] = $this->generateKeyPair();
             $cleanPublicKey = $this->cleanPublicKey($publicKey);
 
@@ -74,9 +96,9 @@ class MiniAtmCredentialService
                 'partner_id' => $partnerId,
                 'private_key' => $privateKey,
                 'public_key' => $cleanPublicKey,
-                'warning' => 'Private key ini hanya ditampilkan sekali. Harap simpan dengan aman.',
+                'warning' => self::PRIVATE_KEY_WARNING,
             ];
-        }, 3);
+        });
     }
 
     private function generateApiKey(): string
@@ -138,5 +160,19 @@ class MiniAtmCredentialService
         $stripped = str_replace(["\r", "\n", ' '], '', (string) $stripped);
 
         return trim($stripped);
+    }
+
+    private function connection(): Connection
+    {
+        return DB::connection('host_to_host');
+    }
+
+    public function isPartnerOwnedByUser(int $partnerId, string $username): bool
+    {
+        return $this->connection()
+            ->table('partner')
+            ->where('id', $partnerId)
+            ->where('name', $username)
+            ->exists();
     }
 }

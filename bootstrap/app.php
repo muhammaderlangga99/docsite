@@ -13,8 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web();
         $middleware->validateCsrfTokens(except: [
-            'api-proxy/*',
-            'api-proxy-cdcp/*',
+            'czlink-proxy/*',
+            'cdcp-proxy/*',
         ]);
 
         $middleware->alias([
