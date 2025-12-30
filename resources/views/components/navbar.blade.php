@@ -3,7 +3,7 @@
     Udah pake Alpine.js (x-data, @click, x-show, x-transition)
     dan Tailwind CSS.
 --}}
-<nav class="bg-white/60 backdrop-blur-lg p-4 border-b border-zinc-100 fixed top-0 z-50 w-full" x-data="{ open: false }">
+<nav class="bg-white/60 backdrop-blur-lg p-4 border-b border-zinc-100 fixed top-0 z-50 w-full" x-data="{ open: false, apiOpen: false }">
     @php
         $appUrl = rtrim(config('app.url'), '/');
     @endphp
@@ -20,6 +20,29 @@
             <div class="hidden md:flex space-x-5 text-sm text-gray-500">
                 <a href="{{ $appUrl }}/docs/introduction" class="hover:text-gray-300">Docs</a>
                 <a href="https://cashup.id" class="hover:text-gray-300">About Us <sup class="text-xs ml-0.5">↗</sup></a>
+                <div class="relative" @mouseenter="apiOpen = true" @mouseleave="apiOpen = false">
+                    <button type="button" class="hover:text-gray-300 flex items-center gap-1">
+                        API Playground
+                        <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.24 4.5a.75.75 0 0 1-1.08 0l-4.24-4.5a.75.75 0 0 1 .02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div x-show="apiOpen"
+                         x-transition:enter="transition ease-out duration-150"
+                         x-transition:enter-start="opacity-0 -translate-y-1"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave-start="opacity-100 translate-y-0"
+                         x-transition:leave-end="opacity-0 -translate-y-1"
+                         class="absolute left-0 mt-2 w-56 rounded-xl overflow-hidden border border-gray-100 bg-white shadow-lg text-gray-600"
+                         style="display: none;">
+                        <a href="{{ $appUrl }}/api-playground/api-czlink" class="block px-4 py-2 hover:bg-gray-50">API CZLink</a>
+                        <a href="{{ $appUrl }}/api-playground/api-cdcp" class="block px-4 py-2 hover:bg-gray-50">API CDCP</a>
+                        <a href="{{ $appUrl }}/api-playground/api-qris" class="block px-4 py-2 hover:bg-gray-50">API QRIS</a>
+                        <a href="{{ $appUrl }}/api-playground/api-bnpl" class="block px-4 py-2 hover:bg-gray-50">API BNPL</a>
+                        <a href="{{ $appUrl }}/api-playground/api-mini-atm" class="block px-4 py-2 hover:bg-gray-50">API Mini ATM</a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -76,13 +99,24 @@
          x-transition:leave="transition ease-in duration-150"
          x-transition:leave-start="opacity-100 translate-y-0"
          x-transition:leave-end="opacity-0 -translate-y-2"
-         class="md:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3"
+         class="md:hidden z-50 px-2 pt-2 pb-3 space-y-1 sm:px-3"
          style="display: none;"
          @click.away="open = false" {{-- Bonus: klik di luar menu bakal nutup --}}
          >
         
         <a href="https://cashup.id" class="block py-2 rounded-md text-base">About</a>
         <a href="{{ $appUrl }}/docs/introduction" class="block py-2 rounded-md text-base">Docs</a>
+        <div class="pt-2">
+            <div class="text-xs uppercase tracking-wide text-gray-400">API Playground</div>
+            <a href="{{ $appUrl }}/api-playground/api-czlink" class="block py-2 rounded-md text-base">API CZLink</a>
+            <a href="{{ $appUrl }}/api-playground/api-cdcp" class="block py-2 rounded-md text-base">API CDCP</a>
+            <a href="{{ $appUrl }}/api-playground/api-qris" class="block py-2 rounded-md text-base">API QRIS</a>
+            <a href="{{ $appUrl }}/api-playground/api-bnpl" class="block py-2 rounded-md text-base">API BNPL</a>
+            <a href="{{ $appUrl }}/api-playground/api-mini-atm" class="block py-2 rounded-md text-base">API Mini ATM</a>
+        </div>
         
     </div>
 </nav>
+
+
+
