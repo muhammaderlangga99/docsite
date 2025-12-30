@@ -1,0 +1,2734 @@
+openapi: 3.0.0
+info:
+  title: QRIS
+  version: 1.0.0
+  description: ''
+servers:
+  - url: /qris-proxy
+    description: Docs proxy (QRIS)
+  - url: https://tucanos-miniatm.cashlez.com
+    description: Docs Staging
+tags:
+  - name: QRIS Static
+    description: QRIS Static endpoints
+  - name: API QRIS
+    description: QRIS endpoints
+x-tagGroups:
+  - name: API QRIS Group
+    tags:
+      - QRIS Static
+      - API QRIS
+paths:
+  /MmCoreQrpssHost/v1/payment/get_qr_code:
+    post:
+      summary: QRIS Static
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tMWxpb25kZS9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc2NjU1MDA2MCwiZXhwIjoxNzc0MzI2MDYwfQ.U9TodbgGROXVmxRfbMg-4tntc61n5fv9H8LXVna62TiQYxGvHZFLPxaB2YQxK8UzrUxBhckmyeraYF5V2x84KQ
+      responses:
+        '200':
+          description: 200 QRIS Static
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  is_qris_flag:
+                    type: boolean
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  hs_qr_string_len:
+                    type: integer
+                  merchant_address2:
+                    type: string
+                  hs_qr_string_enc:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  batch_group_id:
+                    type: integer
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  merchant_id:
+                    type: integer
+                  message:
+                    type: string
+                  qr_pay_app_id:
+                    type: string
+                    format: utc-millisec
+                  version:
+                    type: object
+                    properties:
+                      qrpss_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  batch_group_name:
+                    type: string
+                  qr_pay_app_name:
+                    type: string
+                  container_name:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  general_ksn_index:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  create_at:
+                    type: string
+                    format: style
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                is_qris_flag: true
+                response_code: '0000'
+                hs_qr_string_len: 390
+                merchant_address2: Jl Jend Sudirman No Kav 33
+                hs_qr_string_enc: >-
+                  E0D98F55A136E3F27A45A71094CB300977B055C9E8DF8C915737C63597B9E40253900EB2BCDD8B687D6B6E21C2AD47700B185EB589E519431125E70EF75C8C2815F128BC4A1FE7977D6E98BA84D731649313A22D1F2A75FC9CFFF50BF0C87AF313075A9F3C3514276478BF228577FEF0D116406C2001C974E813DF30A3115086476E4296D2F1975E52A5016C33521E51E459FD71A8EFB0DD91F025F12DB861D913DE5663A9DF3A182850CCCC8EC478CC1439E03C15A9BF2EC5A3F1B1C20B0E26BF2426DA901E4907
+                merchant_address1: Gd Atria @Sudirman Lt.23
+                batch_group_id: 1
+                midware_timestamp: '1766550075'
+                merchant_name: Cashlez IT 2
+                merchant_id: 364
+                message: SUCCESS TO GENERATE QR CODE.
+                qr_pay_app_id: '1'
+                version:
+                  qrpss_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                batch_group_name: CASHLEZ-QRIS-STATIC
+                qr_pay_app_name: CASHLEZ
+                container_name: cz-prod.dc.angelfish.docker
+                print_receipt_merchant_name: Cashlez IT 2
+                general_ksn_index: 2B13D
+                print_receipt_address_line_2: Jakarta Pusat,Tanah Abang
+                create_at: '2025-12-24 11:21:15.285'
+                print_receipt_address_line_1: Gd Atria @Sudirman Lt.23
+                status: OK
+      tags:
+        - QRIS Static
+      description: >-
+        Generated from cURL: curl --location
+        'http://localhost:28282/create-user-qris-static' \
+
+        --header 'Content-Type: application/json' \
+
+        --data '{
+            "muid": "jajananastria01",
+            "merchantUniqueCode": "CB418-3125",
+            "mid": "363565441665267"
+        }'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_id:
+                  type: string
+                pub_key:
+                  type: string
+                qr_pay_app_id:
+                  type: string
+                  format: utc-millisec
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_id: D1V2230001101
+              pub_key: >-
+                MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHK4NeC/viQAgHM30C/MLz4ipYbflfmPKEJeMDtc9mkENqQ20jI/C848K1flF8PmVuNaJZ343A1FWKen/gsu7GiMj7K42bd8Mu8z2MW/3ATP81Q4ak6kDmffg7jJWXU4fCJ2HJnylyZJiW47V28xrKAaJSIdgogukGgXpUr404bQIDAQAB
+              qr_pay_app_id: '1'
+              device_timestamp: '1754540746'
+  /MmCoreQrpssHost/v1/get_app_config:
+    post:
+      summary: App Config QRIS Static
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tMWxpb25kZS9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc2NjU1MDMzOCwiZXhwIjoxNzc0MzI2MzM4fQ.rFPDi7TXdbX00grOlMH4axQUKatvN0IUE-4Y7d6bIIFUGrW514pNtg5nNyNN-kMjmAjDvUxVvzsV1dAwZlk5iA
+      responses:
+        default:
+          description: App Config QRIS Static
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                  container_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  app_config:
+                    type: object
+                    properties:
+                      qr_pay_app_list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            logo:
+                              type: string
+                            id:
+                              type: integer
+                  lock_flag:
+                    type: boolean
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      qrpss_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: 00B0
+                container_name: cz-prod.dc.angelfish.docker
+                midware_timestamp: '1766550407'
+                app_config:
+                  qr_pay_app_list:
+                    - name: CASHLEZ
+                      logo: >-
+                        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
+                      id: 1
+                lock_flag: false
+                message: GET APPLICATION CONFIG SUCCESS.
+                version:
+                  qrpss_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                status: OK
+      tags:
+        - QRIS Static
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1754540746'
+  /MmCoreQrpssHost/v1/trx_history/get_all_success_payment_list:
+    post:
+      summary: QRIS Static History Transaction
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMSIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tMWxpb25kZS9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc2NjU1ODUxNiwiZXhwIjoxNzc0MzM0NTE2fQ.kErT9_JQDI7_-rDyjpKQry40KTKF9lMcoaA5iQ2RMhn6TVkHAYj-mu-7FzN67d62KgWp6sqRvpWaOroe4HiSeg
+      responses:
+        '200':
+          description: 200 QRIS Static History Transaction
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  merchant_id:
+                    type: integer
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      qrpss_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  number_of_success_payment:
+                    type: integer
+                  container_name:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  success_payment_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        approval_code:
+                          type: string
+                        batch_group_id:
+                          type: integer
+                        invoice_num:
+                          type: string
+                          format: color
+                        base_amount:
+                          type: integer
+                        batch_num:
+                          type: string
+                          format: color
+                        create_at:
+                          type: string
+                          format: date-time
+                        batch_group_name:
+                          type: string
+                        rrn:
+                          type: string
+                          format: utc-millisec
+                        issuer_name:
+                          type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0031'
+                merchant_address2: Jl Jend Sudirman No Kav 33
+                merchant_address1: Gd Atria @Sudirman Lt.23
+                midware_timestamp: '1766558524'
+                merchant_name: Cashlez IT 1
+                merchant_id: 368
+                message: SUCCESS TO GET SUCCESS PAYMENT LIST.
+                version:
+                  qrpss_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                number_of_success_payment: 126
+                container_name: cz-prod.dc.angelfish.docker
+                print_receipt_merchant_name: Cashlez IT 1
+                success_payment_list:
+                  - approval_code: 7xd22w
+                    batch_group_id: 1
+                    invoice_num: '000126'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-16T10:49:01Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000126'
+                    issuer_name: SHOPEE AIRPAY
+                  - approval_code: sxvw2u
+                    batch_group_id: 1
+                    invoice_num: '000125'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-16T09:49:10Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000125'
+                    issuer_name: GOPAY
+                  - approval_code: vgyb7v
+                    batch_group_id: 1
+                    invoice_num: '000124'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-15T19:10:17Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000124'
+                    issuer_name: GOPAY
+                  - approval_code: nwf5t3
+                    batch_group_id: 1
+                    invoice_num: '000123'
+                    base_amount: 4
+                    batch_num: '000001'
+                    create_at: '2025-12-15T18:29:42Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000123'
+                    issuer_name: ASTRAPAY
+                  - approval_code: 944v63
+                    batch_group_id: 1
+                    invoice_num: '000122'
+                    base_amount: 8
+                    batch_num: '000001'
+                    create_at: '2025-12-15T18:28:30Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000122'
+                    issuer_name: GOPAY
+                  - approval_code: t0zq8l
+                    batch_group_id: 1
+                    invoice_num: '000121'
+                    base_amount: 3
+                    batch_num: '000001'
+                    create_at: '2025-12-15T18:28:18Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000121'
+                    issuer_name: BCADIGITAL
+                  - approval_code: yw9cny
+                    batch_group_id: 1
+                    invoice_num: '000120'
+                    base_amount: 22
+                    batch_num: '000001'
+                    create_at: '2025-12-15T18:26:03Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000120'
+                    issuer_name: BCA
+                  - approval_code: jq29sg
+                    batch_group_id: 1
+                    invoice_num: '000119'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-15T18:25:42Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000119'
+                    issuer_name: BCA
+                  - approval_code: fk4ysy
+                    batch_group_id: 1
+                    invoice_num: '000118'
+                    base_amount: 2
+                    batch_num: '000001'
+                    create_at: '2025-12-15T18:25:40Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000118'
+                    issuer_name: Superbank
+                  - approval_code: ivq6vx
+                    batch_group_id: 1
+                    invoice_num: '000117'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-15T18:25:28Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000117'
+                    issuer_name: Superbank
+                  - approval_code: rfb28f
+                    batch_group_id: 1
+                    invoice_num: '000116'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-15T18:18:03Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000116'
+                    issuer_name: Superbank
+                  - approval_code: c450ba
+                    batch_group_id: 1
+                    invoice_num: '000115'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-15T18:08:35Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000115'
+                    issuer_name: Superbank
+                  - approval_code: gysdzd
+                    batch_group_id: 1
+                    invoice_num: '000114'
+                    base_amount: 5
+                    batch_num: '000001'
+                    create_at: '2025-12-15T18:07:23Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000114'
+                    issuer_name: BCA
+                  - approval_code: 6l10ky
+                    batch_group_id: 1
+                    invoice_num: '000113'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-15T18:04:09Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000113'
+                    issuer_name: Superbank
+                  - approval_code: k1kofq
+                    batch_group_id: 1
+                    invoice_num: '000112'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-15T17:37:13Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000112'
+                    issuer_name: Superbank
+                  - approval_code: xel6b9
+                    batch_group_id: 1
+                    invoice_num: '000111'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-15T17:34:27Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000111'
+                    issuer_name: BCA
+                  - approval_code: 614wdo
+                    batch_group_id: 1
+                    invoice_num: '000110'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-15T17:28:43Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000110'
+                    issuer_name: BCA
+                  - approval_code: uyje6g
+                    batch_group_id: 1
+                    invoice_num: '000109'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-15T17:28:16Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000109'
+                    issuer_name: Superbank
+                  - approval_code: ud00t8
+                    batch_group_id: 1
+                    invoice_num: '000108'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-15T17:28:14Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000108'
+                    issuer_name: BCA
+                  - approval_code: 5y4di8
+                    batch_group_id: 1
+                    invoice_num: '000107'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-15T17:10:17Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000107'
+                    issuer_name: MANDIRI
+                  - approval_code: 0dsgph
+                    batch_group_id: 1
+                    invoice_num: '000106'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-10T04:03:05Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000106'
+                    issuer_name: GOPAY
+                  - approval_code: z0f8er
+                    batch_group_id: 1
+                    invoice_num: '000105'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-08T08:08:28Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000105'
+                    issuer_name: GOPAY
+                  - approval_code: 69q7wy
+                    batch_group_id: 1
+                    invoice_num: '000104'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-08T08:06:13Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000104'
+                    issuer_name: GOPAY
+                  - approval_code: nj4023
+                    batch_group_id: 1
+                    invoice_num: '000103'
+                    base_amount: 2
+                    batch_num: '000001'
+                    create_at: '2025-12-08T07:49:06Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000103'
+                    issuer_name: DANA
+                  - approval_code: 9kkea2
+                    batch_group_id: 1
+                    invoice_num: '000102'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-08T07:48:33Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000102'
+                    issuer_name: GOPAY
+                  - approval_code: r5zvc9
+                    batch_group_id: 1
+                    invoice_num: '000101'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-08T07:47:37Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000101'
+                    issuer_name: GOPAY
+                  - approval_code: sr32lc
+                    batch_group_id: 1
+                    invoice_num: '000100'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-08T07:46:50Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000100'
+                    issuer_name: GOPAY
+                  - approval_code: 5o0svp
+                    batch_group_id: 1
+                    invoice_num: '000099'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-08T07:44:41Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000099'
+                    issuer_name: GOPAY
+                  - approval_code: 1l8zlm
+                    batch_group_id: 1
+                    invoice_num: '000098'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-03T20:04:48Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000098'
+                    issuer_name: BCA
+                  - approval_code: 6ibe70
+                    batch_group_id: 1
+                    invoice_num: '000097'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-12-01T17:01:00Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000097'
+                    issuer_name: BCA
+                  - approval_code: xetkso
+                    batch_group_id: 1
+                    invoice_num: '000096'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-20T03:41:31Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000096'
+                    issuer_name: BNI
+                  - approval_code: sx37go
+                    batch_group_id: 1
+                    invoice_num: '000095'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-13T08:12:20Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000095'
+                    issuer_name: GOPAY
+                  - approval_code: 2l9uny
+                    batch_group_id: 1
+                    invoice_num: '000094'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-13T08:11:22Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000094'
+                    issuer_name: BCA
+                  - approval_code: jz6jlu
+                    batch_group_id: 1
+                    invoice_num: '000093'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-12T11:26:43Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000093'
+                    issuer_name: DANA
+                  - approval_code: 3gtywt
+                    batch_group_id: 1
+                    invoice_num: '000092'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-12T11:23:15Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000092'
+                    issuer_name: GOPAY
+                  - approval_code: fbn5ei
+                    batch_group_id: 1
+                    invoice_num: '000091'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-12T11:16:29Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000091'
+                    issuer_name: GOPAY
+                  - approval_code: jkqaov
+                    batch_group_id: 1
+                    invoice_num: '000090'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-12T11:11:21Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000090'
+                    issuer_name: GOPAY
+                  - approval_code: qqt0sa
+                    batch_group_id: 1
+                    invoice_num: '000089'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-12T11:04:37Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000089'
+                    issuer_name: GOPAY
+                  - approval_code: uo8cfl
+                    batch_group_id: 1
+                    invoice_num: '000088'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-12T11:03:39Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000088'
+                    issuer_name: GOPAY
+                  - approval_code: etxcpm
+                    batch_group_id: 1
+                    invoice_num: '000087'
+                    base_amount: 2
+                    batch_num: '000001'
+                    create_at: '2025-11-12T08:00:53Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000087'
+                    issuer_name: BCA
+                  - approval_code: j0w0q6
+                    batch_group_id: 1
+                    invoice_num: '000086'
+                    base_amount: 3
+                    batch_num: '000001'
+                    create_at: '2025-11-11T18:30:29Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000086'
+                    issuer_name: BNI
+                  - approval_code: p56983
+                    batch_group_id: 1
+                    invoice_num: '000085'
+                    base_amount: 69
+                    batch_num: '000001'
+                    create_at: '2025-11-11T18:28:57Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000085'
+                    issuer_name: BNI
+                  - approval_code: on19g0
+                    batch_group_id: 1
+                    invoice_num: '000084'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-11T18:20:35Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000084'
+                    issuer_name: BNI
+                  - approval_code: ncagga
+                    batch_group_id: 1
+                    invoice_num: '000083'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-11T18:13:19Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000083'
+                    issuer_name: BCA
+                  - approval_code: ttb78d
+                    batch_group_id: 1
+                    invoice_num: '000082'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-11T17:20:33Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000082'
+                    issuer_name: BCA
+                  - approval_code: frh28w
+                    batch_group_id: 1
+                    invoice_num: '000081'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-11T17:20:07Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000081'
+                    issuer_name: GOPAY
+                  - approval_code: 0bmnf0
+                    batch_group_id: 1
+                    invoice_num: '000080'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-07T05:00:38Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000080'
+                    issuer_name: BRI
+                  - approval_code: 7xwha1
+                    batch_group_id: 1
+                    invoice_num: '000079'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-07T05:00:05Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000079'
+                    issuer_name: BCA
+                  - approval_code: yleogq
+                    batch_group_id: 1
+                    invoice_num: '000078'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-06T04:50:43Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000078'
+                    issuer_name: BCA
+                  - approval_code: dak3nt
+                    batch_group_id: 1
+                    invoice_num: '000077'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-06T04:46:36Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000077'
+                    issuer_name: BRI
+                  - approval_code: rwqwk6
+                    batch_group_id: 1
+                    invoice_num: '000076'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-06T04:07:48Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000076'
+                    issuer_name: BCA
+                  - approval_code: napykj
+                    batch_group_id: 1
+                    invoice_num: '000075'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-06T04:06:12Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000075'
+                    issuer_name: BRI
+                  - approval_code: pgk0vw
+                    batch_group_id: 1
+                    invoice_num: '000074'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-05T07:54:49Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000074'
+                    issuer_name: BCA
+                  - approval_code: fh79wr
+                    batch_group_id: 1
+                    invoice_num: '000073'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-05T07:45:32Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000073'
+                    issuer_name: GOPAY
+                  - approval_code: vttn0x
+                    batch_group_id: 1
+                    invoice_num: '000072'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-05T07:44:07Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000072'
+                    issuer_name: GOPAY
+                  - approval_code: cxqxes
+                    batch_group_id: 1
+                    invoice_num: '000071'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-05T07:36:47Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000071'
+                    issuer_name: GOPAY
+                  - approval_code: 01fywz
+                    batch_group_id: 1
+                    invoice_num: '000070'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-05T07:28:35Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000070'
+                    issuer_name: BCA
+                  - approval_code: n336fd
+                    batch_group_id: 1
+                    invoice_num: '000069'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-05T07:24:01Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000069'
+                    issuer_name: BRI
+                  - approval_code: z68omu
+                    batch_group_id: 1
+                    invoice_num: '000068'
+                    base_amount: 2
+                    batch_num: '000001'
+                    create_at: '2025-11-05T07:21:31Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000068'
+                    issuer_name: BRI
+                  - approval_code: 2rwrqo
+                    batch_group_id: 1
+                    invoice_num: '000067'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-11-05T07:19:12Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000067'
+                    issuer_name: BRI
+                  - approval_code: gr4lot
+                    batch_group_id: 1
+                    invoice_num: '000066'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-31T05:28:14Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000066'
+                    issuer_name: BRI
+                  - approval_code: 5icip6
+                    batch_group_id: 1
+                    invoice_num: '000065'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-31T05:25:48Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000065'
+                    issuer_name: BCA
+                  - approval_code: rmyb92
+                    batch_group_id: 1
+                    invoice_num: '000064'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-30T08:39:58Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000064'
+                    issuer_name: DANA
+                  - approval_code: vi32s8
+                    batch_group_id: 1
+                    invoice_num: '000063'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-30T08:39:12Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000063'
+                    issuer_name: DANA
+                  - approval_code: 5dkmd4
+                    batch_group_id: 1
+                    invoice_num: '000062'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-30T03:15:55Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000062'
+                    issuer_name: BNI
+                  - approval_code: isj4mv
+                    batch_group_id: 1
+                    invoice_num: '000061'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-30T03:12:23Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000061'
+                    issuer_name: BRI
+                  - approval_code: 8izdvl
+                    batch_group_id: 1
+                    invoice_num: '000060'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-30T03:10:10Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000060'
+                    issuer_name: BCA
+                  - approval_code: bgmmk4
+                    batch_group_id: 1
+                    invoice_num: '000059'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-30T03:09:32Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000059'
+                    issuer_name: BCA
+                  - approval_code: d5vlrh
+                    batch_group_id: 1
+                    invoice_num: '000058'
+                    base_amount: 9
+                    batch_num: '000001'
+                    create_at: '2025-10-28T08:08:10Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000058'
+                    issuer_name: SHOPEE AIRPAY
+                  - approval_code: s7l603
+                    batch_group_id: 1
+                    invoice_num: '000057'
+                    base_amount: 7
+                    batch_num: '000001'
+                    create_at: '2025-10-28T08:05:55Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000057'
+                    issuer_name: BCA
+                  - approval_code: 4d4bm4
+                    batch_group_id: 1
+                    invoice_num: '000056'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-28T08:05:11Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000056'
+                    issuer_name: BNI
+                  - approval_code: nna712
+                    batch_group_id: 1
+                    invoice_num: '000055'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-28T08:04:45Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000055'
+                    issuer_name: MANDIRI
+                  - approval_code: k2imdl
+                    batch_group_id: 1
+                    invoice_num: '000054'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-22T17:16:09Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000054'
+                    issuer_name: BRI
+                  - approval_code: etuawl
+                    batch_group_id: 1
+                    invoice_num: '000053'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-22T04:44:26Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000053'
+                    issuer_name: OVO
+                  - approval_code: hiempf
+                    batch_group_id: 1
+                    invoice_num: '000052'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-22T04:42:15Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000052'
+                    issuer_name: OVO
+                  - approval_code: 07hm1z
+                    batch_group_id: 1
+                    invoice_num: '000051'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-16T05:29:23Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000051'
+                    issuer_name: DANA
+                  - approval_code: wae5hi
+                    batch_group_id: 1
+                    invoice_num: '000050'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-10-15T09:32:49Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000050'
+                    issuer_name: GOPAY
+                  - approval_code: p77ric
+                    batch_group_id: 1
+                    invoice_num: '000049'
+                    base_amount: 5
+                    batch_num: '000001'
+                    create_at: '2025-10-15T03:19:02Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000049'
+                    issuer_name: GOPAY
+                  - approval_code: vu4fmt
+                    batch_group_id: 1
+                    invoice_num: '000048'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-29T08:17:50Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000048'
+                    issuer_name: BCA
+                  - approval_code: 8bj67c
+                    batch_group_id: 1
+                    invoice_num: '000047'
+                    base_amount: 5
+                    batch_num: '000001'
+                    create_at: '2025-09-24T10:27:26Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000047'
+                    issuer_name: GOPAY
+                  - approval_code: u3w418
+                    batch_group_id: 1
+                    invoice_num: '000046'
+                    base_amount: 2
+                    batch_num: '000001'
+                    create_at: '2025-09-24T10:26:57Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000046'
+                    issuer_name: OVO
+                  - approval_code: 6rlwxu
+                    batch_group_id: 1
+                    invoice_num: '000045'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T10:26:47Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000045'
+                    issuer_name: MANDIRI
+                  - approval_code: 2kx8m3
+                    batch_group_id: 1
+                    invoice_num: '000044'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T10:26:44Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000044'
+                    issuer_name: GOPAY
+                  - approval_code: n5pfs2
+                    batch_group_id: 1
+                    invoice_num: '000043'
+                    base_amount: 2
+                    batch_num: '000001'
+                    create_at: '2025-09-24T10:25:57Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000043'
+                    issuer_name: DANA
+                  - approval_code: w7ddrm
+                    batch_group_id: 1
+                    invoice_num: '000042'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T10:25:56Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000042'
+                    issuer_name: BRI
+                  - approval_code: aut2r9
+                    batch_group_id: 1
+                    invoice_num: '000041'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T10:25:25Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000041'
+                    issuer_name: BRI
+                  - approval_code: r8mn8l
+                    batch_group_id: 1
+                    invoice_num: '000040'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T10:24:49Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000040'
+                    issuer_name: BRI
+                  - approval_code: v1igo7
+                    batch_group_id: 1
+                    invoice_num: '000039'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T10:21:16Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000039'
+                    issuer_name: MANDIRI
+                  - approval_code: e441p1
+                    batch_group_id: 1
+                    invoice_num: '000038'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T10:20:36Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000038'
+                    issuer_name: BRI
+                  - approval_code: l5iqgl
+                    batch_group_id: 1
+                    invoice_num: '000037'
+                    base_amount: 901
+                    batch_num: '000001'
+                    create_at: '2025-09-24T10:07:35Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000037'
+                    issuer_name: BCA
+                  - approval_code: 5phr4v
+                    batch_group_id: 1
+                    invoice_num: '000036'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T10:00:09Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000036'
+                    issuer_name: SEABANK
+                  - approval_code: zbr1b7
+                    batch_group_id: 1
+                    invoice_num: '000035'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:59:52Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000035'
+                    issuer_name: OVO
+                  - approval_code: mbq9fh
+                    batch_group_id: 1
+                    invoice_num: '000034'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:57:55Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000034'
+                    issuer_name: DANA
+                  - approval_code: 3r655a
+                    batch_group_id: 1
+                    invoice_num: '000033'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:57:26Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000033'
+                    issuer_name: DANA
+                  - approval_code: 2zeitz
+                    batch_group_id: 1
+                    invoice_num: '000032'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:56:56Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000032'
+                    issuer_name: DANA
+                  - approval_code: 31frka
+                    batch_group_id: 1
+                    invoice_num: '000031'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:55:09Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000031'
+                    issuer_name: LINK AJA
+                  - approval_code: pqdb4r
+                    batch_group_id: 1
+                    invoice_num: '000030'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:53:14Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000030'
+                    issuer_name: MANDIRI
+                  - approval_code: qkjfpy
+                    batch_group_id: 1
+                    invoice_num: '000029'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:39:13Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000029'
+                    issuer_name: BCA
+                  - approval_code: m5swjj
+                    batch_group_id: 1
+                    invoice_num: '000028'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:37:28Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000028'
+                    issuer_name: BCA
+                  - approval_code: r10bbq
+                    batch_group_id: 1
+                    invoice_num: '000027'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:36:46Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000027'
+                    issuer_name: BCA
+                  - approval_code: z1id16
+                    batch_group_id: 1
+                    invoice_num: '000026'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:35:30Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000026'
+                    issuer_name: BCA
+                  - approval_code: sbnytu
+                    batch_group_id: 1
+                    invoice_num: '000025'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:34:35Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000025'
+                    issuer_name: BCA
+                  - approval_code: f06foo
+                    batch_group_id: 1
+                    invoice_num: '000024'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:33:20Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000024'
+                    issuer_name: BCA
+                  - approval_code: rv0r9u
+                    batch_group_id: 1
+                    invoice_num: '000023'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:32:44Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000023'
+                    issuer_name: BCA
+                  - approval_code: qyii87
+                    batch_group_id: 1
+                    invoice_num: '000022'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T09:32:17Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000022'
+                    issuer_name: BCA
+                  - approval_code: h6cf0h
+                    batch_group_id: 1
+                    invoice_num: '000021'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T08:58:28Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000021'
+                    issuer_name: BRI
+                  - approval_code: 6jsoui
+                    batch_group_id: 1
+                    invoice_num: '000020'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T08:57:46Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000020'
+                    issuer_name: BRI
+                  - approval_code: fqomuy
+                    batch_group_id: 1
+                    invoice_num: '000019'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T08:56:03Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000019'
+                    issuer_name: DANA
+                  - approval_code: cvx257
+                    batch_group_id: 1
+                    invoice_num: '000018'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T08:54:56Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000018'
+                    issuer_name: DANA
+                  - approval_code: r82h6b
+                    batch_group_id: 1
+                    invoice_num: '000017'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T08:53:24Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000017'
+                    issuer_name: MANDIRI
+                  - approval_code: 0y3jve
+                    batch_group_id: 1
+                    invoice_num: '000016'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T08:52:36Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000016'
+                    issuer_name: MANDIRI
+                  - approval_code: rbblg3
+                    batch_group_id: 1
+                    invoice_num: '000015'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T07:51:42Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000015'
+                    issuer_name: MANDIRI
+                  - approval_code: 7y95t3
+                    batch_group_id: 1
+                    invoice_num: '000014'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-24T07:28:36Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000014'
+                    issuer_name: BRI
+                  - approval_code: 8kji88
+                    batch_group_id: 1
+                    invoice_num: '000013'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-23T15:58:31Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000013'
+                    issuer_name: LINK AJA
+                  - approval_code: yu5dnn
+                    batch_group_id: 1
+                    invoice_num: '000012'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-09-23T15:58:04Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000012'
+                    issuer_name: MANDIRI
+                  - approval_code: 8va17v
+                    batch_group_id: 1
+                    invoice_num: '000011'
+                    base_amount: 3
+                    batch_num: '000001'
+                    create_at: '2025-08-25T05:18:06Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000011'
+                    issuer_name: OVO
+                  - approval_code: km9upr
+                    batch_group_id: 1
+                    invoice_num: '000010'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-08-25T05:18:05Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000010'
+                    issuer_name: DANA
+                  - approval_code: ss04nu
+                    batch_group_id: 1
+                    invoice_num: '000009'
+                    base_amount: 2
+                    batch_num: '000001'
+                    create_at: '2025-08-25T05:18:04Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000009'
+                    issuer_name: GOPAY
+                  - approval_code: ntew89
+                    batch_group_id: 1
+                    invoice_num: '000008'
+                    base_amount: 2
+                    batch_num: '000001'
+                    create_at: '2025-08-25T05:17:31Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000008'
+                    issuer_name: GOPAY
+                  - approval_code: g6pwye
+                    batch_group_id: 1
+                    invoice_num: '000007'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-08-25T05:17:22Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000007'
+                    issuer_name: DANA
+                  - approval_code: og7sfo
+                    batch_group_id: 1
+                    invoice_num: '000006'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-08-25T05:16:25Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000006'
+                    issuer_name: DANA
+                  - approval_code: or4wcj
+                    batch_group_id: 1
+                    invoice_num: '000005'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-08-25T05:08:14Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000005'
+                    issuer_name: OVO
+                  - approval_code: g1zqq1
+                    batch_group_id: 1
+                    invoice_num: '000004'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-08-25T05:07:27Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000004'
+                    issuer_name: GOPAY
+                  - approval_code: vnjbb5
+                    batch_group_id: 1
+                    invoice_num: '000003'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-08-22T08:22:20Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000003'
+                    issuer_name: OVO
+                  - approval_code: nadur5
+                    batch_group_id: 1
+                    invoice_num: '000002'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-08-22T08:21:20Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000002'
+                    issuer_name: OVO
+                  - approval_code: zbw7xe
+                    batch_group_id: 1
+                    invoice_num: '000001'
+                    base_amount: 1
+                    batch_num: '000001'
+                    create_at: '2025-08-22T08:19:09Z'
+                    batch_group_name: CASHLEZ-QRIS-STATIC
+                    rrn: '000000000001'
+                    issuer_name: OVO
+                print_receipt_address_line_2: Jl Jend Sudirman No Kav 33
+                print_receipt_address_line_1: Gd Atria @Sudirman Lt.23
+                status: OK
+      tags:
+        - QRIS Static
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1766558407983'
+  /MmCorePsgsHost/v1/login:
+    post:
+      summary: User Device Login
+      responses:
+        '200':
+          description: 200 Login Cash Pay Tech
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  merchant_id:
+                    type: integer
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      psgs_ver:
+                        type: string
+                  token:
+                    type: string
+                  container_name:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0000'
+                merchant_address2: Jl Jend Sudirman No Kav 33
+                merchant_address1: Gd Atria @Sudirman Lt.23
+                midware_timestamp: '1754541925'
+                merchant_name: Cashlez IT 2
+                merchant_id: 364
+                message: LOGIN SUCCESS.
+                version:
+                  crypto_ver: v1.5.0
+                  psgs_ver: v1.0.1
+                token: >-
+                  eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tbGlvbmRlL01tQ29yZVBzZ3NIb3N0L3YxL2xvZ2luIiwiaWF0IjoxNzU0NTQxOTI1LCJleHAiOjE3NjI0OTA3MjV9.L54ra1uYWE12NV9kE6-hFqJKXcgYK8qE0TOVJs5iNhUpIZFJ9s26rjZ3JZ7SNLxmi01Ay_I2P6MX4raKfQXGxQ
+                container_name: cz-prod.dc.anglefish.docker
+                print_receipt_merchant_name: Cashlez IT 2
+                print_receipt_address_line_2: Jakarta Pusat,Tanah Abang
+                print_receipt_address_line_1: Gd Atria @Sudirman Lt.23
+                status: OK
+      tags:
+        - API QRIS
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                pass_hash:
+                  type: string
+                username:
+                  type: string
+            example:
+              device_timestamp: '1754540746'
+              pass_hash: 21ec28a895dc3ec5cb1d95181d05bdf20ae3be449723723401dbffbfed582bdf
+              username: ittest02
+  /MmCoreQrpsHost/v1/get_app_config_1:
+    post:
+      summary: App Config_1
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: success
+          headers:
+            Server:
+              schema:
+                type: string
+              example: nginx/1.14.1
+            Date:
+              schema:
+                type: string
+              example: Fri, 29 Nov 2024 13:47:13 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  app_config:
+                    type: object
+                    properties:
+                      qr_pay_app_list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            logo:
+                              type: string
+                            id:
+                              type: integer
+                      trx_via_payment_app_flag:
+                        type: boolean
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: 00B0
+                midware_timestamp: '1732888033'
+                app_config:
+                  qr_pay_app_list:
+                    - name: QRIS
+                      logo: >-
+                        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
+                      id: 1
+                    - name: GOPAY QRIS
+                      logo: >-
+                        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
+                      id: 2
+                    - name: OVO QRIS
+                      logo: >-
+                        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
+                      id: 3
+                    - name: MCP QRIS
+                      logo: >-
+                        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
+                      id: 15
+                    - name: QREN QRIS
+                      logo: >-
+                        iVBORw0KGgoAAAANSUhEUgAAAhwAAAEwCAYAAAD8eKisAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QTE0RUQxQzAxRjM3MTFFQjhGQzY5NTgwNEU0RkE5MjgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QTE0RUQxQzExRjM3MTFFQjhGQzY5NTgwNEU0RkE5MjgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpBMTRFRDFCRTFGMzcxMUVCOEZDNjk1ODA0RTRGQTkyOCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpBMTRFRDFCRjFGMzcxMUVCOEZDNjk1ODA0RTRGQTkyOCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjS3YIkAABS8SURBVHja7N1dbtvG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
+                      id: 16
+                    - name: MIDTRANS QRIS
+                      logo: >-
+                        iVBORw0KGgoAAAANSUhEUgAAAPoAAAApCAYAAAAcRjS8AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAADJmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxMzggNzkuMTU5ODI0LCAyMDE2LzA5LzE0LTAxOjA5OjAxICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNyAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OThGN0U1RDFBMTk5MTFFQUE2MzRGQzNFRkZBQzIxODUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OThGN0U1RDJBMTk5MTFFQUE2MzRGQzNFRkZBQzIxODUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5OEY3RTVDRkExOTkxMUVBQTYzNEZDM0VGRkFDMjE4NSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5OEY3RTVEMEExOTkxMUVBQTYzNEZDM0VGRkFDMjE4NSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRG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
+                      id: 17
+                    - name: DANA QRIS
+                      logo: >-
+                        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
+                      id: 5
+                    - name: NOBU QRIS
+                      logo: >-
+                        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
+                      id: 18
+                  trx_via_payment_app_flag: true
+                message: GET APPLICATION CONFIG SUCCESS.
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                status: OK
+      tags:
+        - API QRIS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1754540746'
+  /MmCorePsgsHost/v1/get_general_device_key:
+    post:
+      summary: Generate Public Key
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjenBhcnRuZXJzaGlwNiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4vTW1Db3JlUHNnc0hvc3QvdjEvbG9naW4iLCJpYXQiOjE3NTc2NjE2NTAsImV4cCI6MTc2NTUyNDA1MH0.Gxm6pfWymHMtXNzTOBrJijMUh5Ahz-rISgH-QmY9Ov1Awj2cFNViaP80TQxFuLKMItpnrWjB9EHmjEt5rLh97A
+      responses:
+        '200':
+          description: 200 Generate Public Key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  enc_keys:
+                    type: object
+                    properties:
+                      pin_block_mk_universal:
+                        type: string
+                      general_ksn:
+                        type: string
+                      general_ipek:
+                        type: string
+                      amount_ksn:
+                        type: string
+                      amount_ipek:
+                        type: string
+                      pin_block_wk_universal:
+                        type: string
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      psgs_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0011'
+                container_name: cz-prod.dc.anglefish.docker
+                midware_timestamp: '1754542040'
+                enc_keys:
+                  pin_block_mk_universal: >-
+                    8DD92F237B97DF694BFD7D25504FDED3FC3566D99CFB18317C097940F2F984BAE3841F649C9D073DF92ED8B2F30CD7FFCF1212F8206B97EDEE3289097B6EDE452DE55A0C0F6648548BBCD967C7971FE5D9BF05201176F3121B79F5B9B66FB285512D06004E202A47D4BA40B38323D4DDE56DC13639EF500445E7E6FE8944FF40
+                  general_ksn: >-
+                    6D1F92C77831AD98C58B737D2790CDEBE1900DC77551194C8FB61CD89CC468C79705912D097A5EF06911D6DA16414094B505F4FF58A79A312F8FA42CADD773E3D635EFE7DA2BB2761B42FA6F811AEDC2CF710B9BCF0ECDA5255FD9F91588057E3CFFDFBDE2455EC742C432178B5A2F3BB06200A4CFA8B13A5E7F3D372E74FBC0
+                  general_ipek: >-
+                    6044765A968836E524233599CAFDED48AC0CFA396CD8705F1C25DBF3EDB8147F101EB9281DB7A7FF3DA99E84C4A06063FBAE3D99AA737D09FF900BF91F2BCD8A925D271198E8D89C57107F76B5F18BB2B34F4EEE780B7CD51248BAB32AEBD3BE32AFA836D6E889F1ECE0E2113E7E935C6B60BDEDB21A69E8146E4892FDCB5A63
+                  amount_ksn: >-
+                    4DB23274B40FB6810DEE32D8CBD0C649B6A4D620E76EBF0F1DF5FAE54E6F93201A17A084CA3C218D0C5EC3116170090C3369EE34AA30C0460558F12E773526574BCA0474F9384F4CB088BDDF5365A52B578C6C0691FE6DB9E762779EC5E469CF7F87FCCAFBA6A1822ED800D77267281BAB027D2F24D70E2242A8D4BD618F4943
+                  amount_ipek: >-
+                    68956AC9101EEDF1085B827FDDB37E108C9C3E04C82351C5539D715BB9722223590ADE9DABB0B9B55DEEB93A9EE0B3186F92C802A3C9F8DCD9C8408D69B5699F7560EDA3F5F393CCB8C23CF07DB057052825F0EECDF4016FC5124F2E86D3D2A95E23DA9B17DD2F53C28E1BADA0DF61AFAC3490991A988FC124BDE8440B679DD5
+                  pin_block_wk_universal: >-
+                    A4F6017E67012C6BDDDEE8B4B415FD4D3F6951A3E1F111421350B3C1A6B2B32CED2727B9161401699A4A9FCEFA515F772CEBF1CADEF727C59A29B9B9FDFA09DF7D56413DF9DCE777D0E7F7421E0BEF2196F38F1FE8FB938C4E65E00B74EE18B0F91FF13A701FDD34A795EC155EF600B4EC667D8C9855B6B73C3E617E82FF2E9A
+                message: KEY DOWNLOAD SUCCESS.
+                version:
+                  crypto_ver: v1.5.0
+                  psgs_ver: v1.0.1
+                status: OK
+      tags:
+        - API QRIS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              device_timestamp: '1754540746'
+              device_id: D1V2230001101
+              pub_key: >-
+                MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHK4NeC/viQAgHM30C/MLz4ipYbflfmPKEJeMDtc9mkENqQ20jI/C848K1flF8PmVuNaJZ343A1FWKen/gsu7GiMj7K42bd8Mu8z2MW/3ATP81Q4ak6kDmffg7jJWXU4fCJ2HJnylyZJiW47V28xrKAaJSIdgogukGgXpUr404bQIDAQAB
+  /MmCoreQrpsHost/v1/payment/generate_qr_code:
+    post:
+      summary: Generate QR Code
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{getToken}}'
+      responses:
+        '200':
+          description: 200 Generate QR Code
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_id:
+                    type: integer
+                  invoice_num:
+                    type: string
+                    format: color
+                  base_amount:
+                    type: integer
+                  general_ksn_index:
+                    type: string
+                  is_qris_flag:
+                    type: boolean
+                  hs_qr_string_len:
+                    type: integer
+                  merchant_address2:
+                    type: string
+                  hs_qr_string_enc:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  batch_group_id:
+                    type: integer
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  message:
+                    type: string
+                  qr_pay_app_id:
+                    type: integer
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  batch_group_name:
+                    type: string
+                  cz_trx_id:
+                    type: string
+                  trx_via_payment_app_flag:
+                    type: boolean
+                  qr_pay_app_name:
+                    type: string
+                  container_env_name:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  create_at:
+                    type: string
+                    format: style
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0000'
+                merchant_id: 368
+                invoice_num: '000373'
+                base_amount: 10
+                general_ksn_index: 3BA4A
+                is_qris_flag: true
+                hs_qr_string_len: 478
+                merchant_address2: Jl Jend Sudirman No Kav 33
+                hs_qr_string_enc: >-
+                  21BF64A5A73B70737175C1EBF4F2D4DDE60E57D309A8332D34B2736C84B2853698E32D80590310AC7BE4FB0D7552FEFEDE309FE673489EFB873D3A56957CE3DCE281485AFF8F6B7B786FD2FBA05047459E105A4A52F7183EF76E42326DD9D1CAE8E856EA9EDA7B0004C788EA44E218AEB1EA74BC7A3F1C0BCEB58431084AD173C886C8354619F5106BFD53535443FE3A7F11B8A84827DD6516CB192C0DCB6648855A2E680CD1EE3F5619FC9BA5BE5F56D3D4C486D5AB7746150B23B4F637649C384326139F09A06C62E1EB51A50B3F5EC298327DEA46B43B4D66084F1C8B02F1AB9CEB13774E849B3C80AFED6195E063
+                merchant_address1: Gd Atria @Sudirman Lt.23
+                batch_group_id: 11
+                midware_timestamp: '1747645058'
+                merchant_name: Cashlez IT 1
+                message: SUCCESS TO GENERATE QR CODE.
+                qr_pay_app_id: 21
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                batch_group_name: CASHLEZ-QRIS
+                cz_trx_id: DMPM91415803000373
+                trx_via_payment_app_flag: true
+                qr_pay_app_name: CASHLEZ
+                container_env_name: cash-prod.octopus.be1.docker
+                print_receipt_merchant_name: Cashlez IT 1
+                print_receipt_address_line_2: Jakarta Pusat,Tanah Abang
+                create_at: '2025-05-19 15:57:38.693'
+                print_receipt_address_line_1: Gd Atria @Sudirman Lt.23
+                status: OK
+      tags:
+        - API QRIS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              amount_ksn_index: 996E3
+              base_amount_enc: D04968223A5A2C6A
+              base_amount_hash: 371638e85a68d98ac91d6f1fc1698c4f788503af4f58e66de5ee0dbad827f674cbc317c5b3a950e7a056c2aaa785e6c44d0c847df6f1a5e89f6f689724062b74
+              device_id: P551700121971
+              qr_pay_app_id: '21'
+              device_timestamp: '1747198413'
+              pos_cloud_pointer: ''
+              pos_request_type: ''
+              settlement_session_num: '0'
+  /MmCoreQrpsHost/v1/payment/status_check:
+    post:
+      summary: QR Check status
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: success
+          headers:
+            Server:
+              schema:
+                type: string
+              example: nginx/1.14.1
+            Date:
+              schema:
+                type: string
+              example: Fri, 29 Nov 2024 15:02:07 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_id:
+                    type: integer
+                  invoice_num:
+                    type: string
+                    format: color
+                  base_amount:
+                    type: string
+                  approval_code:
+                    type: string
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  batch_group_id:
+                    type: integer
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  message:
+                    type: string
+                  qr_pay_app_id:
+                    type: integer
+                  batch_num:
+                    type: string
+                    format: color
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  batch_group_name:
+                    type: string
+                  cz_trx_id:
+                    type: string
+                  qr_pay_app_name:
+                    type: string
+                  rrn:
+                    type: string
+                    format: utc-millisec
+                  issuer_name:
+                    type: string
+                  qr_generated_at:
+                    type: string
+                    format: style
+                  print_receipt_merchant_name:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  create_at:
+                    type: string
+                    format: style
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0011'
+                merchant_id: 368
+                invoice_num: '000126'
+                base_amount: '{{$body ''base_amount_plain'' ''postman''}}'
+                approval_code: a4zun5
+                merchant_address2: Jl Gondangdia No Kav 33
+                merchant_address1: Gd Wisma Graha Lt.23
+                batch_group_id: 11
+                midware_timestamp: '1736318364'
+                merchant_name: Test IT 1
+                message: PAYMENT ALREADY PAID.
+                qr_pay_app_id: 21
+                batch_num: '000004'
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                batch_group_name: CASHLEZ-QRIS
+                cz_trx_id: DMPM91415803000126
+                qr_pay_app_name: GOPAY
+                rrn: '000000000085'
+                issuer_name: GOPAY
+                qr_generated_at: '2025-01-08 13:39:01'
+                print_receipt_merchant_name: Test IT 1
+                print_receipt_address_line_2: Jakarta Pusat,Tanah Abang
+                create_at: '2025-01-08 13:39:23'
+                print_receipt_address_line_1: Gd Wisma Graha Lt.23
+                status: OK
+      tags:
+        - API QRIS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                invoice_num:
+                  type: string
+                  format: color
+            example:
+              device_timestamp: '1690214848234'
+              invoice_num: '000433'
+  /MmCoreQrpsHost/v1/trx_history/get_all_success_payment_list:
+    post:
+      summary: QRIS History
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: success
+          headers:
+            Server:
+              schema:
+                type: string
+              example: nginx/1.14.1
+            Date:
+              schema:
+                type: string
+              example: Fri, 29 Nov 2024 13:50:04 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  merchant_id:
+                    type: integer
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  success_payment_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        approval_code:
+                          type: string
+                        qr_generated_at:
+                          type: string
+                          format: style
+                        batch_group_id:
+                          type: integer
+                        invoice_num:
+                          type: string
+                          format: color
+                        base_amount:
+                          type: integer
+                        qr_pay_app_id:
+                          type: integer
+                        batch_num:
+                          type: string
+                          format: color
+                        create_at:
+                          type: string
+                        batch_group_name:
+                          type: string
+                        qr_pay_app_name:
+                          type: string
+                        rrn:
+                          type: string
+                          format: utc-millisec
+                        issuer_name:
+                          type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0031'
+                merchant_address2: Tanah Abang,Jakarta Pusat
+                merchant_address1: ATRIA SUDIRMAN Lantai 23
+                midware_timestamp: '1732889497'
+                merchant_name: Tyo
+                merchant_id: 25
+                message: SUCCESS TO GET SUCCESS PAYMENT LIST.
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                print_receipt_merchant_name: Tyo
+                success_payment_list:
+                  - approval_code: pe1ikd
+                    qr_generated_at: '2024-11-29 21:11:06'
+                    batch_group_id: 11
+                    invoice_num: '000395'
+                    base_amount: 1
+                    qr_pay_app_id: 21
+                    batch_num: '000030'
+                    create_at: '2024-11-29 21:11:17'
+                    batch_group_name: CASHLEZ-QRIS
+                    qr_pay_app_name: CASHLEZ
+                    rrn: '000000000205'
+                    issuer_name: GOPAY
+                print_receipt_address_line_2: Tanah Abang, Jakarta Pusat
+                print_receipt_address_line_1: ATRIA SUDIRMAN Lantai 23
+                status: OK
+      tags:
+        - API QRIS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1690216383737'
+  /MmCorePsgsHost/v1/get_application_general_config:
+    post:
+      summary: '[Unused] App General Config'
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjenBhcnRuZXJzaGlwNiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4vTW1Db3JlUHNnc0hvc3QvdjEvbG9naW4iLCJpYXQiOjE3NTc2NjE5NjgsImV4cCI6MTc2NTUyNDM2OH0.ETks7B7iMJBbHl99Jg8ZjnqSBPQqwqOQEJaY61XS-sJS6ljJS5YF_FYwyYrd7f9lp7eB5qom31Zp4dru2vDOXw
+      responses:
+        '200':
+          description: 200 App General Config
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_name:
+                    type: string
+                  pos_request_type:
+                    type: string
+                    format: utc-millisec
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      psgs_ver:
+                        type: string
+                  is_payment_application_unattended:
+                    type: boolean
+                  status:
+                    type: string
+                  app_gen_config:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        is_enable:
+                          type: boolean
+                        payment_method:
+                          type: string
+              example:
+                response_code: '0020'
+                container_name: cz-prod.dc.anglefish.docker
+                pos_request_type: '1'
+                midware_timestamp: '1754542203'
+                message: GET APPLICATION GENERAL CONFIG SUCCESS.
+                version:
+                  crypto_ver: v1.5.0
+                  psgs_ver: v1.0.1
+                is_payment_application_unattended: false
+                status: OK
+                app_gen_config:
+                  - is_enable: true
+                    payment_method: cdcp
+                  - is_enable: true
+                    payment_method: qrps
+      tags:
+        - API QRIS
+  /v1/payment/cancel:
+    post:
+      summary: '[Unused] QR Code cancel'
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: success
+          headers:
+            Server:
+              schema:
+                type: string
+              example: nginx/1.14.1
+            Date:
+              schema:
+                type: string
+              example: Fri, 29 Nov 2024 15:02:07 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  batch_group_id:
+                    type: integer
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  merchant_id:
+                    type: integer
+                  message:
+                    type: string
+                  qr_pay_app_id:
+                    type: integer
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  batch_group_name:
+                    type: string
+                  qr_pay_app_name:
+                    type: string
+                  qr_generated_at:
+                    type: string
+                    format: style
+                  print_receipt_merchant_name:
+                    type: string
+                  invoice_num:
+                    type: string
+                    format: color
+                  base_amount:
+                    type: integer
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0012'
+                merchant_address2: Tanah Abang,Jakarta Pusat
+                merchant_address1: ATRIA SUDIRMAN Lantai 23
+                batch_group_id: 11
+                midware_timestamp: '1732892411'
+                merchant_name: Tyo
+                merchant_id: 25
+                message: PAYMENT CANCEL APPROVED.
+                qr_pay_app_id: 21
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                batch_group_name: CASHLEZ-QRIS
+                qr_pay_app_name: CASHLEZ
+                qr_generated_at: '2024-11-29 22:00:06'
+                print_receipt_merchant_name: Tyo
+                invoice_num: '000396'
+                base_amount: 1
+                print_receipt_address_line_2: Tanah Abang, Jakarta Pusat
+                print_receipt_address_line_1: ATRIA SUDIRMAN Lantai 23
+                status: OK
+      tags:
+        - API QRIS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                invoice_num:
+                  type: string
+                  format: color
+            example:
+              device_timestamp: '1690214848234'
+              invoice_num: '000433'
+  /MmCoreQrpsHost/v1/trx_history/get_success_settlement_list:
+    post:
+      summary: '[Unused] History Settlement Success'
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tbGlvbmRlL01tQ29yZVBzZ3NIb3N0L3YxL2xvZ2luIiwiaWF0IjoxNzU0NTQxOTI1LCJleHAiOjE3NjI0OTA3MjV9.L54ra1uYWE12NV9kE6-hFqJKXcgYK8qE0TOVJs5iNhUpIZFJ9s26rjZ3JZ7SNLxmi01Ay_I2P6MX4raKfQXGxQ
+      responses:
+        '200':
+          description: 200 History Settlement Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_env_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  success_settlement_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        success_payment_total_base_amount:
+                          type: integer
+                        batch_group_id:
+                          type: integer
+                        refund_total_base_amount:
+                          type: integer
+                        num_of_success_payment:
+                          type: integer
+                        tips_total_base_amount:
+                          type: integer
+                        batch_num:
+                          type: integer
+                        num_of_tips:
+                          type: integer
+                        num_of_refund:
+                          type: integer
+                        settlement_at:
+                          type: string
+                          format: style
+                        batch_group_name:
+                          type: string
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0090'
+                container_env_name: cash-prod.lion-fish.be1.docker
+                midware_timestamp: '1754542250'
+                success_settlement_list:
+                  - success_payment_total_base_amount: 2454
+                    batch_group_id: 11
+                    refund_total_base_amount: 1
+                    num_of_success_payment: 2
+                    tips_total_base_amount: 0
+                    batch_num: 36
+                    num_of_tips: 0
+                    num_of_refund: 1
+                    settlement_at: '2025-08-05 22:51:24'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 3
+                    batch_group_id: 11
+                    refund_total_base_amount: 7
+                    num_of_success_payment: 3
+                    tips_total_base_amount: 0
+                    batch_num: 35
+                    num_of_tips: 0
+                    num_of_refund: 7
+                    settlement_at: '2025-07-28 23:04:14'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 9
+                    batch_group_id: 11
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 5
+                    tips_total_base_amount: 0
+                    batch_num: 34
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-07-17 23:19:37'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 100
+                    batch_group_id: 11
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 33
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-07-15 22:45:35'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 100
+                    batch_group_id: 11
+                    refund_total_base_amount: 2
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 32
+                    num_of_tips: 0
+                    num_of_refund: 1
+                    settlement_at: '2025-07-14 22:46:36'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 1
+                    batch_group_id: 11
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 31
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-07-09 22:56:04'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 14
+                    batch_group_id: 11
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 2
+                    tips_total_base_amount: 0
+                    batch_num: 30
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-07-07 23:16:03'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 22
+                    batch_group_id: 11
+                    refund_total_base_amount: 10
+                    num_of_success_payment: 2
+                    tips_total_base_amount: 0
+                    batch_num: 29
+                    num_of_tips: 0
+                    num_of_refund: 1
+                    settlement_at: '2025-06-30 23:26:03'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 100
+                    batch_group_id: 11
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 28
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-06-24 23:09:57'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 2
+                    batch_group_id: 11
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 27
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-06-23 23:22:57'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 11
+                    batch_group_id: 11
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 2
+                    tips_total_base_amount: 0
+                    batch_num: 26
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-06-18 22:50:57'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 31
+                    batch_group_id: 11
+                    refund_total_base_amount: 1
+                    num_of_success_payment: 4
+                    tips_total_base_amount: 0
+                    batch_num: 25
+                    num_of_tips: 0
+                    num_of_refund: 1
+                    settlement_at: '2025-06-05 23:09:05'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 51
+                    batch_group_id: 11
+                    refund_total_base_amount: 1
+                    num_of_success_payment: 2
+                    tips_total_base_amount: 0
+                    batch_num: 24
+                    num_of_tips: 0
+                    num_of_refund: 1
+                    settlement_at: '2025-06-04 23:19:06'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 1
+                    batch_group_id: 11
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 23
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-05-19 23:14:05'
+                    batch_group_name: CASHLEZ-QRIS
+                  - success_payment_total_base_amount: 1
+                    batch_group_id: 11
+                    refund_total_base_amount: 1
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 22
+                    num_of_tips: 0
+                    num_of_refund: 1
+                    settlement_at: '2025-05-15 23:24:24'
+                    batch_group_name: CASHLEZ-QRIS
+                message: SUCCESS TO GET SUCCESS SETTLEMENT LIST.
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                status: OK
+      tags:
+        - API QRIS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1754540746'
+  /MmCoreQrpsHost/v1/trx_history/get_last_trx_data:
+    post:
+      summary: '[Unused] QRIS Last Transaction'
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tbGlvbmRlL01tQ29yZVBzZ3NIb3N0L3YxL2xvZ2luIiwiaWF0IjoxNzU0NTQyOTM3LCJleHAiOjE3NjI0OTE3Mzd9.7EiSR2bpEJIyQ2ZQPvpu3KvKCeAbRQSJlKoeXVj0aaxx2nGtrT5v_8k5Ssp6bNKCCq3W6aaMm4kt7ysMy31pNw
+      responses:
+        '200':
+          description: 200 QRIS Last Transaction
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_id:
+                    type: integer
+                  invoice_num:
+                    type: string
+                    format: color
+                  base_amount:
+                    type: integer
+                  trx_type:
+                    type: string
+                  approval_code:
+                    type: string
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  batch_group_id:
+                    type: integer
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  message:
+                    type: string
+                  qr_pay_app_id:
+                    type: integer
+                  batch_num:
+                    type: string
+                    format: color
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  batch_group_name:
+                    type: string
+                  cz_trx_id:
+                    type: string
+                  qr_pay_app_name:
+                    type: string
+                  rrn:
+                    type: string
+                    format: utc-millisec
+                  issuer_name:
+                    type: string
+                  container_env_name:
+                    type: string
+                  qr_generated_at:
+                    type: string
+                    format: style
+                  print_receipt_merchant_name:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  create_at:
+                    type: string
+                    format: style
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0070'
+                merchant_id: 364
+                invoice_num: '000018'
+                base_amount: 1
+                trx_type: PAYMENT
+                approval_code: 89n4v5
+                merchant_address2: Jl Jend Sudirman No Kav 33
+                merchant_address1: Gd Atria @Sudirman Lt.23
+                batch_group_id: 11
+                midware_timestamp: '1754542960'
+                merchant_name: Cashlez IT 2
+                message: SUCCESS TO GET LAST TRANSACTION DATA.
+                qr_pay_app_id: 21
+                batch_num: '000037'
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                batch_group_name: CASHLEZ-QRIS
+                cz_trx_id: DMPM36263561000018
+                qr_pay_app_name: CASHLEZ
+                rrn: '000000000011'
+                issuer_name: DANA
+                container_env_name: cash-prod.lion-fish.be1.docker
+                qr_generated_at: '2024-11-20 11:39:20'
+                print_receipt_merchant_name: Cashlez IT 2
+                print_receipt_address_line_2: Jakarta Pusat,Tanah Abang
+                create_at: '2024-11-20 11:39:53'
+                print_receipt_address_line_1: Gd Atria @Sudirman Lt.23
+                status: OK
+      tags:
+        - API QRIS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1754540746'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

@@ -15,6 +15,12 @@ class ApiProxy
         $allowedPrefixes = [
             'MmCoreCzLinkHost/',
             'MmCorePsgsHost/',
+            'MmCoreQrpsHost/',
+            'MmCoreQrpssHost/',
+            'MmCoreBnplHost/',
+            'mini-atm/',
+            'partner/',
+            'api/',
         ];
 
         $normalizedPath = ltrim($path, '/');

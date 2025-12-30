@@ -1,0 +1,2436 @@
+openapi: 3.0.0
+info:
+  title: BNPL
+  version: 1.0.0
+  description: ''
+servers:
+  - url: https://angelfish.cashlez.com
+    description: Docs Staging
+# servers:
+#   - url: /bnpl-proxy
+#     description: Docs proxy (BNPL)
+#   - url: https://angelfish.cashlez.com
+#     description: Docs Staging
+paths:
+  /MmCorePsgsHost/v1/login:
+    post:
+      summary: User Device Login
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            {"device_timestamp":"1711600404051","isVisibleUsername":false,"pass_hash":"2941aa79575fc9e500d0caaa727b1a1303be50de1a379110b9e76cb41c4d6d06","username":"iqbal"}
+      responses:
+        '200':
+          description: 200 User Device Login
+          headers:
+            Server:
+              schema:
+                type: string
+              example: nginx/1.14.1
+            Date:
+              schema:
+                type: string
+              example: Thu, 28 Mar 2024 04:58:41 GMT
+            Content-Length:
+              schema:
+                type: integer
+              example: '759'
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  merchant_id:
+                    type: integer
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      psgs_ver:
+                        type: string
+                  token:
+                    type: string
+                  container_env_name:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+      tags:
+        - API BNPL
+  # /MmCorePsgsHost/v1/login:
+  #   post:
+  #     summary: User Device Login
+  #     parameters:
+  #       - name: Authorization
+  #         in: header
+  #         schema:
+  #           type: string
+  #         example: >-
+  #           {"device_timestamp":"1711600404051","isVisibleUsername":false,"pass_hash":"2941aa79575fc9e500d0caaa727b1a1303be50de1a379110b9e76cb41c4d6d06","username":"iqbal"}
+  #     responses:
+  #       '200':
+  #         description: 200 User Device Login
+  #         headers:
+  #           Server:
+  #             schema:
+  #               type: string
+  #             example: nginx/1.14.1
+  #           Date:
+  #             schema:
+  #               type: string
+  #             example: Thu, 28 Mar 2024 04:58:41 GMT
+  #           Content-Length:
+  #             schema:
+  #               type: integer
+  #             example: '759'
+  #           Connection:
+  #             schema:
+  #               type: string
+  #             example: keep-alive
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 response_code:
+  #                   type: string
+  #                   format: utc-millisec
+  #                 merchant_address2:
+  #                   type: string
+  #                 merchant_address1:
+  #                   type: string
+  #                 midware_timestamp:
+  #                   type: string
+  #                   format: utc-millisec
+  #                 merchant_name:
+  #                   type: string
+  #                 merchant_id:
+  #                   type: integer
+  #                 message:
+  #                   type: string
+  #                 version:
+  #                   type: object
+  #                   properties:
+  #                     crypto_ver:
+  #                       type: string
+  #                     psgs_ver:
+  #                       type: string
+  #                 token:
+  #                   type: string
+  #                 container_env_name:
+  #                   type: string
+  #                 print_receipt_merchant_name:
+  #                   type: string
+  #                 print_receipt_address_line_2:
+  #                   type: string
+  #                 print_receipt_address_line_1:
+  #                   type: string
+  #                 status:
+  #                   type: string
+  #             example:
+  #               response_code: '0000'
+  #               merchant_address2: Mexico City
+  #               merchant_address1: Dusun Legupit RT002 RW015
+  #               midware_timestamp: '1711601921'
+  #               merchant_name: Weak Days
+  #               merchant_id: 98
+  #               message: LOGIN SUCCESS.
+  #               version:
+  #                 crypto_ver: v1.5.0
+  #                 psgs_ver: v1.0.1
+  #               token: >-
+  #                 eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpcWJhbCIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4vTW1Db3JlUHNnc0hvc3QvdjEvbG9naW4iLCJpYXQiOjE3MTE2MDE5MjEsImV4cCI6MTcxOTU1MDcyMX0.39cxiARaS7QOx9JB1yLN46hlKkKfcfYQc5gJwIIIae0jBeMcWGuiL7T6YNXnbofrN-9kr5ppoyGZvKkRwutZew
+  #               container_env_name: swpi-devel.aws-ec2.be1.docker
+  #               print_receipt_merchant_name: Weak Days IQ
+  #               print_receipt_address_line_2: Paku Jaya, Kec. Serpong Utara
+  #               print_receipt_address_line_1: Jl. Kayu Gede III Kel No.99
+  #               status: OK
+  #     tags:
+  #       - API CDCP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                isVisibleUsername:
+                  type: boolean
+                pass_hash:
+                  type: string
+                username:
+                  type: string
+            example:
+              device_timestamp: '1711600404051'
+              isVisibleUsername: false
+              pass_hash: 2941aa79575fc9e500d0caaa727b1a1303be50de1a379110b9e76cb41c4d6d06
+              username: ittest02
+  /MmCoreBnplHost/v1/get_application_general_config:
+    post:
+      summary: App Config BNPL
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMSIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tMWxpb25kZS9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc2NjU1MDcyNiwiZXhwIjoxNzc0MzI2NzI2fQ.feuNuW8-LasXWrIqtfzPjLNT7dMY-wmgAuc9M8mPnjXN0RJWt7VNuSk2DCea_o0pakb3s0Wziv7TMbLonNYeuA
+      responses:
+        '200':
+          description: 200 App Config BNPL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_name:
+                    type: string
+                  pos_request_type:
+                    type: string
+                    format: utc-millisec
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      psgs_ver:
+                        type: string
+                  is_payment_application_unattended:
+                    type: boolean
+                  status:
+                    type: string
+                  app_gen_config:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        is_enable:
+                          type: boolean
+                        payment_method:
+                          type: string
+              example:
+                response_code: '0020'
+                container_name: cz-prod.dc.angelfish.docker
+                pos_request_type: '1'
+                midware_timestamp: '1766550735'
+                message: GET APPLICATION GENERAL CONFIG SUCCESS.
+                version:
+                  crypto_ver: v1.5.0
+                  psgs_ver: v1.0.1
+                is_payment_application_unattended: false
+                status: OK
+                app_gen_config:
+                  - is_enable: true
+                    payment_method: bnpl
+      tags:
+        - API BNPL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1754540746'
+  /MmCoreBnplHost/v1/get_application_general_config_1:
+    post:
+      summary: App Config BNPL 1
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMSIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tMWxpb25kZS9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc2NjU1MDcyNiwiZXhwIjoxNzc0MzI2NzI2fQ.feuNuW8-LasXWrIqtfzPjLNT7dMY-wmgAuc9M8mPnjXN0RJWt7VNuSk2DCea_o0pakb3s0Wziv7TMbLonNYeuA
+      responses:
+        '200':
+          description: App Config BNPL 1
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                  container_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  app_config:
+                    type: object
+                    properties:
+                      bnpl_pay_app_list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            logo:
+                              type: string
+                            id:
+                              type: integer
+                      trx_via_payment_app_flag:
+                        type: boolean
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: 00B0
+                container_name: cz-prod.dc.angelfish.docker
+                midware_timestamp: '1766550799'
+                app_config:
+                  bnpl_pay_app_list:
+                    - name: INDODANA BNPL
+                      logo: >-
+                        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
+                      id: 1
+                    - name: KREDIVO BNPL
+                      logo: >-
+                        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
+                      id: 2
+                  trx_via_payment_app_flag: false
+                message: GET APPLICATION CONFIG SUCCESS.
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                status: OK
+      tags:
+        - API BNPL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1754540746'
+  /MmCoreBnplHost/v1/payment/generate_qr_code:
+    post:
+      summary: BNPL Generate QR Code
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMSIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tMWxpb25kZS9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc2NjU1MDcyNiwiZXhwIjoxNzc0MzI2NzI2fQ.feuNuW8-LasXWrIqtfzPjLNT7dMY-wmgAuc9M8mPnjXN0RJWt7VNuSk2DCea_o0pakb3s0Wziv7TMbLonNYeuA
+      responses:
+        '200':
+          description: 200 BNPL Generate QR Code
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_id:
+                    type: integer
+                  invoice_num:
+                    type: string
+                    format: color
+                  base_amount:
+                    type: integer
+                  general_ksn_index:
+                    type: string
+                  is_qris_flag:
+                    type: boolean
+                  hs_qr_string_len:
+                    type: string
+                    format: color
+                  merchant_address2:
+                    type: string
+                  hs_qr_string_enc:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  batch_group_id:
+                    type: integer
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  message:
+                    type: string
+                  qr_pay_app_id:
+                    type: integer
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  batch_group_name:
+                    type: string
+                  trx_via_payment_app_flag:
+                    type: boolean
+                  qr_pay_app_name:
+                    type: string
+                  container_name:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0000'
+                merchant_id: 368
+                invoice_num: '000191'
+                base_amount: 1
+                general_ksn_index: 970DA
+                is_qris_flag: false
+                hs_qr_string_len: '148'
+                merchant_address2: Jl Jend Sudirman No Kav 33
+                hs_qr_string_enc: >-
+                  0D4A69653B182364B54295AD5AB51B3EDF6DB120EA79C0ABDC83493522FEDE7B559DDB619AB29AFAD2AEF1BE9AA4DAC9898A7AC61DCFDB8728C9E4305AA25E3CCB457C69C7C5F475205EA37C0D8D3046
+                merchant_address1: Gd Atria @Sudirman Lt.23
+                batch_group_id: 1
+                midware_timestamp: '1766550864'
+                merchant_name: Cashlez IT 1
+                message: SUCCESS TO GENERATE QR CODE.
+                qr_pay_app_id: 2
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                batch_group_name: KREDIVO-BNPL
+                trx_via_payment_app_flag: false
+                qr_pay_app_name: KREDIVO BNPL
+                container_name: cz-prod.dc.angelfish.docker
+                print_receipt_merchant_name: Cashlez IT 1
+                print_receipt_address_line_2: Jl Jend Sudirman No Kav 33
+                print_receipt_address_line_1: Gd Atria @Sudirman Lt. 23
+                status: OK
+      tags:
+        - API BNPL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount_ksn_index:
+                  type: string
+                base_amount_enc:
+                  type: string
+                base_amount_hash:
+                  type: string
+                device_id:
+                  type: string
+                qr_pay_app_id:
+                  type: string
+                  format: utc-millisec
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              amount_ksn_index: 76EBE
+              base_amount_enc: B1329C8429CD774F
+              base_amount_hash: >-
+                6bb8ae05a047f14a63550d51021fa8a2e8af08851fece38df7d424e37408d194725f6082fe99cc9fe3275888cf2dab62cf5844e3b1c602c4152572eeea3fdbc3
+              device_id: D1V2230001101
+              qr_pay_app_id: '2'
+              device_timestamp: '1754540746'
+  /MmCoreBnplHost/v1/payment/status_check:
+    post:
+      summary: BNPL Check Status
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMSIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tMWxpb25kZS9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc2NjU1ODMzNiwiZXhwIjoxNzc0MzM0MzM2fQ.H08gqU_A5N9o55piC32CfwN-1yy_82ASbEnAj1OoqNNYDfBgh9VOE_YrP9fiCekwY5qYP5emeAW8nE9Y5pa7Mg
+      responses:
+        default:
+          description: 200 BNPL Check Status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_id:
+                    type: integer
+                  invoice_num:
+                    type: string
+                    format: color
+                  base_amount:
+                    type: integer
+                  approval_code:
+                    type: string
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  batch_group_id:
+                    type: integer
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  message:
+                    type: string
+                  qr_pay_app_id:
+                    type: integer
+                  batch_num:
+                    type: string
+                    format: color
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  batch_group_name:
+                    type: string
+                  qr_pay_app_name:
+                    type: string
+                  rrn:
+                    type: string
+                    format: utc-millisec
+                  issuer_name:
+                    type: string
+                  qr_generated_at:
+                    type: string
+                    format: style
+                  container_name:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  create_at:
+                    type: string
+                    format: style
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0011'
+                merchant_id: 368
+                invoice_num: '000192'
+                base_amount: 1
+                approval_code: pygy17
+                merchant_address2: Jl Jend Sudirman No Kav 33
+                merchant_address1: Gd Atria @Sudirman Lt.23
+                batch_group_id: 1
+                midware_timestamp: '1766558347'
+                merchant_name: Cashlez IT 1
+                message: PAYMENT ALREADY PAID.
+                qr_pay_app_id: 2
+                batch_num: '000011'
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                batch_group_name: KREDIVO-BNPL
+                qr_pay_app_name: KREDIVO BNPL
+                rrn: '000000000055'
+                issuer_name: KREDIVO
+                qr_generated_at: '2025-12-24 13:34:42'
+                container_name: cz-prod.dc.angelfish.docker
+                print_receipt_merchant_name: Cashlez IT 1
+                print_receipt_address_line_2: Jl Jend Sudirman No Kav 33
+                create_at: '2025-12-24 13:36:45'
+                print_receipt_address_line_1: Gd Atria @Sudirman Lt.23
+                status: OK
+      tags:
+        - API BNPL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                invoice_num:
+                  type: string
+                  format: color
+            example:
+              device_timestamp: '1766558205218'
+              invoice_num: '000192'
+  /MmCoreBnplHost/v1/trx_history/get_all_success_payment_list:
+    post:
+      summary: BNPL History Transaction
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMSIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tMWxpb25kZS9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc2NjU1ODc2MCwiZXhwIjoxNzc0MzM0NzYwfQ.8rBQp93F9v6-ahoRRcOdc9YQfJpRGgLVldQl6SPYN5aHLyvXeCkDnJPierIb48cmhRdb7sQLU2XC23hY9I2dIA
+      responses:
+        '200':
+          description: 200 BNPL History Transaction
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  merchant_id:
+                    type: integer
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  container_name:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  success_payment_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        approval_code:
+                          type: string
+                        qr_generated_at:
+                          type: string
+                          format: style
+                        batch_group_id:
+                          type: integer
+                        invoice_num:
+                          type: string
+                          format: color
+                        base_amount:
+                          type: integer
+                        qr_pay_app_id:
+                          type: integer
+                        batch_num:
+                          type: string
+                          format: color
+                        create_at:
+                          type: string
+                        batch_group_name:
+                          type: string
+                        qr_pay_app_name:
+                          type: string
+                        rrn:
+                          type: string
+                          format: utc-millisec
+                        issuer_name:
+                          type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0031'
+                merchant_address2: Jl Jend Sudirman No Kav 33
+                merchant_address1: Gd Atria @Sudirman Lt.23
+                midware_timestamp: '1766558770'
+                merchant_name: Cashlez IT 1
+                merchant_id: 368
+                message: SUCCESS TO GET SUCCESS PAYMENT LIST.
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                container_name: cz-prod.dc.angelfish.docker
+                print_receipt_merchant_name: Cashlez IT 1
+                success_payment_list:
+                  - approval_code: pygy17
+                    qr_generated_at: '2025-12-24 13:34:42'
+                    batch_group_id: 1
+                    invoice_num: '000192'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    batch_num: '000011'
+                    create_at: '2025-12-24 13:36:45'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    rrn: '000000000055'
+                    issuer_name: KREDIVO
+                print_receipt_address_line_2: Jl Jend Sudirman No Kav 33
+                print_receipt_address_line_1: Gd Atria @Sudirman Lt.23
+                status: OK
+      tags:
+        - API BNPL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1766558620146'
+  /MmCoreBnplHost/v1/trx_history/get_all_pending_payment_list:
+    post:
+      summary: BNPL Pending Transaction
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMSIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tMWxpb25kZS9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc2NjU1ODc2MCwiZXhwIjoxNzc0MzM0NzYwfQ.8rBQp93F9v6-ahoRRcOdc9YQfJpRGgLVldQl6SPYN5aHLyvXeCkDnJPierIb48cmhRdb7sQLU2XC23hY9I2dIA
+      responses:
+        default:
+          description: 200 BNPL Pending Transaction
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  merchant_id:
+                    type: integer
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  container_name:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  pending_payment_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        is_qris_flag:
+                          type: boolean
+                        expired_flag:
+                          type: boolean
+                        batch_group_id:
+                          type: integer
+                        invoice_num:
+                          type: string
+                          format: color
+                        base_amount:
+                          type: integer
+                        qr_pay_app_id:
+                          type: integer
+                        create_at:
+                          type: string
+                          format: style
+                        batch_group_name:
+                          type: string
+                        qr_pay_app_name:
+                          type: string
+                        qr_string:
+                          type: string
+                          format: uri
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0030'
+                merchant_address2: Jl Jend Sudirman No Kav 33
+                merchant_address1: Gd Atria @Sudirman Lt.23
+                midware_timestamp: '1766558930'
+                merchant_name: Cashlez IT 1
+                merchant_id: 368
+                message: SUCCESS TO GET PENDING PAYMENT LIST.
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                container_name: cz-prod.dc.angelfish.docker
+                print_receipt_merchant_name: Cashlez IT 1
+                pending_payment_list:
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000191'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-12-24 11:34:25'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/863421276.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000189'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-12-24 11:12:48'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/863411194.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000188'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-12-24 11:12:37'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/863411096.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000186'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-12-24 11:12:28'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/863411011.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000185'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-12-24 10:40:37'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/863396293.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000184'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-12-22 15:34:36'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/862484210.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000181'
+                    base_amount: 200009
+                    qr_pay_app_id: 1
+                    create_at: '2025-11-24 15:57:02'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/890e1bf6-c913-11f0-ad4e-09dce3272fbe.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1763975219&Signature=eOjU70fYNZvPpI7xRIY%2FY7bbA13SjC%2FErnw4JBtdgCAtm5Fy4Ij2QR3fVv7IKM5bNWVnNmR6RQHaOph6H7NQoQRoqGoOAdDY75QB6W4BdS0iWjLyadHZr%2BS1KTiaSm8LarzKJonR%2BMj7TmsqqL3dZcFoAVQMetSqmTg5zBeeR7cr65JsR%2F1ouCSH%2Btg9C2kbpE6DNFXqmOzh4J3UPZCRGFlZEGbl4fT7nIm8hd0dvK0Yln4iBTQuqITzY6%2FS%2FFYF9yqE5vHU8K1Bw%2F5z1ikh9df%2B19MCFV9kSKTiSGrZDZxhUB%2FD29weNBlHMhxkXL15sctLmfQa3bfpk%2Fl49%2BdZiQ%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000177'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-11-20 14:33:14'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/844731061.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000176'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-11-20 11:19:37'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/844643306.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000175'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-11-20 11:16:09'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/844641720.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000173'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-11-14 15:27:07'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/841657192.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000169'
+                    base_amount: 10000
+                    qr_pay_app_id: 2
+                    create_at: '2025-11-07 14:46:05'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/838015525.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000168'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-11-07 14:45:56'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/c8e6f26f-bbad-11f0-9f8b-67d2cef41dc2.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1762502152&Signature=s1IIVcdK313tdBWgQ8SYcoqXwe4qf2bkUvtviE0Sb5dmMW0vNrIt9R%2FNRWzyZsf87oI%2BTncBCaE1aIsTHW5nu8UoEVigvKn5clywdoqujtwGoeZxz802JDUkVwMSpsbm1pf%2FwxC02EYnHLZpqxwmTd7aca5IwwqT31kjzlCxxaIfW%2FdRtVjCaebFBPYz%2F3SmOc7YkT0gs76f1lJv889%2F4hj0x4WH8E2uRFymJJLoDZiOh7s1mB%2FFr9oa39cQ%2FBBCnbLD3fHFyVbnjXQzPgVCOPeokXFUxWOzx6jdiqqNZeRCM1LD%2FfE5vqQnnrcv0LpT%2Be4AtlCKHeGhgerHOtLoLA%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000166'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-11-06 10:28:28'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/a6cd8812-bac0-11f0-9593-4f029826cd6f.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1762400304&Signature=rG9Llgne0uwAJe4ZUzy3migxH57CnfVGRezLsW%2F7ORmim9zuJuzZhqDPVhFDyDFPhbFMe%2BsyidFm6t7Jx08Fg4C9kE5knAmrER4Ul3QV%2BK8Re4Pq5xOtCwSSe%2FA5V8u98zqTlMiG5JLLawhDmcBjV97%2BY5bFuWoj%2FT02AEABQahrH2QF7jKaAXsZP9SpJBB4mdAh2576EtKcfEKiOvwJL60Dmunm10fABkVDcLbYu3OimFOGVu10XHcwH2txw8l%2BfDciTwsIY9OXlxJ%2BgULrhOVSJ4LOfA5eSY6ETUzoQYLYwjjs8cc%2B1IXb1B0lV8kFI0mthvPBo6WjsTRdNIY5ag%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000164'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-11-06 10:28:17'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/837401475.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000162'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-11-04 17:08:48'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/836517674.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000161'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-11-04 17:06:11'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/e1cf4d39-b965-11f0-9b4a-130f0abc01a4.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1762251368&Signature=iC4idw5OeDTGtn2VgJ8iunTCGjUZUG%2BEaMSON2d8nbo8xOx%2Bv6MKzJDani7cw%2BVEfdwYAwNkCO6cagaDrMV2YkX5nAyJ6djgcMl4Wu4pExj1%2BOOXG3B1BwTV1sRAK4Fop%2Bb0Y%2F3QwCWOtACb0SesiGt%2FFhAS567uEJysMrnczk4CSZHrITe0Nw7MXY7uMlW%2F7UC6GGs4y%2B63Mc9U9CC635vX%2BIcDQsDLzcuw6vo0vAvNtkYr%2FmhAwqnlGbzWpt%2FYM6Te0P96BwD5Lz3pQNI80scScredwbW09fFwIc840qZtfTYYMU%2FCKHtamUfHOmaYyf99ppd85SsFMGucKAN3mg%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000158'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-31 15:37:34'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/834218655.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000154'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-31 11:09:17'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/834099815.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000152'
+                    base_amount: 10001
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-30 15:54:26'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/07dbf151-b56e-11f0-88ee-bb95d8bb120a.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1761815063&Signature=GnOGzqrT%2FbJUzNbxsTafzl7OiURZIcTHrb%2Bk1LyqdFDx3106F69o9iyWssJOgJUjPNz5WQ0Zu5XHnQNwwzyXwHwa58e0kCY4A0wwxi71k2NVdGs%2FTKFVs1B4gn%2BPzk5a8gOhvujZymXRMGzTP6LM5fHxBXOSamROeOcFwnw%2FRIw3%2BH%2F13RNbaYB%2B4aJZ1yntYRVF%2BMzA02qBfnVnLTZi9WlqtCB9hdOTPpB%2BfFPQLzAlz3swbxglwrEV4pb6yZpySNV0ktywRr%2FgYAyLhBfUajGM52ihz3%2BJHsEWQCc8M0EhG3Y5ivRfdl8qL%2BYz4k6%2BQB9nBlsqkZVbjfA9vdGTAA%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000151'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-30 15:45:48'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/833698757.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000150'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-30 15:38:58'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/833696032.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000149'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-30 15:32:41'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/833693524.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000148'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-30 15:28:23'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/63c37508-b56a-11f0-88ee-a33c7a9b7c9f.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1761813499&Signature=tTCYNgdNv6h9Kv%2B1QXMWG3rs4aJ51NPxWLVQq2q8jLqdHxKePVoa9alYVsFuxrq6aQZyv8QK4pTEBC3BkXYDiHsKU4P0PoLhsCkmC5U1mBo3R9FmauzHisi4VUwaRi9EkYTKVj9e3W%2Bdj%2B9C6jPiFdmZG2Y9IAjnLMuiD4vv8LWbOKJ%2BP1fIUSlyK5r%2FreWt9UjasE2tU5zg%2FPiLc%2B5IQLeSJWIAt58AVVT3oJZC313%2FMN3yqvK%2BWB4DgHnCrIIm%2FhSqfpZJZJWt%2BtUBsI4hYGFMkhAoyvVt4y06DEOab3k3dvzXy1z2LbdEFauHp3G%2B0RsRNu2enx4ZZLInj1%2Fegg%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000146'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-30 10:38:14'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/db90638c-b541-11f0-8949-c3c61f931fb6.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1761796091&Signature=JZ6yW51DFVqWbSjK9M9yQ2NR15WyDffIsrqwOmQlj3wG%2BmVGVDLRIaQAb9ATCqJ9AOZ8rK9kRKn0Gh03p0GT0y%2FKZl7QSQrT84uIIiyWI4OhRgu38zIKQ4TFaQso3FdT2NPY3xf%2BLw6wdDfib8Icq53ZL%2BnTR%2BA6fEYwJMRpA4d1OP9enCq9%2BMVGUo2YDCOm4XdI%2FoR2NHL0N6ird8XKBIck7UWyyU3r3Vv1I2OkPu8O7kCVIGftA50a8hn%2FooLtezWa6zFgdt%2FOxKwG9PaQKDOs6nbh9QFZ9f1k7uOH7vL7eDK77IMxe5Gmo3v91coHJ%2FSv4bjrjhHAt2M5L%2FiNWQ%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000138'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-28 15:45:02'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/832659729.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000136'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-28 13:54:56'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/832615686.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000134'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-28 13:43:08'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/832610987.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000132'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-27 10:29:43'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/832011002.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000129'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-25 15:49:11'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/78037283-b17f-11f0-a9d6-65bf57af2217.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1761382748&Signature=kdqZZPtnK%2BzWgjCJFw%2FYkqu1WdCdIQmweeGhSM2fZccCGZlkmKTgB3ij%2B%2BEiv%2BbUsmLXbgPdeHIZPYachXY%2BV6X2D5vQy8EiOHeRDWB9%2FNjV0DHo7ex5dcVLirqhTMUM83vSKPOIx7Z4rChf4qaOz6JtVFPojV8z8Be8w3SWhO38nRtOoE3sdcUhV49mLSNyRChvXmDrYrrBWnPjBYzG0BuIGxAFhDu43shJQBp7SBVumLwSSZAzCiwJfOOFql2MTH%2FofyKyE6JmDJn6hbqRB2XmTG1p78tPm5xugibyZ78%2FrROEM3AU3CkMKmhOUfbj9bonL1HH4Sv%2BvOpWp1%2Bo4g%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000127'
+                    base_amount: 10000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-25 15:46:46'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/831095001.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000122'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-23 13:47:39'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/288c13d9-afdc-11f0-958b-77d672e27d64.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1761202655&Signature=b3%2BeVzsuLtVQw1gpPURGGxPulvuAEKEoF%2FQZ9GFlDtFVRsGO%2B4scjYimnchNDQ%2FaofQ1Uny%2BSX012yJXvaFIVWhsaI3ko3U7orhUDrpbQBcHl6gDSPYL2ysy5Yex%2BY8Wjb8XkCX4UlHDCQAeHN9VYPZD9KojaXIOVvMj7Xlo91%2B%2BJ9v2%2BqLD8Odur0ZL7Tupc6IR6AA9bJDzf0Zwa9qWtNBx8ygZrR2f1gOsQTI2KFCTRo9sn3%2BhETu8dTJFyE7gKQ8VPSeeci7waPKi7dBRKEnrinw2uj0u7GbAWDyZXyD2UDp66HJ1lLZn3tKugH3M3GnyoxxeTojkTmi6M%2B7y4A%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000119'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-23 13:45:12'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/830026730.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000117'
+                    base_amount: 10
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-22 22:47:08'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/829775873.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000116'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-22 22:45:08'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/13eb9cc9-af5e-11f0-a763-e13d755bb8de.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1761148504&Signature=ChukZqn6sYFZiYXZ%2B%2BC1RCc3JmItScu04rcndja39Df2uOqKTYculMcGs%2F%2BhXNe5nt200ziQbuZ2Y76WdulnlIuQ1DR5hxYu5Db%2F15NdsI6rpu%2BO3AReu4ggaKQZl%2FtWIBgbgt8kGEgDMsnBpg3f7gV3%2Bq%2BLAjcn0pbYe%2B9UlY7skcSRqZC1cVqA8SpTrSCBoVd4o2P44RGzDm3BsMzcPtLwSISn%2Bdh7ofp7cHX1XBjcdYqixwFk0LOLcLjVw5pSh7SvsYiTjkysQtPRB6i9rsJQ7E9icNk9tEfvNTkjLlZYUn%2BxhjxSkZaW1DpLvqdpO8vHu%2BWXeyB%2FlZpO77clXg%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000115'
+                    base_amount: 100
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-22 22:44:17'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/829775041.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000109'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-22 16:43:39'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/829608793.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000108'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-22 16:04:12'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/829593005.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000105'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-22 15:34:35'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/f077f496-af21-11f0-8708-93e3a8e67e33.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1761122675&Signature=Jf7BAixcKNfJrUydRn64wBtm65ZQcARqfLLzkE3mAAkARFPvkkAYWZcQg4yhfdhRT2qfHq07zZ1qFY0DDO%2BR%2F35B0c6UCO89%2BxERqcRBlNiKMUbOsTTFHadg03AS%2FHTpEhJrLhlMmaVJju4w54yQpT9A4fZehPgMHG%2BGXGJ4o4NSaTgnKghrHWOfVn%2BZ7KLELzg74X56b997eVWtcSKIwxGmUsGql0iJIA%2Fi43I4s7d1YCgmZhiyv8cGY5oTJxGPuNK382QOS3%2FsIE%2Bx3Bfx%2BemQK9QgcnymIFX%2B3889IRYzTZC7ZCJouvXi8OJxqdU5a9YserXWUfEOs%2F%2F6xTQDlg%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000104'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-22 15:34:19'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/e6c77c80-af21-11f0-a763-812d7a47ecdb.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1761122659&Signature=BUeubztuA%2BwrKktnvMv2Yr4OgTAz7YHazHi2qOaUYsw0IWy2pS%2F%2FU00GWkIJeUqp0OAaYeyHWLa7j0mSI4vy19KbUnLQ5IkN43mIIEPYuxnRkxVGvBps%2BtS9nXuCuBhn%2BmSx6XOl2JlEoEDWqalCi5lxaajZaYWt24q7NyCHkt4zHiQQBfZB5%2FUSnXZNvw7uSbmgF%2BeJSEWqeS6MXFiJpr8U8MQqXtdMojt7h00SmpwTwyoZEU42HK%2FhoYHdiDX5VP0GmayTFCe6i14rpp9KxpCKBRdfZP42vCUkRlwhi7EY2K4T2TgsZmO2fTG0J22B2FhCFGy8jjo28hfg6d1LUg%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000103'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-22 15:34:05'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/de14ebe5-af21-11f0-90cc-f7b21d2c073d.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1761122644&Signature=ZDSUPL0de6JnvJdsFs3tS%2FQbFeiaAr3iVo80wNgZEnqim9uyvsXQiYFohiSL0zF8DemEqYbjkob%2FSK4PzgUEbcI83TJIWwGB0Pboz8FZV39Pp152AG6Jl430z2Shm8SBuYs1xus2o2twc4343qLyWc4TGByjLZjjUpLj2r3ECVc8eIqgBY%2BC2iS6QLVJbuWjpUYskmeojjW66sSbk%2BbkN%2BVKqM5M8Ypnue0pgxMwnTJK536jRvCU9J2w5TJLcq8mBixHP5krqST5NzXK%2Biqa%2F8xkgRdbrA3uhZhEBNFZ0XnKujPUJUSN9Z9d1u5RnrHf5bIsSTbSRgL%2FIcwia2IZHw%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000102'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-22 15:32:48'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/829580676.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000094'
+                    base_amount: 10
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-22 09:54:10'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/829446288.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000093'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-21 12:13:43'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/828991918.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000092'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-21 12:12:53'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/828991523.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000090'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-21 12:08:17'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/f41c3ce0-ae3b-11f0-b976-5165ff3b719c.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1761023897&Signature=fFDTsBHD8qAviwn0rM6S54sJe6B3Z3xQwMIvLIowUoqDN6KYc4qYddYXUr6XOJwMnqCIIoalqfynDVfd9%2BzFbEbFCDC6EwMU8kqLh0vlu80AU%2FYoAEzWbhLKnppe%2FvxpFqm073OPqyinyl4dzvzShK%2FzSQcSJPSDwNYNuaG%2Fxa88O36hZ9fj%2F4RlB%2BQKZ70n1Jc5LwLr4fYgzriCB1jvcKGoA5ZUxcmac4VpmM%2FJ9LodIphI2qK85kU7i5dAjfKQESF6V7MCPpaKLv09OvE4lSe3v53nStGrD0KRpxjcbdKqIDkptwZeJqnVXNMZJyshSIDzPOXifnVfbLgnPYFbeQ%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000088'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-20 11:49:41'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/30823f96-ad70-11f0-91d8-e93a2f28b691.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1760936381&Signature=pP2D356S%2FylP3vxxTtjdjYdXxxE2Br76TM43ATudrkbnOvezy%2BjRkOXV%2B4VgOnLnGzgQWzwP1nlTnXOPRU4D2PvoTKEvtG7g4ZxqgRFSA84Wpv%2Bc8ow%2FKmtppsaqS2I1flbEc7zAni8QYtWiYhNAKD2Q5bWtJFh%2BpakDNL%2Fba59%2Bn6%2BGn%2BlMEcJYfSqSah2MCcJ5RXbsvQTI1gc5cnsvfUco8jkNwyvIFxlO5xY%2BYYtdyIKaWupTTA03eBOrRitxaBupIL1XVlWMXLCzJwiYAlY1lBcv1lpeLq%2Bo%2B9qGwotuPF9Qv9WfD%2FiV7%2FlQGBlVHQz0WBVnxAgPYTMHGzRmag%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000087'
+                    base_amount: 10
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-20 11:49:02'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/828422153.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000085'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-20 11:18:46'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/828407770.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000083'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-20 10:58:30'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/828398495.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000076'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-18 11:24:41'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/5d85df5e-abda-11f0-b6e8-997e2ba2e12e.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1760762081&Signature=ZqfiizvNdDQaG68OiGJO3lb44mg3ovrxESzGyoI8uvXYMdEVdwDotl3ewBHfRfYP%2FfyTvGrSj19cW%2Fq0oA7sqXsRV8Zf%2BsnB%2Beq4E1pUJW0JWklYJDTE6YcYRunSs03WlUwkgeCKHX3khXLDi6T0BuTuZJ4cJLXZec7tuYZ8odjeCiwFqNCaC6g5Jgqb38fmf5ZAHojxFte3LmiuPACz5lxMMSXfrQwrB30vWZFIgez%2FenB%2FrPDHakuZ%2F%2BqT0wPrAL%2BfLbWrKDbfbo9sHVcML7bQkQDaxP0bTjKmZcw9ejf5xisyRKZWVwEhmhZhK%2B4dTl%2Ft3AWfOtB3PjcHf8nXSA%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000075'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-18 11:19:23'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/a03cfe42-abd9-11f0-b6e8-c11f5be62650.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1760761763&Signature=cjOVVzQXeOg3YsOY9mbbdXqhuzNhsbzanheIuOVhk1h4Nb2jTKWj9T5LJeJbe9lYqKGCkfJbjUmQYI77tR8OZwF9uvw%2Fv5x4y77kRCn3wgXosxFSgLBtKJFDer2tgtkXaLXi4zhdg0pqoUyT3sAC0XfOazczCzk4xPD%2F8TQ%2FlaGk0U6%2BVIM%2FruC%2BJWZA2obcsnsiw8QIydNxmAKTvHlvlk80pUg%2B8QLOh5O%2F5ro9VvcAwknMMLzmsPNNhNfGVqtEeQJjVWIEiZsmYzoV2%2BkJw5L6GnRiI6%2Fy9%2F88nmJ8U9ABKkPA9XF1Is5mYLB3mZ%2FdH0Mv9NN3lpesIDJuHm6%2BQw%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000065'
+                    base_amount: 100
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-16 16:45:41'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/826442624.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000064'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-16 16:41:40'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/826440972.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000063'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-16 16:39:35'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/826440127.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000062'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-16 16:34:41'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/826438113.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000061'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-16 16:31:19'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/826436725.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000060'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-16 16:10:49'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/826428529.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000059'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-16 16:10:30'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/826428397.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000058'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-16 16:10:10'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/826428252.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000057'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-16 16:01:52'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/826424998.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000056'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-16 15:48:42'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/826420108.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000052'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-16 11:55:53'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/826329817.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000046'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-15 10:55:56'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825802717.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000045'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 18:08:42'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825479167.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000044'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 17:57:41'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825473946.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000043'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 17:48:45'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825469568.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000041'
+                    base_amount: 10000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 17:14:35'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825454034.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000040'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 17:09:02'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825451696.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000039'
+                    base_amount: 10
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 17:07:56'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825451238.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000038'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 16:41:17'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825440332.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000037'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 16:39:53'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825439805.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000036'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 16:31:13'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825436325.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000035'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 15:45:17'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825418644.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000034'
+                    base_amount: 10
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 15:40:31'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825416873.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000033'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 15:39:27'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825416501.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000032'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 15:39:10'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825416395.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000031'
+                    base_amount: 10000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 15:33:30'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825414375.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000030'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-14 15:33:16'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/6dbb50e0-a8d8-11f0-b6b5-65d3dbc77150.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1760431395&Signature=DESYMzLVORjQIx4mjLPcwB6L5%2FyIXkSryxobwHwlvlIvsogCmIbVIHsw9CzkV%2Fx3MBRyhK3AXTaxtU91cWcMGgYeGtszueZC3a9NviwHZ5qhn2eve0VAL5DVuWNsOJQM2Fwi3mHquW%2Fd5VGKwnReJRpnLaBXwettpRRiu%2F3qyTvvv4Yq%2BHDUFTdBoqDfZtsAEgtDGDBz69%2FP3%2B7J%2BNkuLpmMQSoINo3vJZP9cVObjUbNdH2%2FIZ6uMyTRHVetIJEBDCJV46DlXhr4r4LO81%2BUfpNiGBPYdF0tPeRXEdTbUGQnEVxNZtPba8NEuZk6n%2F%2B%2FgSzrrV8DRou%2Fd4VVH14RSg%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000028'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 15:32:38'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825414056.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000027'
+                    base_amount: 10000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 15:31:42'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825413720.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000026'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-14 15:26:19'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/75712641-a8d7-11f0-a07b-cf0ac79db0da.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1760430979&Signature=IHU3AXlwtdfjiIGkEX3Arorj1AGyGJPdaE5a1mwXgUD2NvjwkocIf9tuaM5gHI%2ByqhVfNfkaK00GjSSI3hnEfwKN%2B9%2F76WhrgepcJF1841kJtNCxuI13XxA36lPq6rx5kFxUx9Df1uhIMHf3OQYqbKRuAEIwVEgiUPPtxhyhx7OLUbsFJxzvB2GUhBX8Hc6CeXd3t4RFD80e3d0BlmFlg%2BG6byy7RUlvToxr%2BY1FcRwMsWWs4v2HMH34qx25MCO0HpCHBORJq8%2F2o8pQ0RlCXbbr7J7acrPbyJZLVPB5UkPZfTN4aoHPPkPx0y7qVfm7uNjO1f4mOuQv9AQPiPuhOQ%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000024'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 15:24:26'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825410977.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000023'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 15:22:15'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825410151.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000022'
+                    base_amount: 1
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 09:16:19'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825267493.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000021'
+                    base_amount: 1000
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 09:16:08'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825267409.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 1
+                    invoice_num: '000020'
+                    base_amount: 100
+                    qr_pay_app_id: 2
+                    create_at: '2025-10-14 03:30:07'
+                    batch_group_name: KREDIVO-BNPL
+                    qr_pay_app_name: KREDIVO BNPL
+                    qr_string: >-
+                      https://api.kredivo.com/offline/v1/get_qr_image/3837/dynamic/825171532.png
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000016'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-13 18:08:51'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/ffce893d-a824-11f0-949b-f56c2c001c62.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1760354331&Signature=OdX5Ccq7Y9R0DWbwTVYSUUkHvD%2F3h0IRnnyK%2Fd9k2lOPfl8JwZl%2BA1VT892eHOLbXtA8sWYroqkOJ2KjMC9PhQNDxXF9cmB2w3h4hNwlFFIrOQH48VBgJlMPYc2l5HAdeFHd5g24MdwNao7EcSszSZ1TziZKfMwrYaTjgSFWf%2Bg0%2BJZxsUID2q%2Bckq1fUtBXM4pxNO%2BP6c3NOhOUSITH9H%2B%2FET98r5fCmQh6VjoJPloewsd6Q9xaNxhw9qfIFmPgOCYZ3JvJvpBq621skJhFfiiHzU9%2BRaA74jFdmimS2sTA2riJ6A5u5pNtojZwDxqnBQ1Qv7xkMdYTtxxInP63WQ%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000013'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-13 14:46:04'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/aba1fd15-a808-11f0-a07b-1de915afba3e.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1760342164&Signature=zYVVga6cCorVX6XvHWx4C2xsiF%2BolD9qMcQNaColibI%2FHMskGS9Gv826Q7jkqMG2CQfYk%2FnnZX6di8Acqh19MZn0txzcc2SxefZGQtJMlRAxkd9XOAcsew5Wfwc6Vu0twS7Kau935S%2BvgpN6IH3XP%2BXqy%2Bl%2BgZGtvhkJp0PbvS7z4okF8E3r9WqUWDOn26x6MqEIuO4w14FvqZWlSkBC%2FN3PQo220mtdhkH%2BdTNY5mV%2Bi4dbD3Q3Qda6wZUGw5qq9KBeAo%2BjdQQkf35XSx%2FJpeTuHf2I%2ByBH1CzflhIpqPA7jF8dBex0QHYFRSd%2BuP3HTq1J4nYYM3SN3t3tJ%2FYl1Q%3D%3D
+                  - is_qris_flag: false
+                    expired_flag: false
+                    batch_group_id: 2
+                    invoice_num: '000008'
+                    base_amount: 10000
+                    qr_pay_app_id: 1
+                    create_at: '2025-10-11 00:55:07'
+                    batch_group_name: INDODANA-BNPL
+                    qr_pay_app_name: INDODANA BNPL
+                    qr_string: >-
+                      https://storage.googleapis.com/com-indodana-prod/offline/qr/41bc4c77-a602-11f0-b6b5-cbd645d5a78b.jpg?GoogleAccessId=offline-prod-signedurl@tmf-prod.iam.gserviceaccount.com&Expires=1760119507&Signature=z0dWqRwf8OPr7ofxGDnOQOElh3Pl%2B0Fl0%2Frs15ZsJ4BzzC%2B181LetIVVn3DrBb1p4ZEqsn9drk6rPzNzH16PGhesq27ap1xkMoipOaTkC9Aru9E24iY%2B9bfXq1s10G7AB2qzQ%2BagUdgbqPkMI2M3UfUJgLHzAk23b3BZEWr5Wxw7wdrhAzKQWHejqoLNrZBlZsmZe%2F8Xo3H0ySHOIh8BP%2B8%2Fx8bQaMKsElrxRRBreODs%2Fh%2BCxUxhvyvvMgmRKpv%2BXUNKculB19TdD9PrVPK6EOdsc4oRG2rvR7he3Rpgy6xhRwTxT%2Fsw3Qunos4F6DvRu3khyruGwBZq4GBEJf10IQ%3D%3D
+                print_receipt_address_line_2: Jl Jend Sudirman No Kav 33
+                print_receipt_address_line_1: Gd Atria @Sudirman Lt.23
+                status: OK
+      tags:
+        - API BNPL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1766558620146'
+  /MmCoreBnplHost/v1/trx_history/get_last_trx_data:
+    post:
+      summary: BNPL Last Transaction
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMSIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tMWxpb25kZS9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc2NjU1OTA0MywiZXhwIjoxNzc0MzM1MDQzfQ.6jjo_1UdH8omengYkYW_VZlXDNb4ywUIxA8piDZzZqrlw6T7VfkiVMVTD0Wf_8z-5BkFGC1M_W8TVsxiy9MiMQ
+      responses:
+        default:
+          description: 200 BNPL Last Transaction
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_id:
+                    type: integer
+                  invoice_num:
+                    type: string
+                    format: color
+                  base_amount:
+                    type: integer
+                  trx_type:
+                    type: string
+                  approval_code:
+                    type: string
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  batch_group_id:
+                    type: integer
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  message:
+                    type: string
+                  qr_pay_app_id:
+                    type: integer
+                  batch_num:
+                    type: string
+                    format: color
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  batch_group_name:
+                    type: string
+                  qr_pay_app_name:
+                    type: string
+                  rrn:
+                    type: string
+                    format: utc-millisec
+                  issuer_name:
+                    type: string
+                  qr_generated_at:
+                    type: string
+                    format: style
+                  container_name:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  create_at:
+                    type: string
+                    format: style
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0070'
+                merchant_id: 368
+                invoice_num: '000192'
+                base_amount: 1
+                trx_type: PAYMENT
+                approval_code: pygy17
+                merchant_address2: Jl Jend Sudirman No Kav 33
+                merchant_address1: Gd Atria @Sudirman Lt.23
+                batch_group_id: 1
+                midware_timestamp: '1766559052'
+                merchant_name: Cashlez IT 1
+                message: SUCCESS TO GET LAST TRANSACTION DATA.
+                qr_pay_app_id: 2
+                batch_num: '000011'
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                batch_group_name: KREDIVO-BNPL
+                qr_pay_app_name: KREDIVO BNPL
+                rrn: '000000000055'
+                issuer_name: KREDIVO
+                qr_generated_at: '2025-12-24 13:34:42'
+                container_name: cz-prod.dc.angelfish.docker
+                print_receipt_merchant_name: Cashlez IT 1
+                print_receipt_address_line_2: Jl Jend Sudirman No Kav 33
+                create_at: '2025-12-24 13:36:45'
+                print_receipt_address_line_1: Gd Atria @Sudirman Lt.23
+                status: OK
+      tags:
+        - API BNPL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1766558965172'
+  /MmCoreBnplHost/v1/settlement/device_user:
+    post:
+      summary: BNPL Settlement
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 BNPL Settlement
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  print_receipt_merchant_name:
+                    type: string
+                  message:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+                  settlement_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        total_tip_amount:
+                          type: integer
+                        number_of_success_payment:
+                          type: integer
+                        batch_group:
+                          type: string
+                        total_refund_base_amount:
+                          type: integer
+                        total_expired_pending_payment_base_amount:
+                          type: integer
+                        batch_num:
+                          type: integer
+                        number_of_refund:
+                          type: integer
+                        number_of_tip:
+                          type: integer
+                        total_success_payment_base_amount:
+                          type: integer
+                        number_of_expired_pending_payment:
+                          type: integer
+              example:
+                response_code: '0061'
+                container_name: cz-prod.dc.angelfish.docker
+                midware_timestamp: '1766559095'
+                print_receipt_merchant_name: Cashlez IT 1
+                message: SETTLEMENT PROCESS DONE.
+                print_receipt_address_line_2: Jl Jend Sudirman No Kav 33
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                print_receipt_address_line_1: Gd Atria @Sudirman Lt.23
+                status: OK
+                settlement_list:
+                  - total_tip_amount: 0
+                    number_of_success_payment: 1
+                    batch_group: KREDIVO-BNPL
+                    total_refund_base_amount: 210
+                    total_expired_pending_payment_base_amount: 0
+                    batch_num: 11
+                    number_of_refund: 3
+                    number_of_tip: 0
+                    total_success_payment_base_amount: 1
+                    number_of_expired_pending_payment: 0
+      tags:
+        - API BNPL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1766559092044'
+  /MmCoreBnplHost/v1/trx_history/get_success_settlement_trx_list:
+    post:
+      summary: BNPL Settlement Detail
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMSIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tMWxpb25kZS9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc2NjU1OTczOSwiZXhwIjoxNzc0MzM1NzM5fQ.FAH7-ig-lC7SzI56BYoxS4JJzPoFXGlvkqMFtHSwANYxqJ2Y7qnGQuMqjSa4E_PI4m6zCcxy12N8dluGiVmlrw
+      responses:
+        default:
+          description: BNPL Settlement Detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_name:
+                    type: string
+                  settlement_trx_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        paid_at:
+                          type: string
+                          format: style
+                        approval_code:
+                          type: string
+                        batch_group_id:
+                          type: integer
+                        invoice_num:
+                          type: string
+                          format: color
+                        base_amount:
+                          type: integer
+                        trx_type:
+                          type: string
+                        qr_generate_at:
+                          type: string
+                          format: style
+                        batch_num:
+                          type: string
+                          format: color
+                        settlement_at:
+                          type: string
+                        batch_group_name:
+                          type: string
+                        rrn:
+                          type: string
+                          format: utc-millisec
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0036'
+                container_name: cz-prod.dc.angelfish.docker
+                settlement_trx_list:
+                  - paid_at: '2025-11-24 15:13:32'
+                    approval_code: dxmnkv
+                    batch_group_id: 1
+                    invoice_num: '000178'
+                    base_amount: 10
+                    trx_type: REFUND
+                    qr_generate_at: '2025-11-24 15:13:09'
+                    batch_num: '000011'
+                    settlement_at: '2025-12-24 13:51:32'
+                    batch_group_name: KREDIVO-BNPL
+                    rrn: '000000000052'
+                  - paid_at: '2025-11-24 15:16:06'
+                    approval_code: vnsi7r
+                    batch_group_id: 1
+                    invoice_num: '000179'
+                    base_amount: 100
+                    trx_type: REFUND
+                    qr_generate_at: '2025-11-24 15:15:54'
+                    batch_num: '000011'
+                    settlement_at: '2025-12-24 13:51:32'
+                    batch_group_name: KREDIVO-BNPL
+                    rrn: '000000000053'
+                  - paid_at: '2025-11-24 15:17:53'
+                    approval_code: lxbkly
+                    batch_group_id: 1
+                    invoice_num: '000180'
+                    base_amount: 100
+                    trx_type: REFUND
+                    qr_generate_at: '2025-11-24 15:17:42'
+                    batch_num: '000011'
+                    settlement_at: '2025-12-24 13:51:32'
+                    batch_group_name: KREDIVO-BNPL
+                    rrn: '000000000054'
+                  - paid_at: '2025-12-24 13:36:45'
+                    approval_code: pygy17
+                    batch_group_id: 1
+                    invoice_num: '000192'
+                    base_amount: 1
+                    trx_type: SUCCESS_PAYMENT
+                    qr_generate_at: '2025-12-24 13:34:42'
+                    batch_num: '000011'
+                    settlement_at: '2025-12-24 13:51:32'
+                    batch_group_name: KREDIVO-BNPL
+                    rrn: '000000000055'
+                midware_timestamp: '1766559751'
+                message: SUCCESS TO GET TRANSACTION HISTORY.
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                status: OK
+      tags:
+        - API BNPL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                batch_group_id:
+                  type: integer
+                batch_num:
+                  type: integer
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              batch_group_id: 1
+              batch_num: 11
+              device_timestamp: '1766559599137'
+  /MmCoreBnplHost/v1/trx_history/get_success_settlement_list:
+    post:
+      summary: BNPL Settlement List
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMSIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tMWxpb25kZS9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc2NjU1OTkyMiwiZXhwIjoxNzc0MzM1OTIyfQ.449e9GFRlMnz3q7U2k9owUE7YmzUSoyloQDJh4zF2XfAlbSPpdPoCT-7fynb_PLO4jgzG6SfeP_RE3Rc3qH8_A
+      responses:
+        '200':
+          description: 200 BNPL Settlement List
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  success_settlement_list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        success_payment_total_base_amount:
+                          type: integer
+                        batch_group_id:
+                          type: integer
+                        refund_total_base_amount:
+                          type: integer
+                        num_of_success_payment:
+                          type: integer
+                        tips_total_base_amount:
+                          type: integer
+                        batch_num:
+                          type: integer
+                        num_of_tips:
+                          type: integer
+                        num_of_refund:
+                          type: integer
+                        settlement_at:
+                          type: string
+                          format: style
+                        batch_group_name:
+                          type: string
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      qrps_ver:
+                        type: string
+                      crypto_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0090'
+                container_name: cz-prod.dc.angelfish.docker
+                midware_timestamp: '1766559934'
+                success_settlement_list:
+                  - success_payment_total_base_amount: 1
+                    batch_group_id: 1
+                    refund_total_base_amount: 210
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 11
+                    num_of_tips: 0
+                    num_of_refund: 3
+                    settlement_at: '2025-12-24 13:51:32'
+                    batch_group_name: KREDIVO-BNPL
+                  - success_payment_total_base_amount: 1
+                    batch_group_id: 1
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 10
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-11-20 21:00:26'
+                    batch_group_name: KREDIVO-BNPL
+                  - success_payment_total_base_amount: 10
+                    batch_group_id: 1
+                    refund_total_base_amount: 10
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 9
+                    num_of_tips: 0
+                    num_of_refund: 1
+                    settlement_at: '2025-11-13 15:19:00'
+                    batch_group_name: KREDIVO-BNPL
+                  - success_payment_total_base_amount: 10
+                    batch_group_id: 1
+                    refund_total_base_amount: 10
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 8
+                    num_of_tips: 0
+                    num_of_refund: 1
+                    settlement_at: '2025-11-07 14:49:10'
+                    batch_group_name: KREDIVO-BNPL
+                  - success_payment_total_base_amount: 10
+                    batch_group_id: 1
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 7
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-11-06 10:27:36'
+                    batch_group_name: KREDIVO-BNPL
+                  - success_payment_total_base_amount: 1
+                    batch_group_id: 1
+                    refund_total_base_amount: 10004
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 6
+                    num_of_tips: 0
+                    num_of_refund: 5
+                    settlement_at: '2025-10-31 16:57:58'
+                    batch_group_name: KREDIVO-BNPL
+                  - success_payment_total_base_amount: 1
+                    batch_group_id: 1
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 5
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-10-29 14:53:37'
+                    batch_group_name: KREDIVO-BNPL
+                  - success_payment_total_base_amount: 200
+                    batch_group_id: 1
+                    refund_total_base_amount: 1011
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 4
+                    num_of_tips: 0
+                    num_of_refund: 3
+                    settlement_at: '2025-10-28 18:25:56'
+                    batch_group_name: KREDIVO-BNPL
+                  - success_payment_total_base_amount: 10000
+                    batch_group_id: 2
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 3
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-10-28 18:25:56'
+                    batch_group_name: INDODANA-BNPL
+                  - success_payment_total_base_amount: 1
+                    batch_group_id: 1
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 3
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-10-28 15:12:21'
+                    batch_group_name: KREDIVO-BNPL
+                  - success_payment_total_base_amount: 1
+                    batch_group_id: 1
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 2
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-10-28 15:09:38'
+                    batch_group_name: KREDIVO-BNPL
+                  - success_payment_total_base_amount: 200
+                    batch_group_id: 1
+                    refund_total_base_amount: 16346
+                    num_of_success_payment: 2
+                    tips_total_base_amount: 0
+                    batch_num: 1
+                    num_of_tips: 0
+                    num_of_refund: 30
+                    settlement_at: '2025-10-23 21:00:13'
+                    batch_group_name: KREDIVO-BNPL
+                  - success_payment_total_base_amount: 10000
+                    batch_group_id: 2
+                    refund_total_base_amount: 0
+                    num_of_success_payment: 1
+                    tips_total_base_amount: 0
+                    batch_num: 2
+                    num_of_tips: 0
+                    num_of_refund: 0
+                    settlement_at: '2025-10-23 18:05:13'
+                    batch_group_name: INDODANA-BNPL
+                  - success_payment_total_base_amount: 41003
+                    batch_group_id: 2
+                    refund_total_base_amount: 50000
+                    num_of_success_payment: 4
+                    tips_total_base_amount: 0
+                    batch_num: 1
+                    num_of_tips: 0
+                    num_of_refund: 5
+                    settlement_at: '2025-10-22 18:05:13'
+                    batch_group_name: INDODANA-BNPL
+                message: SUCCESS TO GET SUCCESS SETTLEMENT LIST.
+                version:
+                  qrps_ver: v1.0.3
+                  crypto_ver: v1.5.0
+                status: OK
+      tags:
+        - API BNPL
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+            example:
+              device_timestamp: '1766559599137'

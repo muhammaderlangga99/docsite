@@ -152,3 +152,36 @@ Route::match(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], '/cdcp-proxy/
 
     return ApiProxy::handle($request, $path, $baseUrl);
 })->where('path', '.*')->name('api.proxy.cdcp');
+
+// route untuk proxy API requests ke QRIS API melalui server kita
+Route::match(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], '/qris-proxy/{path}', function (Request $request, $path) {
+    if ($request->isMethod('options')) {
+        return response('', 204);
+    }
+
+    $baseUrl = 'https://tucanos-miniatm.cashlez.com';
+
+    return ApiProxy::handle($request, $path, $baseUrl);
+})->where('path', '.*')->name('api.proxy.qris');
+
+// route untuk proxy API requests ke BNPL API melalui server kita
+Route::match(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], '/bnpl-proxy/{path}', function (Request $request, $path) {
+    if ($request->isMethod('options')) {
+        return response('', 204);
+    }
+
+    $baseUrl = 'https://angelfish.cashlez.com';
+
+    return ApiProxy::handle($request, $path, $baseUrl);
+})->where('path', '.*')->name('api.proxy.bnpl');
+
+// route untuk proxy API requests ke Mini ATM API melalui server kita
+Route::match(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], '/mini-atm-proxy/{path}', function (Request $request, $path) {
+    if ($request->isMethod('options')) {
+        return response('', 204);
+    }
+
+    $baseUrl = 'https://tucanos-miniatm.cashlez.com';
+
+    return ApiProxy::handle($request, $path, $baseUrl);
+})->where('path', '.*')->name('api.proxy.mini-atm');

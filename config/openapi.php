@@ -24,5 +24,8 @@ return [
         'api-czlink' => 'api-docs.yaml',
         // 'czlink-api' => 'czlink/api-docs.yaml',
         'api-cdcp' => 'api-cdcp.yaml',
+        'api-qris' => 'api-qris.yaml',
+        'api-bnpl' => 'api-bnpl.yaml',
+        'api-mini-atm' => 'api-mini-atm.yaml',
     ],
 ];

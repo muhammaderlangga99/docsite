@@ -3,9 +3,10 @@ info:
   title: Cashlez Link API
   description: API documentation for the Payment Link Generation Service
   version: "1.0"
+# servers:
+#   - url: /czlink-proxy
+#     description: Docs proxy
 servers:
-  - url: /czlink-proxy
-    description: Docs proxy
   - url: https://api-link.cashup.id
     description: API utama
 security:

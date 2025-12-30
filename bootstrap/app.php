@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'czlink-proxy/*',
             'cdcp-proxy/*',
+            'qris-proxy/*',
+            'bnpl-proxy/*',
+            'mini-atm-proxy/*',
         ]);
 
         $middleware->alias([

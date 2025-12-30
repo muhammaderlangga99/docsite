@@ -3,9 +3,12 @@ info:
   title: New Collection
   version: 1.0.0
   description: ''
+# servers:
+#   - url: /cdcp-proxy
+#     description: Docs proxy (CDCP)
+#   - url: https://tucanos-miniatm.cashlez.com
+#     description: Docs Staging
 servers:
-  - url: /cdcp-proxy
-    description: Docs proxy (CDCP)
   - url: https://tucanos-miniatm.cashlez.com
     description: Docs Staging
 paths:

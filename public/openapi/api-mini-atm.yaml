@@ -1,0 +1,2487 @@
+openapi: 3.0.0
+info:
+  title: Cashmove
+  version: 1.0.0
+  description: ''
+servers:
+  - url: https://tucanos-miniatm.cashlez.com
+    description: Docs Staging
+# servers:
+#   - url: /bnpl-proxy
+#     description: Docs proxy (BNPL)
+#   - url: https://angelfish.cashlez.com
+#     description: Docs Staging
+tags:
+  - name: EDC
+    description: Mini ATM EDC endpoints
+  - name: Partner
+    description: Mini ATM Partner endpoints
+x-tagGroups:
+  - name: Cash Move
+    tags:
+      - EDC
+      - Partner
+paths:
+  /MmCorePsgsHost/v1/login:
+    post:
+      summary: login
+      responses:
+        '200':
+          description: 200 login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  merchant_address2:
+                    type: string
+                  merchant_address1:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  merchant_name:
+                    type: string
+                  merchant_id:
+                    type: integer
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      psgs_ver:
+                        type: string
+                  token:
+                    type: string
+                  container_env_name:
+                    type: string
+                  print_receipt_merchant_name:
+                    type: string
+                  print_receipt_address_line_2:
+                    type: string
+                  print_receipt_address_line_1:
+                    type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0000'
+                merchant_address2: Jakarta
+                merchant_address1: Jakarta
+                midware_timestamp: '1749787446'
+                merchant_name: Bukalapak Demo
+                merchant_id: 117
+                message: LOGIN SUCCESS.
+                version:
+                  crypto_ver: v1.5.0
+                  psgs_ver: v1.0.1
+                token: >-
+                  eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJibGF0bSIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4vTW1Db3JlUHNnc0hvc3QvdjEvbG9naW4iLCJpYXQiOjE3NDk3ODc0NDYsImV4cCI6MTc1NzczNjI0Nn0.TUVieheY9aXHHQvPPhfBqlDgKkhdh6KUqNBa9rtZ_pJHbFfGAt6S2caziZqcuMtkf3Y9DxMW2vyzySSdBEZVAw
+                container_env_name: cash-devel.sword-miniatm.be1.docker
+                print_receipt_merchant_name: Buka Lapak
+                print_receipt_address_line_2: Jakarta
+                print_receipt_address_line_1: Jakarta
+                status: OK
+      tags:
+        - EDC
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                isVisibleUsername:
+                  type: boolean
+                pass_hash:
+                  type: string
+                username:
+                  type: string
+            example:
+              device_timestamp: '1749783466'
+              isVisibleUsername: false
+              pass_hash: 3ae0bc1f6a84be563c796f07ac86d936eb1e95404b242319cc4c6693c541010e
+              username: ittest02
+  /MmCorePsgsHost/v1/get_general_device_key:
+    post:
+      summary: General Device Key
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tbWFyMi9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc1MDkyNDQ5MCwiZXhwIjoxNzU4ODczMjkwfQ.ntS5Lhg9nRDPZ0eKASMfVeXv9RuCSzWOIn-gOYEMEM40za-U2i3_UE_q2bu6DqlCJrTNrpSRqxDb2AVlwGt2-g
+      responses:
+        '200':
+          description: 200 General Device Key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_code:
+                    type: string
+                    format: utc-millisec
+                  container_env_name:
+                    type: string
+                  midware_timestamp:
+                    type: string
+                    format: utc-millisec
+                  enc_keys:
+                    type: object
+                    properties:
+                      pin_block_mk_universal:
+                        type: string
+                      general_ksn:
+                        type: string
+                      general_ipek:
+                        type: string
+                      amount_ksn:
+                        type: string
+                      amount_ipek:
+                        type: string
+                      pin_block_wk_universal:
+                        type: string
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      crypto_ver:
+                        type: string
+                      psgs_ver:
+                        type: string
+                  status:
+                    type: string
+              example:
+                response_code: '0011'
+                container_env_name: ''
+                midware_timestamp: '1711602289'
+                enc_keys:
+                  pin_block_mk_universal: >-
+                    C766B95C5EF4EB0DC233D403AB30B8FA07E86862F880CFF02C2552D96BE120A89A327E80DFF2B0E40BDCECC41EDF3915AA173CDAD017DEC38A03A1F3306547F9728E27B342D627017F993D7BF9943DB66BFB8B3951DD7F264DC8FF6C5DB38524DB6EA15A8F4745FDBF290B79E085181C5CBF78EC77E531BA2EDEFC52292BF29E9DBE26BF18A72093BF2101D89A98D02708CB45D2C55ACFCEA5254E9EA28A2CC3D489F04FEC6CDB269FD54B4CE1E3A80487ED892E6C50DC8DA8038EAFF91FECAF28BE5FB83A6D90F3FC04519962770238BC71730B80689598D40914DE1D21FEB5472A4F49DB85B3B318C5931D23C7A4725769EBE32D571F4847C2BC2B928357EA
+                  general_ksn: >-
+                    40B9E0CD63BB90DCF1EA23259C83E2ED120E9BB85BFD47F23C909FFCB5918610DE00DCDCAC9B176036B77D34093465CF8B6BB9FED23F53F03BFB6807BC3A38ADF54E49096816AD1431C2820CDC97A7BA7F76ABF944C5EDE88E39708D6556BA0043261F056B5F1885FC0D7D5DAD742F5C2121239D863264EA1544081214E88ADF39FD945C72CE58813634E9BDE4B3A6647771A61C1C1AF7BAAA1571217AE08C077633A9984821133D5F7B679E6EC0DE6FB03C37EB6FF21CB2EEAE73BDAA4DC4AD38EB109CBB50D9CB023BF1277BA1764254F9F5B41E708EEB580B18BA8C3D60FECCCB8B259DA3030F98E9E4457B2C607BBAE09AC6727DF3C41DE4679392F53724
+                  general_ipek: >-
+                    9A3F4900261DE54B38CD6F6D2FD8822923970384775D531B00BD0F2A3848162A595679C495FDEB20D72E2DB52BADB2841AFFC9C48F758A54D1510FCD698A63E5880916473B15F4EDDA4B1122D7443732884BA3D22E5967693E5DA11584986E44BD66947EF724775F0459226F42D14E6E0414CE4D87BE07362245C984C9015F50E5BE43422A12FCF9B0F7F2E499A46D07F6476F788BEEE24FEFE73F40F22CB8B61098BFBA24A60B13011501C8F1706D8922532BD6F398AD8EDB36C847BEE877F8FE3BD49C331986404D1F9B354953F24754C6F6AD63B4EF8D53D9E8ABA5E8B25F50C9C23FADF6811F3C80ED5D441E2D10C5FA0AF989BA52AED5F96BAC017761A4
+                  amount_ksn: >-
+                    D211CA1955F746CAF760045C201B5893A0CE076684CEA3F0439D5E16DA7D3A00A07C93B8695A12FC4C8CCBF53E01F0489212BB01F5E749C7FC6AD01EC206B62518B79496E3316A6E4435BC690E10D6CC991F82A92EBED4AE49FC1CEBCDC76A55B9486B2150201B4847DAE11B5DC681AE0F5A1FE3DC8C4B32559B900798D6ADDEC0F6A17202E980E15478F5CA0F30B50261801E661BB41CA7BBB1641E49C5D2101FA5634DAF0DBF712370BA45E6D0378C75797FCE87B4EC8192E34F6040C150A44EE4303DA691DAD761E0E156E4405AC7B83700EFEB2512D9B0F83143B7A0A1392BE80B6E9885C239DD179F06E13654B4C7643D7B8592776BBFBC3E4F02AB1E3F
+                  amount_ipek: >-
+                    206420E3CB89CD675CBAC72F7118192ADAA469223D807AD71F9A53DC3FDBBBA9CBA1F42C95B576A87050263811C2D81ED2617E6BF1BBDE135C248BB7183AA766FC0C03A8E76051BF4054194E85161B24AC4FC183A034E392B3237760ED13542968E0171588EAFC12B599C8A9E2F2FAC55849CD6E8BD8D22D2365B3925F3D289C8AECDA443B5981F9A189C8CD150430C119D9A039344E9F0A7EADE4EC4B5DA2FD1E107FC928B6F003B9E752866C2D1DDC7B6881BE116064C5F97D99CD3D5CEFEA2FF44B501FD508100B32F5E93976A08F039A8152B6378EF5A1E4752C07A946C27AAE448878529439B16C360D842F1A41A9C2C0CDA2A449C5A9F2369DB24B9EE2
+                  pin_block_wk_universal: >-
+                    000448AB57DA9C03509A19FD6781DBA1ACCB3898E139D3DB94167AC63E600AE0F0909DDB909C0AF9452C6FE6BA2AAE854E1B9EAA484E966E5B62A6C42A159C2E38F35885AE56E77089AC90F8B31FF9E365480DBF70B8EBDD94A2EA520CCC7DE7EFC33DFB1DEFD3284CA26EBFDA6674790773EAC8C095A39FCCA96573E775215E832FC3DEB22D30C4A64C128BF10684C0B37A44B04347AC4F4F5B6CCB83864A017BE6F61BCC2001A49C6483CD0D3A0E1165B56F5BCD6FCB3AD3E3ECB44F50DE522C7591458E98E704829DCAB8656C29EEEF4AF11AE42EADA3A01317EDFCD1F25B459247DBEBFA41F6BE2E131DAFA9E5D6BB54E13448A78291D4A8D494A206C756
+                message: NOT DEFINE RESPONSE CODE.
+                version:
+                  crypto_ver: v1.5.0
+                  psgs_ver: v1.0.1
+                status: OK
+      tags:
+        - EDC
+  /mini-atm/api/v1/application-config:
+    post:
+      summary: App Config Rules
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tbWFyMi9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc1MDkyNDQ5MCwiZXhwIjoxNzU4ODczMjkwfQ.ntS5Lhg9nRDPZ0eKASMfVeXv9RuCSzWOIn-gOYEMEM40za-U2i3_UE_q2bu6DqlCJrTNrpSRqxDb2AVlwGt2-g
+      responses:
+        '200':
+          description: 200 App Config Rules
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    format: utc-millisec
+                  app_config:
+                    type: object
+                    properties:
+                      min_amount_per_trx:
+                        type: integer
+                      max_amount_without_cvm_per_trx:
+                        type: integer
+                      max_amount_with_cvm_per_trx:
+                        type: integer
+                  merchant_account_number_bank_code:
+                    type: string
+                    format: color
+                  message:
+                    type: string
+                  merchant_account_number:
+                    type: string
+                    format: utc-millisec
+                  status:
+                    type: string
+                  app_gen_config:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        is_enable:
+                          type: boolean
+                        payment_method:
+                          type: string
+              example:
+                code: '0020'
+                app_config:
+                  min_amount_per_trx: 1
+                  max_amount_without_cvm_per_trx: 10000000
+                  max_amount_with_cvm_per_trx: 10000000
+                merchant_account_number_bank_code: '131'
+                message: OK
+                merchant_account_number: '001001001'
+                status: OK
+                app_gen_config:
+                  - is_enable: true
+                    payment_method: matm
+      tags:
+        - EDC
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_timestamp:
+                  type: string
+                  format: utc-millisec
+                settlement_session_num:
+                  type: integer
+            example:
+              device_timestamp: '1749783466'
+              settlement_session_num: 0
+  /mini-atm/api/v1/history/last-trx-30-day:
+    post:
+      summary: Last Trx 30 Day
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: 200 last-trx-30-day
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        body:
+                          type: object
+                          properties:
+                            account_type:
+                              type: string
+                            host_date_time:
+                              type: string
+                              format: utc-millisec
+                            device_id:
+                              type: string
+                            entry_mode:
+                              type: string
+                              format: color
+                            mid:
+                              type: string
+                              format: utc-millisec
+                            trx_mode:
+                              type: integer
+                            tid:
+                              type: integer
+                            device_timestamp:
+                              type: string
+                              format: utc-millisec
+                            rrn:
+                              type: string
+                              format: utc-millisec
+                            emv:
+                              type: string
+                            reversal:
+                              type: boolean
+                            pb:
+                              type: string
+                            host_date:
+                              type: string
+                              format: utc-millisec
+                            transfer_info:
+                              type: object
+                              properties:
+                                to_account_number:
+                                  type: string
+                                  format: utc-millisec
+                                to_customer_ref:
+                                  type: string
+                                  format: color
+                                to_amount:
+                                  type: string
+                                date_time:
+                                  type: string
+                                  format: utc-millisec
+                                from_account:
+                                  type: string
+                                to_bank:
+                                  type: string
+                                to_name:
+                                  type: string
+                                from_bank:
+                                  type: string
+                                ref_no:
+                                  type: string
+                                  format: utc-millisec
+                                trace_no:
+                                  type: string
+                                  format: color
+                                from_name:
+                                  type: string
+                            host_rc:
+                              type: string
+                              format: utc-millisec
+                            card_no:
+                              type: string
+                            invoice_num:
+                              type: integer
+                            base_amount:
+                              type: integer
+                            trx_type:
+                              type: string
+                            host_time:
+                              type: string
+                              format: color
+                            track:
+                              type: string
+                              format: utc-millisec
+                            invoice_number:
+                              type: string
+                              format: color
+                            account_mode:
+                              type: integer
+              example:
+                code: 200
+                data:
+                  - body:
+                      account_type: Tabungan
+                      host_date_time: '17545649302'
+                      device_id: D1V2230001114
+                      entry_mode: '051'
+                      mid: '123450100010003'
+                      trx_mode: 1
+                      tid: 12345004
+                      device_timestamp: '1722261316508'
+                      rrn: '174771895748'
+                      emv: 9FHRY462381JKALSJCM
+                      reversal: false
+                      pb: BD309B111368D42C
+                      host_date: '0520'
+                      transfer_info:
+                        to_account_number: '001001001'
+                        to_customer_ref: '000325'
+                        to_amount: 10.000.000
+                        date_time: '1747718498'
+                        from_account: ''
+                        to_bank: PT. BPD Maluku
+                        to_name: Iqbal Rizky ramadhan
+                        from_bank: PT BANK PANIN
+                        ref_no: '174771849828'
+                        trace_no: '000325'
+                        from_name: Jumadi
+                      host_rc: '00'
+                      card_no: 5264140*******1711
+                      invoice_num: 325
+                      base_amount: 10000
+                      trx_type: TRANSFER_CASH_WITHDRAWAL
+                      host_time: '122138'
+                      track: '4257683992747583'
+                      invoice_number: '000325'
+                      account_mode: 1
+      tags:
+        - EDC
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_id:
+                  type: string
+                username:
+                  type: string
+            example:
+              device_id: D1V2540000714
+              username: tokobayu
+  /mini-atm/api/v1/history/last-trx:
+    post:
+      summary: Last Trx
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tbWFyMi9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc1MDkyNDQ5MCwiZXhwIjoxNzU4ODczMjkwfQ.ntS5Lhg9nRDPZ0eKASMfVeXv9RuCSzWOIn-gOYEMEM40za-U2i3_UE_q2bu6DqlCJrTNrpSRqxDb2AVlwGt2-g
+      responses:
+        '200':
+          description: 200 Last Trx
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    format: color
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        body:
+                          type: object
+                          properties:
+                            account_type:
+                              type: string
+                            host_date_time:
+                              type: integer
+                            device_id:
+                              type: string
+                            entry_mode:
+                              type: string
+                              format: color
+                            mid:
+                              type: string
+                              format: utc-millisec
+                            trx_mode:
+                              type: integer
+                            tid:
+                              type: string
+                              format: utc-millisec
+                            db_timestamp:
+                              type: integer
+                            rrn:
+                              type: string
+                              format: utc-millisec
+                            emv:
+                              type: string
+                            reversal:
+                              type: boolean
+                            pb:
+                              type: string
+                            host_date:
+                              type: string
+                              format: utc-millisec
+                            balance_info:
+                              type: object
+                              properties:
+                                date_time:
+                                  type: string
+                                  format: utc-millisec
+                                balance:
+                                  type: string
+                                ref_no:
+                                  type: string
+                                  format: utc-millisec
+                                trace_no:
+                                  type: string
+                                  format: color
+                            host_rc:
+                              type: string
+                              format: utc-millisec
+                            card_no:
+                              type: string
+                            invoice_num:
+                              type: integer
+                            base_amount:
+                              type: integer
+                            trx_type:
+                              type: string
+                            host_time:
+                              type: string
+                              format: color
+                            track:
+                              type: string
+                            invoice_number:
+                              type: string
+                              format: color
+                            account_mode:
+                              type: integer
+              example:
+                code: '200'
+                data:
+                  - body:
+                      account_type: SAVING
+                      host_date_time: 1750062592000
+                      device_id: D1V2230000558
+                      entry_mode: '051'
+                      mid: '123450100010002'
+                      trx_mode: 1
+                      tid: '12345003'
+                      db_timestamp: 1750062592000
+                      rrn: '175006259290'
+                      emv: >-
+                        9F260842DE0C04438DFF159F2701809F101C0101A00011000032BF1BB800000000000000000000000000000000009F370492318CA59F36020D2A5F3401005F2A0203609F1A0203609F02060000000000009A03250616820254009C01308407A0000006021010950542000408009F0306000000000000
+                      reversal: false
+                      pb: 6DCE9931490DB00F
+                      host_date: '0616'
+                      balance_info:
+                        date_time: '1750062592'
+                        balance: 5.733.005,01
+                        ref_no: '175006259290'
+                        trace_no: '000012'
+                      host_rc: '00'
+                      card_no: 5264140*****1711
+                      invoice_num: 12
+                      base_amount: 0
+                      trx_type: CHECK_BALANCE
+                      host_time: '152952'
+                      track: 5264140111731711=44102010000075400000
+                      invoice_number: '000012'
+                      account_mode: 1
+      tags:
+        - EDC
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_id:
+                  type: string
+                username:
+                  type: string
+            example:
+              device_id: D7171238649303839
+              username: czatm
+  /mini-atm/api/v1/check-balance:
+    post:
+      summary: check-balance
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpdHRlc3QwMiIsImlzcyI6Imh0dHA6Ly9jb3JlLXBzZ3MtcGxhaW4tbWFyMi9NbUNvcmVQc2dzSG9zdC92MS9sb2dpbiIsImlhdCI6MTc1MDkyNDQ5MCwiZXhwIjoxNzU4ODczMjkwfQ.ntS5Lhg9nRDPZ0eKASMfVeXv9RuCSzWOIn-gOYEMEM40za-U2i3_UE_q2bu6DqlCJrTNrpSRqxDb2AVlwGt2-g
+      responses:
+        '200':
+          description: 200 check-balance
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    format: color
+                  data:
+                    type: object
+                    properties:
+                      account_type:
+                        type: string
+                      host_date_time:
+                        type: integer
+                      mid:
+                        type: string
+                        format: utc-millisec
+                      trx_mode:
+                        type: integer
+                      card_type:
+                        type: string
+                        format: color
+                      tid:
+                        type: string
+                        format: utc-millisec
+                      host_msg:
+                        type: string
+                      reversal:
+                        type: boolean
+                      host_date:
+                        type: string
+                        format: utc-millisec
+                      host_trace_no:
+                        type: string
+                        format: utc-millisec
+                      balance_info:
+                        type: object
+                        properties:
+                          date_time:
+                            type: string
+                            format: utc-millisec
+                          balance:
+                            type: string
+                          ref_no:
+                            type: string
+                            format: utc-millisec
+                          trace_no:
+                            type: string
+                            format: color
+                      host_rc:
+                        type: string
+                        format: utc-millisec
+                      card_no:
+                        type: string
+                      emv_data:
+                        type: string
+                      trx_type:
+                        type: string
+                      host_time:
+                        type: string
+                        format: color
+                      account_mode:
+                        type: integer
+                  message:
+                    type: string
+                  status:
+                    type: string
+              example:
+                code: '200'
+                data:
+                  account_type: Tabungan
+                  host_date_time: 1750062592000
+                  mid: '123450100010002'
+                  trx_mode: 1
+                  card_type: '051'
+                  tid: '12345003'
+                  host_msg: Success
+                  reversal: false
+                  host_date: '0616'
+                  host_trace_no: '303030303133'
+                  balance_info:
+                    date_time: '1750062592'
+                    balance: 5.733.005,01
+                    ref_no: '175006259290'
+                    trace_no: '000012'
+                  host_rc: '00'
+                  card_no: 5264********1711
+                  emv_data: >-
+                    9F260842DE0C04438DFF159F2701809F101C0101A00011000032BF1BB800000000000000000000000000000000009F370492318CA59F36020D2A5F3401005F2A0203609F1A0203609F02060000000000009A03250616820254009C01308407A0000006021010950542000408009F0306000000000000
+                  trx_type: CHECK_BALANCE
+                  host_time: '152952'
+                  account_mode: 1
+                message: Success
+                status: success
+      tags:
+        - EDC
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              device_id: PB0W239G20178
+              username: bnitest05
+              entry_mode: '051'
+              account_mode: 1
+              emv_ksn_index: '28464'
+              emv_req_enc: 'A2FDC94A3F194D80D5EBB6DBB12276BE7224C3CEBBBC9F1D7EA42E879B4DE3D1827E67C978457E7B572DA3ACC7AC75B6DB47960A623BFB2B1EE311789697EB906A4EB6F4D0F8D5A2CAF9D09E6E2996B5EB3D67B61162D0580BA0AA5853B38CEA7E1E377B15F8A8ACA40A9B5A8637A16A972C7E7D88AA7AB23F2454A5D6405CB93BF1E8AF303919F585E9896577BCC37EF5048E05B68425287D0FABA76152D9AB4D6F581E9D872D8A95346399DB3A5301855CDCCD3F1209906109E7A18F794F97DB26B00CFD8972E9'
+              emv_req_len: 390
+              track_2_enc: '20C887808F11338A96367F1748482496A151E026C8B41E9E'
+              track_2_hash: '39435bf6448c0cff343afd711e05e457ccdc2237b5b6aea0127365093a332543a3edcd199835b23d7aaba0b48c703a45d069a52808d04906c083c258af5a5a5e'
+              track_2_len: 37
+              track_2_ksn_index: 'D717A'
+              pin_ksn_index: '9394E'
+              pin_block_enc: '02DD0E617A966FEA'
+  /mini-atm/api/v1/transfer/inquiry:
+    post:
+      summary: transfer-inquiry
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: 200 transfer-inquiry
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    format: color
+                  data:
+                    type: object
+                    properties:
+                      host_date:
+                        type: string
+                        format: utc-millisec
+                      transfer_info:
+                        type: object
+                        properties:
+                          to_account_number:
+                            type: string
+                            format: utc-millisec
+                          to_customer_ref:
+                            type: string
+                            format: color
+                          to_amount:
+                            type: string
+                          date_time:
+                            type: string
+                            format: utc-millisec
+                          to_bank:
+                            type: string
+                          to_name:
+                            type: string
+                          from_bank:
+                            type: string
+                          ref_no:
+                            type: string
+                            format: utc-millisec
+                          trace_no:
+                            type: string
+                            format: color
+                          from_name:
+                            type: string
+                      card_no:
+                        type: string
+                        format: utc-millisec
+                      host_date_time:
+                        type: integer
+                      host_rc:
+                        type: string
+                        format: utc-millisec
+                      entry_mode:
+                        type: string
+                        format: color
+                      mid:
+                        type: string
+                        format: utc-millisec
+                      host_time:
+                        type: string
+                        format: color
+                      invoice_number:
+                        type: string
+                        format: color
+                      tid:
+                        type: string
+                        format: utc-millisec
+                  message:
+                    type: string
+                  status:
+                    type: string
+              example:
+                code: '200'
+                data:
+                  host_date: '0616'
+                  transfer_info:
+                    to_account_number: '31246973215'
+                    to_customer_ref: '000013'
+                    to_amount: 50.000,00
+                    date_time: '1750063642'
+                    to_bank: PT. BANK MANDIRI, TBK.
+                    to_name: IQBAL RIZKY RAMDHAN
+                    from_bank: PT. BANK PANIN
+                    ref_no: '175006364235'
+                    trace_no: '000014'
+                    from_name: 'IQBAL RIZKY RAMDHAN           '
+                  card_no: '5264140111731711'
+                  host_date_time: 1750063642000
+                  host_rc: '00'
+                  entry_mode: '051'
+                  mid: '123450100010002'
+                  host_time: '154722'
+                  invoice_number: '000013'
+                  tid: '12345003'
+                message: Success
+                status: success
+      tags:
+        - EDC
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              track_2_ksn_index: '1B3BC'
+              track_2_hash: '8e12f8a6107ee3085d2039a773e59bee93e2a6e5416324908ecfce65733fae9f26caf829623db1e8131f13b3243c939d5f7efd383c63873b3d51f6b30043b431'
+              device_id: PB0W239G20178
+              pin_block_enc: '338A8C670A3125BC'
+              track_2_enc: '00A58B12BC876F431721DBD8C2CC3DBE8044AF92BCABAEC8'
+              entry_mode: '051'
+              account_mode: 0
+              track_2_len: 37
+              emv_req: '9F260836EF9AC8256CF3489F2701809F101C0101A00000000009CE0F6100000000000000000000000000000000009F370404A06CC59F360200B45F3401015F2A0203609F1A0203609F02060000100000009A03241009820274009C01318407A000000602101095050000040000'
+              emv_ksn_index: '890C5'
+              transfer_data:
+                iss_bank_name: ''
+                amount: 100000
+                dest_bank_code: '126'
+                dest_bank_name: 'PT. BPD SULSELBAR'
+                dest_bank_account: '001001001'
+              pin_ksn_index: '3D8A7'
+              emv_req_enc: '147803FBB2F656B5CC255941A769F671452E548B410754DCC849A9603A9D30A83AB7C4165FE6CB84FE5B609DC912564C966CB6B4847E03A6DE6F48BE097119C62ECEC32943617244A2BC1B3A2BDFBBF0643C2FEE5F7DE9308321C9E57D1923A7719F169D6CF711F6ECF1F21BAE2A0583'
+              emv_req_len: 218
+              track_2: '5211022000000214=25102260000006330000'
+              username: bnitest05
+  /mini-atm/api/v1/transfer:
+    post:
+      summary: transfer
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: 200 transfer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    format: color
+                  data:
+                    type: object
+                    properties:
+                      account_type:
+                        type: string
+                      host_date_time:
+                        type: integer
+                      entry_mode:
+                        type: string
+                        format: color
+                      mid:
+                        type: string
+                        format: utc-millisec
+                      trx_mode:
+                        type: integer
+                      tid:
+                        type: string
+                        format: utc-millisec
+                      host_msg:
+                        type: string
+                      host_date:
+                        type: string
+                        format: utc-millisec
+                      transfer_info:
+                        type: object
+                        properties:
+                          to_account_number:
+                            type: string
+                            format: utc-millisec
+                          to_customer_ref:
+                            type: string
+                            format: color
+                          to_amount:
+                            type: string
+                          date_time:
+                            type: string
+                            format: utc-millisec
+                          from_account:
+                            type: string
+                          to_bank:
+                            type: string
+                          to_name:
+                            type: string
+                          from_bank:
+                            type: string
+                          ref_no:
+                            type: string
+                            format: utc-millisec
+                          trace_no:
+                            type: string
+                            format: color
+                          from_name:
+                            type: string
+                      card_no:
+                        type: string
+                        format: utc-millisec
+                      host_rc:
+                        type: string
+                        format: utc-millisec
+                      emv_data:
+                        type: string
+                      host_time:
+                        type: string
+                        format: color
+                      invoice_number:
+                        type: string
+                        format: color
+                  message:
+                    type: string
+                  status:
+                    type: string
+              example:
+                code: '200'
+                data:
+                  account_type: Tabungan
+                  host_date_time: 1750063660000
+                  entry_mode: '051'
+                  mid: '123450100010002'
+                  trx_mode: 3
+                  tid: '12345003'
+                  host_msg: Success
+                  host_date: '0616'
+                  transfer_info:
+                    to_account_number: '31246973215'
+                    to_customer_ref: '000014'
+                    to_amount: 50.000,00
+                    date_time: '1750063660'
+                    from_account: ''
+                    to_bank: PT. BANK MANDIRI, TBK.
+                    to_name: IQBAL RIZKY RAMDHAN
+                    from_bank: PT. BANK PANIN
+                    ref_no: '175006366059'
+                    trace_no: '000015'
+                    from_name: TRI WALIANGGA
+                  card_no: '5264140111731711'
+                  host_rc: '00'
+                  emv_data: >-
+                    9F26081F779EE6B9B684F59F2701809F101C0101A0001100000046EE1D00000000000000000000000000000000009F3704EA2EE5369F36020D2C5F3401005F2A0203609F1A0203609F02060000000000009A03250616820254009C01308407A0000006021010950542000408009F0306000000000000
+                  host_time: '154740'
+                  invoice_number: '000014'
+                message: Success
+                status: success
+      tags:
+        - EDC
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              invoice_number: '005638'
+              device_id: PB0W239G20178
+              username: bnitest05
+              entry_mode: '051'
+              trx_mode: 3
+              account_mode: 1
+              emv_ksn_index: '28464'
+              emv_req_enc: 'A2FDC94A3F194D80D5EBB6DBB12276BE7224C3CEBBBC9F1D7EA42E879B4DE3D1827E67C978457E7B572DA3ACC7AC75B6DB47960A623BFB2B1EE311789697EB906A4EB6F4D0F8D5A2CAF9D09E6E2996B5EB3D67B61162D0580BA0AA5853B38CEA7E1E377B15F8A8ACA40A9B5A8637A16A972C7E7D88AA7AB23F2454A5D6405CB93BF1E8AF303919F585E9896577BCC37EF5048E05B68425287D0FABA76152D9AB4D6F581E9D872D8A95346399DB3A5301855CDCCD3F1209906109E7A18F794F97DB26B00CFD8972E9'
+              emv_req_len: 390
+              track_2_enc: '20C887808F11338A96367F1748482496A151E026C8B41E9E'
+              track_2_hash: '39435bf6448c0cff343afd711e05e457ccdc2237b5b6aea0127365093a332543a3edcd199835b23d7aaba0b48c703a45d069a52808d04906c083c258af5a5a5e'
+              track_2_len: 37
+              track_2_ksn_index: 'D717A'
+              pin_ksn_index: '9394E'
+              pin_block_enc: '02DD0E617A966FEA'
+              transfer_data:
+                dest_bank_code: '00000000126'
+                dest_bank_name: BNI
+                dest_bank_account: '001001001'
+                dest_account_type: '01'
+                amount: 2000
+  /mini-atm/api/v1/bank-list:
+    get:
+      summary: bank-list
+      responses: {}
+      tags:
+        - EDC
+  /mini-atm/api/v1/reversal:
+    post:
+      summary: reversal
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses: {}
+      tags:
+        - EDC
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              trx_mode: 1
+              invoice_number: '000044'
+              device_id: PB0W239G20178
+              username: bnitest05
+              entry_mode: '051'
+              account_mode: 1
+              emv_ksn_index: '28464'
+              emv_req_enc: 'A2FDC94A3F194D80D5EBB6DBB12276BE7224C3CEBBBC9F1D7EA42E879B4DE3D1827E67C978457E7B572DA3ACC7AC75B6DB47960A623BFB2B1EE311789697EB906A4EB6F4D0F8D5A2CAF9D09E6E2996B5EB3D67B61162D0580BA0AA5853B38CEA7E1E377B15F8A8ACA40A9B5A8637A16A972C7E7D88AA7AB23F2454A5D6405CB93BF1E8AF303919F585E9896577BCC37EF5048E05B68425287D0FABA76152D9AB4D6F581E9D872D8A95346399DB3A5301855CDCCD3F1209906109E7A18F794F97DB26B00CFD8972E9'
+              emv_req_len: 390
+              track_2_enc: '20C887808F11338A96367F1748482496A151E026C8B41E9E'
+              track_2_hash: '39435bf6448c0cff343afd711e05e457ccdc2237b5b6aea0127365093a332543a3edcd199835b23d7aaba0b48c703a45d069a52808d04906c083c258af5a5a5e'
+              track_2_len: 37
+              track_2_ksn_index: 'D717A'
+              pin_ksn_index: '9394E'
+              pin_block_enc: '02DD0E617A966FEA'
+              transfer_data:
+                dest_bank_code: '00000000126'
+                dest_bank_name: BNI
+                dest_bank_account: '001001001'
+                dest_account_type: '01'
+                amount: 2000
+  /partner/api/v1/auth:
+    post:
+      summary: Authorization
+      parameters:
+        - name: ApiKey
+          in: header
+          description: 'APIKey Arranet : TNCMCZ899OTS117HISNXHEUGOTRD5UE6HSQNUEXMQYJEMAG697'
+          schema:
+            type: string
+          example: TNCMCZ899OTS117HISNXHEUGOTRD5UE6HSQNUEXMQYJEMAG698
+      responses:
+        '200':
+          description: auth
+          headers:
+            Date:
+              schema:
+                type: string
+              example: Wed, 18 Jun 2025 23:14:47 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+            Content-Encoding:
+              schema:
+                type: string
+              example: br
+            Cf-Cache-Status:
+              schema:
+                type: string
+              example: DYNAMIC
+            Server:
+              schema:
+                type: string
+              example: cloudflare
+            Cf-Ray:
+              schema:
+                type: string
+              example: 951e7c22194dce43-SIN
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+              example:
+                token: >-
+                  eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBcmFOZXQiLCJpc3MiOiJNaW5pQXRtSG9zdFYyIiwiaWF0IjoxNzUwMjg4NDYwLCJleHAiOjE3NTA4OTMyNjB9.VuZIDLrwf3-33KRy3p7oUVpu02K-xV60MIc0QxJNm8o
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pub_key:
+                  type: string
+            example:
+              pub_key: >-
+                MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvt2KB6V0N2q74iqliNL7nnwXuVwR0b4GZ/uSDRvTJvI9mUJlb+AHuYiS5qJC1LDKv3oXO6DF8XnSWIrXlVXAcLSh4xR1c+za2IqlU27F7t5GdLGmsAjJrR8VJFY2yCciW7veGuO5dp4BOOUFpJ7aC8PZ6E9rAyXSEMj+E2A9680dXS7hMdMsHdIpVgpg2SAPI7gFblWxDnM2NG0BnfHxH4sO7s1xZM4PGmy3rhzwj1YhC/9HvDLdVSzNDd4ZODczjQ5iMNpQTz8y9UYEWhLMdnD+OH+O/7UhWblo9BLOE0ib3p85JSmNucZ/aOhI9cUdCpHSqzWkgZlkil853u2nQwIDAQAB
+  /partner/api/v1/refresh:
+    put:
+      summary: Refresh Token
+      parameters:
+        - name: ApiKey
+          in: header
+          schema:
+            type: string
+          example: '{{ApiKey}}'
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnc3QiLCJpc3MiOiJNaW5pQXRtSG9zdFYyIiwiaWF0IjoxNzU5MjkwNjY4LCJleHAiOjE3NTk4OTU0Njh9.rVwCQDeozUIy7wfvRxFCm19r3nbArtt4JSJP9ZrUAIo
+      responses:
+        '200':
+          description: refresh
+          headers:
+            Date:
+              schema:
+                type: string
+              example: Wed, 18 Jun 2025 23:15:16 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+            Server:
+              schema:
+                type: string
+              example: cloudflare
+            Cf-Cache-Status:
+              schema:
+                type: string
+              example: DYNAMIC
+            Content-Encoding:
+              schema:
+                type: string
+              example: br
+            CF-RAY:
+              schema:
+                type: string
+              example: 951e7cdc6d17ce43-SIN
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+              example:
+                token: >-
+                  eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXJ0bmVyRGF0YSIsImlzcyI6Ik1pbmlBdG1Ib3N0VjIiLCJpYXQiOjE3NTAyODg0ODksImV4cCI6MTc1MDg5MzI4OX0.P_yaaFP9yj4pn9OHoqn2kwuxG_wfMCMJTqJHgDWaHL8
+      tags:
+        - Partner
+  /partner/api/v1/status:
+    get:
+      summary: Daily Trx Status
+      parameters:
+        - name: ApiKey
+          in: header
+          schema:
+            type: string
+          example: TNCMCZ899OTS117HISNXHEUGOTRD5UE6HSQNUEXMQYJEMAG698
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnc3QiLCJpc3MiOiJNaW5pQXRtSG9zdFYyIiwiaWF0IjoxNzU5MjkwNjY4LCJleHAiOjE3NTk4OTU0Njh9.rVwCQDeozUIy7wfvRxFCm19r3nbArtt4JSJP9ZrUAIo
+      responses:
+        '200':
+          description: status
+          headers:
+            Date:
+              schema:
+                type: string
+              example: Wed, 18 Jun 2025 23:15:44 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+            Server:
+              schema:
+                type: string
+              example: cloudflare
+            Cf-Cache-Status:
+              schema:
+                type: string
+              example: DYNAMIC
+            Content-Encoding:
+              schema:
+                type: string
+              example: br
+            CF-RAY:
+              schema:
+                type: string
+              example: 951e7d888f0ece43-SIN
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_transaction:
+                    type: integer
+                  pending_transaction:
+                    type: integer
+                  connected_merchant:
+                    type: integer
+                  last_trx_activity:
+                    type: string
+                    format: style
+              example:
+                total_transaction: 3000
+                pending_transaction: 10
+                connected_merchant: 200
+                last_trx_activity: '23:45'
+      tags:
+        - Partner
+  /partner/api/v1/history30day:
+    get:
+      summary: 30 Day History
+      parameters:
+        - name: ApiKey
+          in: header
+          schema:
+            type: string
+          example: TNCMCZ899OTS117HISNXHEUGOTRD5UE6HSQNUEXMQYJEMAG698
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnc3QiLCJpc3MiOiJNaW5pQXRtSG9zdFYyIiwiaWF0IjoxNzU5MjkwNjY4LCJleHAiOjE3NTk4OTU0Njh9.rVwCQDeozUIy7wfvRxFCm19r3nbArtt4JSJP9ZrUAIo
+      responses:
+        '403':
+          description: history30day
+          headers:
+            Date:
+              schema:
+                type: string
+              example: Wed, 18 Jun 2025 23:16:12 GMT
+            Content-Length:
+              schema:
+                type: integer
+              example: '17'
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+            Cf-Ray:
+              schema:
+                type: string
+              example: 951e7e385bf3ce43-SIN
+            Cf-Cache-Status:
+              schema:
+                type: string
+              example: DYNAMIC
+            Server:
+              schema:
+                type: string
+              example: cloudflare
+      tags:
+        - Partner
+  /partner/api/v1/download-key:
+    post:
+      summary: Download Enc Keys
+      parameters:
+        - name: ApiKey
+          in: header
+          schema:
+            type: string
+          example: TNCMCZ899OTS117HISNXHEUGOTRD5UE6HSQNUEXMQYJEMAG697
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnc3QiLCJpc3MiOiJNaW5pQXRtSG9zdFYyIiwiaWF0IjoxNzU5MjkwOTg1LCJleHAiOjE3NTk4OTU3ODV9.goA7CJw4y_OEhjRlrK_X9KK05fHUK_JiowmZcfxURcI
+      responses:
+        '200':
+          description: download-key
+          headers:
+            Date:
+              schema:
+                type: string
+              example: Wed, 18 Jun 2025 23:16:34 GMT
+            Content-Length:
+              schema:
+                type: integer
+              example: '1871'
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+            Cf-Ray:
+              schema:
+                type: string
+              example: 951e7ebfdd92ce43-SIN
+            Content-Encoding:
+              schema:
+                type: string
+              example: gzip
+            Cf-Cache-Status:
+              schema:
+                type: string
+              example: DYNAMIC
+            Vary:
+              schema:
+                type: string
+              example: accept-encoding
+            Server:
+              schema:
+                type: string
+              example: cloudflare
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pin_block_mk_universal:
+                    type: string
+                  general_ksn:
+                    type: string
+                  general_ipek:
+                    type: string
+                  amount_ksn:
+                    type: string
+                  amount_ipek:
+                    type: string
+                  pin_block_wk_universal:
+                    type: string
+              example:
+                pin_block_mk_universal: >-
+                  5471E6405B3FDEF5AAE8F070D75950876415843D7CEE227DC26C6BB3A950FADAEB20605D7F6CE9FF9A022BAFF10820459D09F20C58AE1458C74B95B5B5F65969BF914FB8EF6D1162C7FF02F0B547C3055A16C17DDBB4B8B2E405D5D9EA780F155B1E0318A68578F2094D025D46EBAE375DB368CB06224C4223D6325E57A648F3D2973C37EBAD780D778EC0FBD78B78A4FADEBCCFD189224EFDF44E2B5394C61332C676564347731EE665A00FF9899F47D038DED0B23EBB600187748DF47802CECC551D891BF12AD5D191F8293E6621013042AFFBB887DC9510864A9DDDF36BD908CCAB3CA9B67DB51DD7D6747CF36A9DD8A1E5239B1E984C88700498642D9643
+                general_ksn: >-
+                  15F30EC7AF7C05B4286E640D65F62988ACBEDFCD18C2EBAA9E33B018CC47989371D39303EC2744121A52C4B062AAE62D48C240860B88D6FDE23EFE806328E512EBED48F7136A2A3DF91E756A72C08037FD7294908BF78D0050748B42E8CA47583B61307BB655428529231ABA2D48CC9F157863B76267743F7C4B9EF06727F9E11E6624C5F60D23930539677E6A402E4EC28821CD74A819E00E85E67E58D998FBA432DF195FED478A59497C183881A4A8710C74EEF4FEF3838B07FCA27792506F2B749A53711C7ADC02F2D2661226666B1633E620FE202F613D8C9CF4EE925B0F2884258C1749FF694D23DBDF36679D68C4023A3A8F1837CAC377BEC91550D849
+                general_ipek: >-
+                  BD9980A908DDE2FF10EB27E7DB50D6A403EFC204C8D8FC1FF59279277FE470B5EB592FB27D201DB2EA051E112084194B3EE71B4F88357A679F3000A80B4E895DE0AAD898E3729EEA82004FC77E9686029F10129DD868DE10D46EAEFECE1398DFBB610C325F5A0E09EB53EDCDBDF0BF34272007228E2909B83889EE59104DD92CE8715DDCBF4E8AAD9501DB0B8EDA54C67A3126956F35169D381FBF4175E3A0CDA6D049904DC122AC6B8923BF0D9AD6EC72593C8655E63FC1428D73CF7DCACC583A543F2C51D188FC46B6A31C7F1CFCD5C3D31AF99581F8A42A32F1C7F1A54A665DECBBAF1785AD9E187754E2821F3F55A8E63ACCDF3BF616C50BABD56E2C4322
+                amount_ksn: >-
+                  1AABA305057844DBA005B7505E6D0FEB05BD01CFD918F1044B66CA3CA75DEC750AA79D419BF4E50C794CBAC9C34E4C76A17381BD4D4AB63FA8D54530376ABD0619A9CA0007DEE44320C113033BC889512E05142DF31DDFEFBBFD28E7919939B3D9B918BEB36442C71B672039D07770051D04786526776A3FA5E011F7C99309F2FD9B1FBF5FB75676CEE8F5D66D3493D2E429182B03CF1B7E5DDB127309568E42D3D29BBBB4B21998DE4A74475809320AA166DFE209C120EC7972FE39AC510CAAED9EBA58CD26122BB0C938ACACBB5CC5BE4F7E61061F17E6D6D4E6DE60CC11A8FDCB01FADD92F95E92330CF34087A89C84901C864EC3BB24CD22B18E03551F08
+                amount_ipek: >-
+                  0B9725CAD8A7A8CB3D2E462F3834245DCCA44F8350788DD0A4067649367CB7359F340612348705475FF79C2C878EC19308CAA00BF3F3647DED6F550D0D86A40D3B2FBD554074A35E027C6A79C6A7C82BF5E8073F0EE8402571C30AE9455801E37D1BE1A713D2E39F2C7822C0A0BCD2E32A0B6CD0C86D8AC853C22B35E82B0E2D6F7DFC99C54E4B713B40D762C2B9234BFB74227CEB715884697A19442E1F93A847FFF25146B984FD159D60C26C8A948B6811AC6D9AB64AB84CC78BA4B30D6502BBC251D2C6F4ED6212447A7625D469D94F064F0728B4CD355174E963398073F3EA03A7CB17D69C2E5B4B9A62CA79F13A8E922F1C1B86E8D7899FFFD7C2624E7B
+                pin_block_wk_universal: >-
+                  484698284A209FD45D7DBF772BC56EF49F66C9EC6D60FA87867903C1A1A01C3AA987D8A4A4CD94982223A3C53302B7E67991809D4689346451A0100456CD0CB98229CDB56C630F090293A4199076DC520028E366B88DEF5336608CDDE28B5CBB9A2870A12141BB296951451C3562B136DC3D32058A8A2EE6E51C23DB62581B6CF14FAF749D241B8BB16C4B6081A78D38787FDA24F1604D26B21FE45E5B96F2EB943DC26D67735BFA716C19CF4A19560DF1043B4D093631F9F9F91834CD6898C766CB189A5C69E022E4CC7728386FCA2CAFEA48CCC14F4540630DF9380BFF0BC1AA6FE842593FEFEF0EAD12A51A61694CB26DC86C9FDE89649B5494631B9FED61
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                device_id:
+                  type: string
+            example:
+              client_id: CLID-KFYLSLJ7O3R78W0S9M1SSUM0G243F3
+              device_id: P551700018766
+  /partner/api/v1/check-balance:
+    post:
+      summary: Check Balance
+      parameters:
+        - name: ApiKey
+          in: header
+          schema:
+            type: string
+          example: ApiKey123456
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnc3QiLCJpc3MiOiJNaW5pQXRtSG9zdFYyIiwiaWF0IjoxNzU5MjkwOTg1LCJleHAiOjE3NTk4OTU3ODV9.goA7CJw4y_OEhjRlrK_X9KK05fHUK_JiowmZcfxURcI
+      responses:
+        '200':
+          description: failed
+          headers:
+            Date:
+              schema:
+                type: string
+              example: Wed, 25 Jun 2025 19:32:36 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+            Cf-Cache-Status:
+              schema:
+                type: string
+              example: DYNAMIC
+            Nel:
+              schema:
+                type: string
+              example: '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+            Report-To:
+              schema:
+                type: string
+              example: >-
+                {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=SOfr2dbrLhOcWsuGsVAPQ6jZEipNDmVOCdHKDEN9EDYg16u4hVYFS4JASMlW96pAq0xPKWtMphZ5CqfwDhlKuTs7wZGZYoY%2FqeGoR%2B8%3D"}]}
+            Content-Encoding:
+              schema:
+                type: string
+              example: br
+            Server:
+              schema:
+                type: string
+              example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+              example: 9556e30f7aa1f640-LAX
+            alt-svc:
+              schema:
+                type: string
+              example: h3=":443"; ma=86400
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  errors:
+                    nullable: true
+              example:
+                code: ''
+                message: |-
+                  TIMEOUT TRANSACTION! 
+                  Transaction can not be completed 
+                  Please try again later
+                errors: null
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_mode:
+                  type: integer
+                device_id:
+                  type: string
+                emv_ksn_index:
+                  type: string
+                emv_req_enc:
+                  type: string
+                emv_req_len:
+                  type: integer
+                entry_mode:
+                  type: string
+                  format: color
+                iss_bank_code:
+                  type: string
+                  format: color
+                iss_bank_name:
+                  type: string
+                pin_block_enc:
+                  type: string
+                pin_ksn_index:
+                  type: string
+                track_2_enc:
+                  type: string
+                track_2_hash:
+                  type: string
+                track_2_ksn_index:
+                  type: string
+                track_2_len:
+                  type: integer
+                trx_mode:
+                  type: integer
+                username:
+                  type: string
+                tid:
+                  type: string
+                  format: utc-millisec
+                client_id:
+                  type: string
+            example:
+              account_mode: 1
+              device_id: P551700018766
+              emv_ksn_index: BE97C
+              emv_req_enc: >-
+                36CE60DBF3FBAD87817449C75077734647D9944E59641E0A344E3EF17BCC3F007002B17B63FD40030D2CFD7E7F1073DECAAE0898D8A0E819076C0CA702695E2E3767C766E1E8E0F18616D718322C3576EBE82AF273DC337CCB65741AFD0E1153E1F0DC2397BF00F35496B454FCFB8434DC00415F390540C1
+              emv_req_len: 236
+              entry_mode: '051'
+              iss_bank_code: '542'
+              iss_bank_name: PT. BANK ARTOS INDONESIA
+              pin_block_enc: AE6B68F6EED77B97
+              pin_ksn_index: DD964
+              track_2_enc: 523441F39E3C165621CA27C3A737FB21
+              track_2_hash: >-
+                4a676bcd4f87f8b03ad7fded50b446941abd9eb1532d0fe5e255dea8dd518e8e2e5df268bc42a442e3648c077bf013bf373a92c46aabfe7de3e9766ae58abb83
+              track_2_ksn_index: 66EB9
+              track_2_len: 32
+              trx_mode: 1
+              username: intgst
+              tid: '12345027'
+              client_id: CLID-KFYLSLJ7O3R78W0S9M1SSUM0G243F3
+  /api/v1/transfer/inquiry:
+    post:
+      summary: Inquiry Transfer
+      parameters:
+        - name: ApiKey
+          in: header
+          schema:
+            type: string
+          example: ApiKey123456
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: success
+          headers:
+            Date:
+              schema:
+                type: string
+              example: Wed, 16 Jul 2025 21:22:51 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+            Cf-Cache-Status:
+              schema:
+                type: string
+              example: DYNAMIC
+            Nel:
+              schema:
+                type: string
+              example: '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+            Report-To:
+              schema:
+                type: string
+              example: >-
+                {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=wcjf1pAdZwhfK3XHDWFTg0HX9gSddpVwduBvSrcu2m7yKJj1HXeICS8HKYmaYokNVJfgTR9ofKbv3xV%2FD3hLVYlyAfvr8JaNDzjMDa%2Ff0Q%3D%3D"}]}
+            Content-Encoding:
+              schema:
+                type: string
+              example: br
+            Server:
+              schema:
+                type: string
+              example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+              example: 96048e9ec864e279-MRS
+            alt-svc:
+              schema:
+                type: string
+              example: h3=":443"; ma=86400
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    format: color
+                  data:
+                    type: object
+                    properties:
+                      host_date:
+                        type: string
+                        format: utc-millisec
+                      transfer_info:
+                        type: object
+                        properties:
+                          to_account_number:
+                            type: string
+                            format: utc-millisec
+                          to_customer_ref:
+                            type: string
+                            format: color
+                          to_amount:
+                            type: string
+                          date_time:
+                            type: string
+                            format: utc-millisec
+                          to_bank:
+                            type: string
+                          to_name:
+                            type: string
+                          from_bank:
+                            type: string
+                          ref_no:
+                            type: string
+                            format: utc-millisec
+                          trace_no:
+                            type: string
+                            format: color
+                          from_name:
+                            type: string
+                      card_no:
+                        type: string
+                      host_date_time:
+                        type: integer
+                      host_rc:
+                        type: string
+                        format: utc-millisec
+                      entry_mode:
+                        type: string
+                        format: color
+                      mid:
+                        type: string
+                        format: utc-millisec
+                      host_time:
+                        type: string
+                        format: color
+                      invoice_number:
+                        type: string
+                        format: color
+                      tid:
+                        type: string
+                        format: utc-millisec
+                  message:
+                    type: string
+                  status:
+                    type: string
+              example:
+                code: '200'
+                data:
+                  host_date: '0717'
+                  transfer_info:
+                    to_account_number: '12438489'
+                    to_customer_ref: '001083'
+                    to_amount: 250.000,00
+                    date_time: '1752700970'
+                    to_bank: PT. BANK CENTRAL ASIA, TBK.
+                    to_name: IQBAL RIZKY RAMDHAN
+                    from_bank: PT. BANK ARTOS INDONESIA
+                    ref_no: '175270097083'
+                    trace_no: '000955'
+                    from_name: ''
+                  card_no: 4889501*****2538
+                  host_date_time: 1752700970000
+                  host_rc: '00'
+                  entry_mode: '051'
+                  mid: '714000100010001'
+                  host_time: '042250'
+                  invoice_number: '001083'
+                  tid: '71400001'
+                message: Transaksi berhasil diproses
+                status: success
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_mode:
+                  type: integer
+                device_id:
+                  type: string
+                emv_ksn_index:
+                  type: string
+                emv_req_enc:
+                  type: string
+                emv_req_len:
+                  type: integer
+                entry_mode:
+                  type: string
+                  format: color
+                pin_block_enc:
+                  type: string
+                pin_ksn_index:
+                  type: string
+                track_2_enc:
+                  type: string
+                track_2_hash:
+                  type: string
+                track_2_ksn_index:
+                  type: string
+                track_2_len:
+                  type: integer
+                transfer_data:
+                  type: object
+                  properties:
+                    amount:
+                      type: integer
+                    dest_bank_account:
+                      type: string
+                      format: utc-millisec
+                    dest_bank_code:
+                      type: string
+                      format: color
+                    dest_bank_name:
+                      type: string
+                    iss_bank_code:
+                      type: string
+                      format: color
+                    iss_bank_name:
+                      type: string
+                trx_mode:
+                  type: integer
+                username:
+                  type: string
+                tid:
+                  type: string
+                client_id:
+                  type: string
+            example:
+              account_mode: 1
+              device_id: P651900000484
+              emv_ksn_index: FFE88
+              emv_req_enc: >-
+                C308766DCCCFA4DC1338F44774D785D891F991E910258C19F01FFFE24F5A4252CE24461F6BE3E9E98DA387881601CE753D500987CE4D6B93F23EB553402311A36024CDFFFBD48FA7D02581135AF978CAB526D6D324C399326E689335548CFEE04578A5AD396269572C82C0B8C01E07DB13DD67D7A00C3718
+              emv_req_len: 236
+              entry_mode: '051'
+              pin_block_enc: EAAB7A096A67C63A
+              pin_ksn_index: E516C
+              track_2_enc: 89549A5481D3998B1117921ABE970F7E
+              track_2_hash: >-
+                4a676bcd4f87f8b03ad7fded50b446941abd9eb1532d0fe5e255dea8dd518e8e2e5df268bc42a442e3648c077bf013bf373a92c46aabfe7de3e9766ae58abb83
+              track_2_ksn_index: B815E
+              track_2_len: 32
+              transfer_data:
+                amount: 250000
+                dest_bank_account: '12438489'
+                dest_bank_code: '014'
+                dest_bank_name: PT. BANK CENTRAL ASIA, TBK.
+                iss_bank_code: '542'
+                iss_bank_name: PT. BANK ARTOS INDONESIA
+              trx_mode: 2
+              username: '{{username}}'
+              tid: '{{tid}}'
+              client_id: '{{clientId}}'
+  /api/v1/transfer:
+    post:
+      summary: Transfer
+      parameters:
+        - name: ApiKey
+          in: header
+          schema:
+            type: string
+          example: ApiKey123456
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: success
+          headers:
+            Date:
+              schema:
+                type: string
+              example: Wed, 16 Jul 2025 21:59:56 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+            Cf-Cache-Status:
+              schema:
+                type: string
+              example: DYNAMIC
+            Nel:
+              schema:
+                type: string
+              example: '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+            Report-To:
+              schema:
+                type: string
+              example: >-
+                {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=RDJW5aMOaoHNuDKy8%2FhdJ9fL2fohK5I25ICWPezFIrzJ0iPa1eKP47JQC0ddnnEBjfR%2BDdwJ6e11rPDwbhBB1dpdB8%2FW5i6XgKbCPVvV4w%3D%3D"}]}
+            Content-Encoding:
+              schema:
+                type: string
+              example: br
+            Server:
+              schema:
+                type: string
+              example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+              example: 9604c4f25c962b67-LAX
+            alt-svc:
+              schema:
+                type: string
+              example: h3=":443"; ma=86400
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    format: color
+                  data:
+                    type: object
+                    properties:
+                      account_type:
+                        type: string
+                      host_date_time:
+                        type: integer
+                      entry_mode:
+                        type: string
+                        format: color
+                      mid:
+                        type: string
+                        format: utc-millisec
+                      trx_mode:
+                        type: integer
+                      tid:
+                        type: string
+                        format: utc-millisec
+                      host_msg:
+                        type: string
+                      host_date:
+                        type: string
+                        format: utc-millisec
+                      transfer_info:
+                        type: object
+                        properties:
+                          to_account_number:
+                            type: string
+                            format: utc-millisec
+                          to_customer_ref:
+                            type: string
+                            format: color
+                          to_amount:
+                            type: string
+                          date_time:
+                            type: string
+                            format: utc-millisec
+                          from_account:
+                            type: string
+                          to_bank:
+                            type: string
+                          to_name:
+                            type: string
+                          from_bank:
+                            type: string
+                          ref_no:
+                            type: string
+                            format: utc-millisec
+                          trace_no:
+                            type: string
+                            format: color
+                          from_name:
+                            type: string
+                      card_no:
+                        type: string
+                      host_rc:
+                        type: string
+                        format: utc-millisec
+                      emv_data:
+                        type: string
+                      host_time:
+                        type: string
+                        format: color
+                      invoice_number:
+                        type: string
+                        format: color
+                  message:
+                    type: string
+                  status:
+                    type: string
+              example:
+                code: '200'
+                data:
+                  account_type: Tabungan
+                  host_date_time: 1752703195000
+                  entry_mode: '051'
+                  mid: '714000100010001'
+                  trx_mode: 3
+                  tid: '71400001'
+                  host_msg: Transaksi berhasil diproses
+                  host_date: '0717'
+                  transfer_info:
+                    to_account_number: '1234589'
+                    to_customer_ref: '001098'
+                    to_amount: 875.500,00
+                    date_time: '1752703195'
+                    from_account: ''
+                    to_bank: PT. BANK CENTRAL ASIA, TBK.
+                    to_name: IQBAL RIZKY RAMDHAN
+                    from_bank: ''
+                    ref_no: '175270319519'
+                    trace_no: '000970'
+                    from_name: SOLID RAY
+                  card_no: 4889501*****2538
+                  host_rc: '00'
+                  emv_data: FFFF
+                  host_time: '045955'
+                  invoice_number: '001098'
+                message: Transaksi berhasil diproses
+                status: success
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_mode:
+                  type: integer
+                device_id:
+                  type: string
+                emv_ksn_index:
+                  type: string
+                emv_req_enc:
+                  type: string
+                emv_req_len:
+                  type: integer
+                entry_mode:
+                  type: string
+                  format: color
+                invoice_number:
+                  type: string
+                  format: color
+                pin_block_enc:
+                  type: string
+                pin_ksn_index:
+                  type: string
+                track_2_enc:
+                  type: string
+                track_2_hash:
+                  type: string
+                track_2_ksn_index:
+                  type: string
+                track_2_len:
+                  type: integer
+                transfer_data:
+                  type: object
+                  properties:
+                    amount:
+                      type: integer
+                    dest_bank_account:
+                      type: string
+                      format: utc-millisec
+                    dest_bank_code:
+                      type: string
+                      format: color
+                    dest_bank_name:
+                      type: string
+                    iss_bank_code:
+                      type: string
+                      format: color
+                    iss_bank_name:
+                      type: string
+                trx_mode:
+                  type: integer
+                username:
+                  type: string
+                tid:
+                  type: string
+                client_id:
+                  type: string
+            example:
+              account_mode: 1
+              device_id: P651900000484
+              emv_ksn_index: FEEAF
+              emv_req_enc: >-
+                CDDED771C3B5E08AE2317CE436D8E07A1AEC4EF0EFCFB715628B4410996E34F1753928CFC8743F688F1D0C08F405093768982D988E33A6004AF94C08E7B8F381622307F25DB74CD59B876E7DF4B4DAF7FC9F1DE388D63DC6722F6A2779ECC8EE66AA934BFB83123D56640A5737AA400C61BD47B93C9FD8C4
+              emv_req_len: 236
+              entry_mode: '051'
+              invoice_number: '001089'
+              pin_block_enc: 6847CB6EC6DD1C21
+              pin_ksn_index: 2562E
+              track_2_enc: FBCE18C15E46DA7142A219DAF72F7851
+              track_2_hash: >-
+                4a676bcd4f87f8b03ad7fded50b446941abd9eb1532d0fe5e255dea8dd518e8e2e5df268bc42a442e3648c077bf013bf373a92c46aabfe7de3e9766ae58abb83
+              track_2_ksn_index: D2DB6
+              track_2_len: 32
+              transfer_data:
+                amount: 875500
+                dest_bank_account: '1234589'
+                dest_bank_code: '014'
+                dest_bank_name: PT. BANK CENTRAL ASIA, TBK.
+                iss_bank_code: '542'
+                iss_bank_name: PT. BANK ARTOS INDONESIA
+              trx_mode: 3
+              username: '{{username}}'
+              tid: '{{tid}}'
+              client_id: '{{clientId}}'
+  /partner/api/v1/monitor-single-trx:
+    post:
+      summary: Partner Monitor Single Trx
+      parameters:
+        - name: ApiKey
+          in: header
+          schema:
+            type: string
+          example: '{{ApiKey}}'
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnc3QiLCJpc3MiOiJNaW5pQXRtSG9zdFYyIiwiaWF0IjoxNzU5MjkwOTg1LCJleHAiOjE3NTk4OTU3ODV9.goA7CJw4y_OEhjRlrK_X9KK05fHUK_JiowmZcfxURcI
+      responses:
+        '200':
+          description: Partner Monitor Single Trx
+          headers:
+            Date:
+              schema:
+                type: string
+              example: Wed, 25 Jun 2025 18:41:51 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+            Cf-Cache-Status:
+              schema:
+                type: string
+              example: DYNAMIC
+            Nel:
+              schema:
+                type: string
+              example: '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+            Report-To:
+              schema:
+                type: string
+              example: >-
+                {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=9uYgP08jYFiLemWgXlQZZvfW0zAfF5f7Pu%2FMT8V96BsymMeJWt%2F%2FVtPP0aZ7OzuUu%2FqG9vPEuKmeAPuAAfPduRYamirVu7rJNexUlkEUJQ%3D%3D"}]}
+            Content-Encoding:
+              schema:
+                type: string
+              example: br
+            Server:
+              schema:
+                type: string
+              example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+              example: 955699f4cbb5f7ab-LAX
+            alt-svc:
+              schema:
+                type: string
+              example: h3=":443"; ma=86400
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      tid:
+                        type: string
+                        format: utc-millisec
+                      stan:
+                        type: string
+                        format: color
+                      mid:
+                        type: string
+                        format: utc-millisec
+                      rrn:
+                        type: string
+                        format: utc-millisec
+                      entryMode:
+                        type: string
+                      maskedPan:
+                        type: string
+                      username:
+                        type: string
+                      trxHostDate:
+                        type: string
+                        format: utc-millisec
+                      trxHostTime:
+                        type: string
+                        format: color
+                      status:
+                        type: string
+                      trxType:
+                        type: string
+                      transactionDate:
+                        type: string
+                        format: style
+                  requestedAt:
+                    type: string
+              example:
+                data:
+                  tid: '71400001'
+                  stan: '000924'
+                  mid: '714000100010001'
+                  rrn: '175084543991'
+                  entryMode: Swipe
+                  maskedPan: 4889501*****2538
+                  username: iqbal
+                  trxHostDate: '0625'
+                  trxHostTime: '165719'
+                  status: Success
+                  trxType: Tarik Tunai
+                  transactionDate: '2025-06-25 16:57:19'
+                requestedAt: 26 Jun 2025 01:41:51
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              tid: '12345027'
+              stan: '015564'
+  /api/v1/monitor-single-tid:
+    post:
+      summary: Partner Monitor Today Tid Trx
+      parameters:
+        - name: ApiKey
+          in: header
+          schema:
+            type: string
+          example: '{{ApiKey}}'
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: Partner Monitor Today Tid Trx
+          headers:
+            Date:
+              schema:
+                type: string
+              example: Wed, 25 Jun 2025 18:41:55 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+            Cf-Cache-Status:
+              schema:
+                type: string
+              example: DYNAMIC
+            Nel:
+              schema:
+                type: string
+              example: '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+            Report-To:
+              schema:
+                type: string
+              example: >-
+                {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=wD%2B%2BlX1N72RJNxWD82hS8zmZ8jMbcbtmp%2F2Ws3n2pR2xp6ro2gOj0qtzg1MfjO3OOppxGs5OIl%2Ba%2B8Br3HW9FrCWxxfExAGcw1sVrKxWWA%3D%3D"}]}
+            Content-Encoding:
+              schema:
+                type: string
+              example: br
+            Server:
+              schema:
+                type: string
+              example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+              example: 95569a111b26f7ab-LAX
+            alt-svc:
+              schema:
+                type: string
+              example: h3=":443"; ma=86400
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        totalTrx:
+                          type: integer
+                        list:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              tid:
+                                type: string
+                                format: utc-millisec
+                              stan:
+                                type: string
+                                format: color
+                              mid:
+                                type: string
+                                format: utc-millisec
+                              rrn:
+                                type: string
+                                format: utc-millisec
+                              entryMode:
+                                type: string
+                              maskedPan:
+                                type: string
+                              username:
+                                type: string
+                              trxHostDate:
+                                type: string
+                                format: utc-millisec
+                              trxHostTime:
+                                type: string
+                                format: color
+                              status:
+                                type: string
+                              trxType:
+                                type: string
+                              transactionDate:
+                                type: string
+                                format: style
+                        status:
+                          type: string
+                  requestedAt:
+                    type: string
+                    format: style
+              example:
+                data:
+                  - totalTrx: 3
+                    list:
+                      - tid: '71400001'
+                        stan: '000928'
+                        mid: '714000100010001'
+                        rrn: '175087681091'
+                        entryMode: Swipe
+                        maskedPan: 4889501*****2538
+                        username: iqbal
+                        trxHostDate: '0626'
+                        trxHostTime: '014010'
+                        status: Success
+                        trxType: Cek Saldo
+                        transactionDate: '2025-06-26 01:40:10'
+                      - tid: '71400001'
+                        stan: '000930'
+                        mid: '714000100010001'
+                        rrn: '175087683281'
+                        entryMode: Swipe
+                        maskedPan: 4889501*****2538
+                        username: iqbal
+                        trxHostDate: '0626'
+                        trxHostTime: '014032'
+                        status: Success
+                        trxType: Tarik Tunai
+                        transactionDate: '2025-06-26 01:40:32'
+                      - tid: '71400001'
+                        stan: '000932'
+                        mid: '714000100010001'
+                        rrn: '175087688497'
+                        entryMode: Swipe
+                        maskedPan: 4889501*****2538
+                        username: iqbal
+                        trxHostDate: '0626'
+                        trxHostTime: '014124'
+                        status: Success
+                        trxType: Transfer
+                        transactionDate: '2025-06-26 01:41:24'
+                    status: Success
+                  - totalTrx: 0
+                    list: []
+                    status: Declined
+                  - totalTrx: 0
+                    list: []
+                    status: Pending
+                  - totalTrx: 0
+                    list: []
+                    status: Reversed
+                requestedAt: 26 Jun 2025 01:41:55
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tid:
+                  type: string
+                  format: utc-millisec
+            example:
+              tid: '71400040'
+  /api/v1/monitor-today-trx:
+    post:
+      summary: Partner Monitor Today Trx
+      parameters:
+        - name: ApiKey
+          in: header
+          schema:
+            type: string
+          example: '{{ApiKey}}'
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: '{{token}}'
+      responses:
+        '200':
+          description: Partner Monitor Today Trx
+          headers:
+            Date:
+              schema:
+                type: string
+              example: Wed, 25 Jun 2025 18:46:04 GMT
+            Transfer-Encoding:
+              schema:
+                type: string
+              example: chunked
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+            Cf-Cache-Status:
+              schema:
+                type: string
+              example: DYNAMIC
+            Nel:
+              schema:
+                type: string
+              example: '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+            Report-To:
+              schema:
+                type: string
+              example: >-
+                {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=xZNbF4XofzbyVpQIl1cW%2FMwLQFwPM7NUizazBhHdCj%2FRLWm2vdloUJNmrirqOmeUYnXbNptvTH8XkiXJ0SqV03R43mMJ3H50tlUmZiyzIw%3D%3D"}]}
+            Content-Encoding:
+              schema:
+                type: string
+              example: br
+            Server:
+              schema:
+                type: string
+              example: cloudflare
+            CF-RAY:
+              schema:
+                type: string
+              example: 9556a01ebe766034-SIN
+            alt-svc:
+              schema:
+                type: string
+              example: h3=":443"; ma=86400
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        totalTrx:
+                          type: integer
+                        list:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              tid:
+                                type: string
+                                format: utc-millisec
+                              stan:
+                                type: string
+                                format: color
+                              mid:
+                                type: string
+                                format: utc-millisec
+                              rrn:
+                                type: string
+                                format: utc-millisec
+                              entryMode:
+                                type: string
+                              maskedPan:
+                                type: string
+                              username:
+                                type: string
+                              trxHostDate:
+                                type: string
+                                format: utc-millisec
+                              trxHostTime:
+                                type: string
+                                format: color
+                              status:
+                                type: string
+                              trxType:
+                                type: string
+                              transactionDate:
+                                type: string
+                                format: style
+                        status:
+                          type: string
+                  requestedAt:
+                    type: string
+                    format: style
+              example:
+                data:
+                  - totalTrx: 3
+                    list:
+                      - tid: '71400001'
+                        stan: '000928'
+                        mid: '714000100010001'
+                        rrn: '175087681091'
+                        entryMode: Swipe
+                        maskedPan: 4889501*****2538
+                        username: iqbal
+                        trxHostDate: '0626'
+                        trxHostTime: '014010'
+                        status: Success
+                        trxType: Cek Saldo
+                        transactionDate: '2025-06-26 01:40:10'
+                      - tid: '71400001'
+                        stan: '000930'
+                        mid: '714000100010001'
+                        rrn: '175087683281'
+                        entryMode: Swipe
+                        maskedPan: 4889501*****2538
+                        username: iqbal
+                        trxHostDate: '0626'
+                        trxHostTime: '014032'
+                        status: Success
+                        trxType: Tarik Tunai
+                        transactionDate: '2025-06-26 01:40:32'
+                      - tid: '71400001'
+                        stan: '000932'
+                        mid: '714000100010001'
+                        rrn: '175087688497'
+                        entryMode: Swipe
+                        maskedPan: 4889501*****2538
+                        username: iqbal
+                        trxHostDate: '0626'
+                        trxHostTime: '014124'
+                        status: Success
+                        trxType: Transfer
+                        transactionDate: '2025-06-26 01:41:24'
+                    status: Success
+                  - totalTrx: 0
+                    list: []
+                    status: Declined
+                  - totalTrx: 1
+                    list:
+                      - tid: '71400001'
+                        stan: '000933'
+                        mid: '714000100010001'
+                        rrn: ''
+                        entryMode: Swipe
+                        maskedPan: 4889501*****2538
+                        username: iqbal
+                        trxHostDate: '0626'
+                        trxHostTime: '014445'
+                        status: Pending
+                        trxType: Cek Saldo
+                        transactionDate: '2025-06-26 01:44:45'
+                    status: Pending
+                  - totalTrx: 0
+                    list: []
+                    status: Reversed
+                requestedAt: 26 Jun 2025 01:46:03
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+
