@@ -15,65 +15,66 @@ class DashboardController extends Controller
         $creditDebitReady = false;
         $qrpsReady = false;
         $miniAtmReady = false;
+        $bnplReady = false;
         $creditDebitTid = null;
         $miniAtmTid = null;
         $merchantMid = null;
-        $bnplReady = false;
 
-        if ($username) {
-            $creditCount = DB::connection('cdcp')
+        if (!$username) {
+            return view('dashboard', compact(
+                'creditDebitReady','qrpsReady','miniAtmReady',
+                'creditDebitTid','miniAtmTid','merchantMid','bnplReady'
+            ));
+        }
+
+        try {
+            // === CDCP ===
+            $cdcpUsers = DB::connection('cdcp')
                 ->table('user_detail')
                 ->where('username', $username)
                 ->whereIn('batch_group', ['BNI_CREDIT', 'BNI_DEBIT'])
-                ->count();
-            $creditDebitReady = $creditCount >= 2;
+                ->orderByDesc('id')
+                ->get();
 
-            if ($creditDebitReady) {
-                $creditDebitTid = DB::connection('cdcp')
-                    ->table('user_detail')
-                    ->where('username', $username)
-                    ->orderByDesc('id')
-                    ->value('tid');
-            }
-
-            $qrpsReady = DB::connection('qrps')
-                ->table('device_user_detail')
-                ->where('username', $username)
-                ->exists();
-
-            $miniAtmReady = DB::connection('mini_atm')
-                ->table('user_detail')
-                ->where('username', $username)
-                ->exists();
-
-            if ($miniAtmReady) {
-                $miniAtmTid = DB::connection('mini_atm')
-                    ->table('user_detail')
-                    ->where('username', $username)
-                    ->orderByDesc('id')
-                    ->value('tid');
-            }
-
+            $creditDebitReady = $cdcpUsers->count() >= 2;
+            $creditDebitTid = $creditDebitReady ? $cdcpUsers->first()->tid : null;
+            
             $merchantMid = DB::connection('cdcp')
                 ->table('merchant_mid')
                 ->where('merchant_id', 125)
                 ->orderByDesc('id')
                 ->value('mid');
 
+            // === QRPS ===
+            $qrpsReady = DB::connection('qrps')
+                ->table('device_user_detail')
+                ->where('username', $username)
+                ->exists();
+
+            // === Mini ATM ===
+            $miniAtm = DB::connection('mini_atm')
+                ->table('user_detail')
+                ->where('username', $username)
+                ->orderByDesc('id')
+                ->first();
+
+            $miniAtmReady = (bool) $miniAtm;
+            $miniAtmTid = $miniAtm?->tid;
+
+            // === BNPL ===
             $bnplReady = DB::connection('bnpl')
                 ->table('device_user_detail')
                 ->where('username', $username)
                 ->exists();
+
+        } catch (\Throwable $e) {
+            report($e);
         }
 
-        return view('dashboard', [
-            'creditDebitReady' => $creditDebitReady,
-            'qrpsReady' => $qrpsReady,
-            'miniAtmReady' => $miniAtmReady,
-            'creditDebitTid' => $creditDebitTid,
-            'miniAtmTid' => $miniAtmTid,
-            'merchantMid' => $merchantMid,
-            'bnplReady' => $bnplReady,
-        ]);
+        return view('dashboard', compact(
+            'creditDebitReady','qrpsReady','miniAtmReady',
+            'creditDebitTid','miniAtmTid','merchantMid','bnplReady'
+        ));
     }
+
 }

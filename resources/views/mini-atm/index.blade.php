@@ -36,6 +36,50 @@
     </div>
 @endif
 
+<div class="border border-slate-200 bg-white text-slate-900 rounded-xl p-6 text-sm shadow-sm space-y-4 mb-6">
+    <div class="flex items-center justify-between">
+        <div>
+            <p class="text-xs uppercase tracking-[0.08em] text-emerald-600 mb-1">Host2Host</p>
+            <p class="font-semibold text-lg text-slate-900">Mini ATM Access</p>
+        </div>
+        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">Ready</span>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-3">
+        <div class="border border-slate-200 rounded-lg p-3 bg-slate-50/70">
+            <p class="text-xs uppercase text-slate-500 tracking-[0.08em] mb-1">Host</p>
+            <div class="flex items-center justify-between gap-2">
+                <span class="font-semibold text-slate-900 break-all">{{ $host }}</span>
+                <button type="button" class="text-xs px-2 py-1 rounded border border-slate-200 text-slate-600 hover:bg-slate-100 copy-btn" data-copy="{{ $host }}">Copy</button>
+            </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg p-3 bg-slate-50/70">
+            <p class="text-xs uppercase text-slate-500 tracking-[0.08em] mb-1">TID</p>
+            <div class="flex items-center justify-between gap-2">
+                <span class="font-semibold text-slate-900 break-all">{{ $miniAtmTid ?? '-' }}</span>
+                <button type="button" class="text-xs px-2 py-1 rounded border border-slate-200 text-slate-600 hover:bg-slate-100 copy-btn" data-copy="{{ $miniAtmTid }}" @if(! $miniAtmTid) disabled @endif>Copy</button>
+            </div>
+            @if(! $miniAtmTid)
+                <p class="text-xs text-amber-600 mt-2">TID belum tersedia. Silakan generate Mini ATM terlebih dahulu.</p>
+            @endif
+        </div>
+        <div class="border border-slate-200 rounded-lg p-3 bg-slate-50/70">
+            <p class="text-xs uppercase text-slate-500 tracking-[0.08em] mb-1">MID</p>
+            <div class="flex items-center justify-between gap-2">
+                <span class="font-semibold text-slate-900 break-all">{{ $merchantMid ?? '-' }}</span>
+                <button type="button" class="text-xs px-2 py-1 rounded border border-slate-200 text-slate-600 hover:bg-slate-100 copy-btn" data-copy="{{ $merchantMid }}">Copy</button>
+            </div>
+        </div>
+        <div class="border border-slate-200 rounded-lg p-3 bg-slate-50/70">
+            <p class="text-xs uppercase text-slate-500 tracking-[0.08em] mb-1">Device ID</p>
+            <div class="flex items-center justify-between gap-2">
+                <span class="font-semibold text-slate-900 break-all">{{ $user?->device_id ?? '-' }}</span>
+                <button type="button" class="text-xs px-2 py-1 rounded border border-slate-200 text-slate-600 hover:bg-slate-100 copy-btn" data-copy="{{ $user?->device_id }}">Copy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @if($credentials)
     <div class="border border-slate-200 bg-white text-slate-900 rounded-xl p-6 text-sm shadow-sm space-y-5">
         <div class="flex items-center justify-between">

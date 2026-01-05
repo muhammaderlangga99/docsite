@@ -16,6 +16,11 @@ use App\Http\Controllers\QrpsController;
 use App\Http\Controllers\MiniAtmController;
 use App\Http\Controllers\MiniAtmCredentialController;
 use App\Http\Controllers\BnplController;
+use App\Http\Controllers\App2AppCdcpQrisController;
+use App\Http\Controllers\App2AppMiniAtmController;
+use App\Http\Controllers\CarlaController;
+use App\Http\Controllers\Host2HostCdcpQrpsController;
+use App\Http\Controllers\Host2HostCnpController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Support\ApiProxy;
@@ -68,7 +73,13 @@ Route::middleware(['auth', 'username.required'])->group(function () {
     Route::middleware(['verified', 'profile.complete'])->group(function () {
         Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-        Route::get('/erica', [EricaController::class, 'index'])->name('erica.index');
+        Route::get('/app2app/cdcp-qris', App2AppCdcpQrisController::class)->name('app2app.cdcp-qris');
+        Route::get('/app2app/mini-atm', App2AppMiniAtmController::class)->name('app2app.mini-atm');
+        Route::get('/host2host/cdcp-qrps', Host2HostCdcpQrpsController::class)->name('host2host.cdcp-qrps');
+        Route::get('/host2host/cnp', Host2HostCnpController::class)->name('host2host.cnp');
+
+        Route::get('/ecr/erica', [EricaController::class, 'index'])->name('erica.index');
+        Route::get('/ecr/carla', CarlaController::class)->name('erica.carla');
         Route::post('/erica/generate', [EricaController::class, 'generate'])->name('erica.generate');
 
         Route::post('/bindings/credit-debit', CreditDebitController::class)->name('bindings.credit-debit');
