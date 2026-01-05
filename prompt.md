@@ -1,68 +1,203 @@
-# Feature Request: Enable MiniATM Service on Dashboard
+# URI Scheme Param
 
-## 1. Overview
-We need to add a new "Activate MiniATM Service" card in the **Dashboard Overview** menu (similar to existing service cards).
+Berikut ini adalah URI Scheme untuk perintah permintaan payment request ke aplikasi Cashlez dari aplikasi merchant.
 
-## 2. User Story
-As a User, I want to click an activation button on the dashboard so that I can enable the MiniATM service for my account.
+## Action Name
 
-## 3. Technical Implementation
+- Cek Saldo: `checkbalance`
+- Transfer: `transfer`
+- Tarik Tunai: `cashwithdrawal`
 
-### Frontend (UI)
-- Location: Dashboard > Overview.
-- Element: A new Card titled "MiniATM Service".
-- Action: Button "Activate Service".
-- State: If already active, the button should be disabled or show "Active".
+## Contoh membangun URI untuk pindah aplikasi (Java)
 
-### Backend (Logic)
-When the button is clicked, perform a database insertion with the following specifications:
+```java
+public void attemptRequestNg(ActionName actionName) {
+  Intent intent = new Intent();
+  StringBuilder sbUri = new StringBuilder();
+  sbUri.append("cashlez://miniatm");
+  sbUri.append(ACTION_NAME);
+  sbUri.append("?launcher=");
+  sbUri.append(data.isLauncher());
+  sbUri.append("&amount=");
+  sbUri.append(data.getAmount());
+  sbUri.append("&callback=");
+  sbUri.append(data.getCallback());
+  if (actionName.equals(ActionName.Action_Transfer)){
+    sbUri.append("&beneBankCode=");
+    sbUri.append(data.getBeneBankCode());
+    sbUri.append("&beneAccountNo=");
+    sbUri.append(data.getBeneAccountNo());
+  }
+  /* sample additional query string */
+  sbUri.append("&customerRefNo=BL123456");
+  sbUri.append("&csr=BL654321");
+  String strUri = sbUri.toString();
+  intent.setAction("android.intent.action.VIEW");
+  intent.setData(Uri.parse(strUri));
+  nextLauncher.launch(intent);
+}
+```
 
-**Target Database:**
-- Scheme: `midware_mini_atm`
-- Table: `user_detail`
+## Contoh request Jump App (Kotlin)
 
-**Input Data Specifications:**
-1.  **`merchant_mid_id`**: Set value to `97` (Hardcoded).
-2.  **`username`**: Use the currently logged-in user's username (Reference table: `mobile_app_users`).
-3.  **`tid` (Terminal ID)**:
-    - Logic: Auto-increment based on the last recorded TID in the database.
-    - Algorithm: `Last_TID + 1`. (e.g., if last is `12345036`, new one is `12345037`).
-4.  **Default/Static Values**: Use the specific hardcoded values provided in the sample query for config columns (JSONs, batch groups, etc.).
+```kotlin
+val btnCb: Button = findViewById(R.id.btnCb)
+btnCb.setOnClickListener {
+    jumpApp.withData(data).checkBalance()
+}
 
-### SQL Query Construction
-Generate an `INSERT` statement dynamically based on the logic above.
+val btnTf: Button = findViewById(R.id.btnTf)
+btnTf.setOnClickListener {
+    data.amount = getRandomAmount()
+    data.beneBankCode = "008"
+    data.beneAccountNo = "15500088992"
+    jumpApp.withData(data).transfer()
+}
 
-**Table Schema Reference (Source User):**
-User exists in `mobile_app_users` (PK: `username`).
+val btnWd: Button = findViewById(R.id.btnWd)
+btnWd.setOnClickListener {
+    data.amount = getRandomAmount()
+    jumpApp.withData(data).cashWithdraw()
+}
+```
 
-**Target Insert Query Pattern:**
-```sql
-INSERT INTO `midware_mini_atm`.`user_detail` (
-    `merchant_mid_id`, 
-    `batch_group`, 
-    `transaction_channel_id`, 
-    `username`, 
-    `tid`, 
-    `batch_num`, 
-    `pin_block_mk`, 
-    `pin_block_wk`, 
-    `last_credit_debit_user_detail_update_timestamp`, 
-    `need_tlmk_dwl_flag`, 
-    `settlement_session_num`, 
-    `additional_param`, 
-    `additional_key`
-) VALUES (
-    97, -- Fixed as per requirement
-    "AJ_MINI_ATM_SIMULATOR", 
-    "AJ_MA_TRX_SIMULATOR", 
-    ?, -- Dynamic: Current Username
-    ?, -- Dynamic: Generated TID (Last TID + 1)
-    1, 
-    "CE262A3D735EA2FB2C6D1CDCB66131A2", 
-    "CE262A3D735EA2FB2C6D1CDCB66131A2", 
-    NOW(), -- Current Timestamp
-    0, 
-    0, 
-    '{"hsm": "HSM_LAB", "mode_bytes": false}', 
-    '{"zpkUnderZmk_kcv":"45C96D","tpkUnderTmk_kcv":"DBCDEE","pinBlockMk":"CE262A3D735EA2FB2C6D1CDCB66131A2","zpkUnderLmk":"266026AE7B2FF559252332B6916A40C3","zpkUnderZmk":"10B024162F83DBEA6E3E660EF2D99AE9","tpkUnderLmk":"EAEC1676AFEF934B7D9EBD4CA3511280","clearTpk":"CE262A3D735EA2FB2C6D1CDCB66131A2","pinBlockWk":"CE262A3D735EA2FB2C6D1CDCB66131A2","zpkUnderLmk_kcv":"45C96D","tpkUnderTmk":"FCCDDF348E531F6420AE0D33B53C2308"}'
-);
+## Class JumApp.java
+
+```java
+public class JumApp {
+    private static JumpBuilder jumpBuilder;
+    public static JumApp initJumpApp(JumpListener listener, AppCompatActivity activity){
+        if (jumpBuilder == null){
+            jumpBuilder = new JumpBuilder();
+        }
+        jumpBuilder.initJumpApp(activity);
+        jumpBuilder.setListener(listener);
+        return jumpBuilder.jumApp;
+    }
+
+    public JumApp withData(MiniAtmRequest data){
+        if (jumpBuilder == null){
+            jumpBuilder = new JumpBuilder();
+        }
+        jumpBuilder.setData(data);
+        return jumpBuilder.jumApp;
+    }
+
+    public void checkBalance(){
+        jumpBuilder.attemptRequestNg(ActionName.Action_Check_Balance);
+    }
+
+    public void transfer(){
+        jumpBuilder.attemptRequestNg(ActionName.Action_Transfer);
+    }
+
+    public void cashWithdraw(){
+        jumpBuilder.attemptRequestNg(ActionName.Action_Cash_Withdrawal);
+    }
+
+    private static class JumpBuilder {
+        private JumApp jumApp;
+        private AppCompatActivity activity;
+        private MiniAtmRequest data;
+        private JumpListener listener;
+        private ActivityResultLauncher<Intent> nextLauncher;
+
+        public void initJumpApp(AppCompatActivity activity){
+            jumApp = new JumApp();
+            this.activity = activity;
+            nextLauncher = activity.registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK){
+                    listener.onRawResult(result.getData());
+                } else {
+                    listener.onCancel();
+                }
+            });
+        }
+
+        public void setData(MiniAtmRequest data) {
+            this.data = data;
+        }
+
+        public void setListener(JumpListener listener){
+            this.listener = listener;
+        }
+
+        public void attemptRequestNg(ActionName actionName) {
+            Intent intent = new Intent();
+            StringBuilder sbUri = new StringBuilder();
+            sbUri.append("cashlez://miniatm.");
+            sbUri.append(actionName.getName());
+            sbUri.append("?launcher=");
+            sbUri.append(data.isLauncher());
+            sbUri.append("&amount=");
+            sbUri.append(data.getAmount());
+            sbUri.append("&callback=");
+            sbUri.append(data.getCallback());
+            if (actionName.equals(ActionName.Action_Transfer)){
+                sbUri.append("&beneBankCode=");
+                sbUri.append(data.getBeneBankCode());
+                sbUri.append("&beneAccountNo=");
+                sbUri.append(data.getBeneAccountNo());
+            }
+            String strUri = sbUri.toString();
+            intent.setAction("android.intent.action.VIEW");
+            intent.setData(Uri.parse(strUri));
+            nextLauncher.launch(intent);
+        }
+    }
+
+    public interface JumpListener {
+        void onRawResult(Intent result);
+        void onCancel();
+    }
+}
+```
+
+## Payment Callback
+
+Callback dapat di-handle dengan cara berikut:
+
+```java
+public void initJumpApp(AppCompatActivity activity){
+    jumApp = new JumApp();
+    this.activity = activity;
+
+    nextLauncher = activity.registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        Log.e("TAG", "initJumpApp: " + result.toString() );
+        if (result.getResultCode() == RESULT_OK){
+            Log.e("TAG", "initJumpApp: " + result.getData() );
+            listener.onRawResult(result.getData());
+        } else {
+            listener.onCancel();
+        }
+    });
+}
+```
+
+```kotlin
+override fun onRawResult(result: Intent) {
+    val rawResult = uriToHashMap(result.data)
+    Log.i("TAG", "onRawResult: $rawResult")
+    updateResult(rawResult.toString(), "onRawResult")
+}
+```
+
+## Contoh lampiran log respon
+
+Check balance:
+
+```
+onRawResult: {approvalCode=173787607993, maskedPan=4889********2538, typeSavings=Tabungan, traceNo=000693, type=balance, respCode=00, status=Success}
+```
+
+Transfer:
+
+```
+onRawResult: {receiverAccountName=IQBAL RIZKY RAMDHAN, approvalCode=173787618762, maskedPan=4889********2538, senderBankName=Bank Jago, typeSavings=Tabungan, traceNo=000848, receiverBankName=PT. BANK MANDIRI, TBK., senderAccountName=NOVILANTI NUR, type=transfer, respCode=00, receiverAccount=15500088992, status=Success}
+```
+
+Withdrawal:
+
+```
+onRawResult: {approvalCode=173787626225, maskedPan=4889********2538, senderBankName=Bank Jago, typeSavings=Tabungan, traceNo=000850, senderAccountName=TRI WALIANGGA, type=withdraw, respCode=00, status=Success}
+```

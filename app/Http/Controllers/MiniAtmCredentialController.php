@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\MiniAtmCredentialService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class MiniAtmCredentialController extends Controller
@@ -12,17 +13,26 @@ class MiniAtmCredentialController extends Controller
     {
         $user = $request->user();
         $credentials = null;
+        $miniAtmTid = null;
 
         if ($user?->username) {
             $credentials = $service->getLatestCredentialsForUser($user->username);
+            $miniAtmTid = DB::connection('mini_atm')
+                ->table('user_detail')
+                ->where('username', $user->username)
+                ->orderByDesc('id')
+                ->value('tid');
         }
 
         return view('mini-atm.index', [
+            'user' => $user,
             'credentials' => $credentials,
             'privateKey' => $request->session()->pull('mini_atm_private_key'),
             'warning' => $request->session()->pull('mini_atm_warning'),
             'message' => $request->session()->pull('mini_atm_success'),
             'error' => $request->session()->pull('mini_atm_error'),
+            'host' => 'https://tucanos-miniatm.cashlez.com',
+            'miniAtmTid' => $miniAtmTid,
         ]);
     }
 

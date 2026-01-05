@@ -1,24 +1,72 @@
 @props(['user', 'mid' => null])
 
 @php
-    $items = [
+    $dashboardItems = [
         [
-            'label' => 'App2App',
+            'label' => 'Payment Feature',
             'icon' => '',
             'url' => url('/dashboard'),
             'active' => request()->routeIs('dashboard'),
         ],
     ];
 
-    $credentialItems = [
+    $app2appItems = [
         [
-            'label' => 'ECR Credentials',
+            'label' => 'CDCP & QRIS',
             'icon' => '',
-            'url' => url('/erica'),
+            'url' => url('/app2app/cdcp-qris'),
+            'active' => request()->routeIs('app2app.cdcp-qris'),
+        ],
+        [
+            'label' => 'Mini ATM',
+            'icon' => '',
+            'url' => url('/app2app/mini-atm'),
+            'active' => request()->routeIs('app2app.mini-atm'),
+        ],
+    ];
+
+    $ericaItems = [
+        [
+            'label' => 'ERICA',
+            'icon' => '',
+            'url' => url('/ecr/erica'),
             'active' => request()->routeIs('erica.*'),
         ],
         [
-            'label' => 'Mini ATM Credentials',
+            'label' => 'CARLA',
+            'icon' => '',
+            'url' => url('/ecr/carla'),
+            'active' => request()->routeIs('erica.carla'),
+        ],
+    ];
+
+    $host2hostItems = [
+        [
+            'label' => 'CDCP & QRPS',
+            'icon' => '',
+            'url' => url('/host2host/cdcp-qrps'),
+            'active' => request()->routeIs('host2host.cdcp-qrps'),
+        ],
+        [
+            'label' => 'BNPL',
+            'icon' => '',
+            'url' => '#',
+            'active' => false,
+        ],
+        [
+            'label' => 'CNP',
+            'icon' => '',
+            'url' => url('/host2host/cnp'),
+            'active' => request()->routeIs('host2host.cnp'),
+        ],
+        [
+            'label' => 'Cashlez Link',
+            'icon' => '',
+            'url' => '#',
+            'active' => false,
+        ],
+        [
+            'label' => 'Mini ATM',
             'icon' => '',
             'url' => url('/mini-atm'),
             'active' => request()->routeIs('mini-atm.*'),
@@ -28,8 +76,8 @@
 
 <aside {{ $attributes->class('w-72 bg-white md:w-72 text-slate-900 h-full overflow-y-auto border-r border-zinc-100 flex flex-col') }}>
     <nav class="px-3 py-4 space-y-1 sm:mt-16">
-        <div class="pt-5 pb-2 px-3 text-[11px] uppercase tracking-[0.08em] text-slate-500">Dashboard</div>
-        @foreach($items as $item)
+        {{-- <div class="pt-5 pb-2 px-3 text-[11px] uppercase tracking-[0.08em] text-slate-500">Dashboard</div> --}}
+        @foreach($dashboardItems as $item)
             <a href="{{ $item['url'] }}"
                class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition
                       {{ $item['active'] ? 'bg-zinc-100 text-slate-900' : 'text-slate-700 hover:bg-zinc-200' }}">
@@ -38,8 +86,28 @@
             </a>
         @endforeach
 
+        <div class="pt-5 pb-2 px-3 text-[11px] uppercase tracking-[0.08em] text-slate-500">App2App</div>
+        @foreach($app2appItems as $item)
+            <a href="{{ $item['url'] }}"
+               class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition
+                      {{ $item['active'] ? 'bg-zinc-100 text-slate-900' : 'text-slate-700 hover:bg-zinc-200' }}">
+                <span>{{ $item['icon'] }}</span>
+                <span>{{ $item['label'] }}</span>
+            </a>
+        @endforeach
+
+        <div class="pt-5 pb-2 px-3 text-[11px] uppercase tracking-[0.08em] text-slate-500">ECR</div>
+        @foreach($ericaItems as $item)
+            <a href="{{ $item['url'] }}"
+               class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition
+                      {{ $item['active'] ? 'bg-zinc-100 text-slate-900' : 'text-slate-700 hover:bg-zinc-200' }}">
+                <span>{{ $item['icon'] }}</span>
+                <span>{{ $item['label'] }}</span>
+            </a>
+        @endforeach
+
         <div class="pt-5 pb-2 px-3 text-[11px] uppercase tracking-[0.08em] text-slate-500">Host2Host</div>
-        @foreach($credentialItems as $item)
+        @foreach($host2hostItems as $item)
             <a href="{{ $item['url'] }}"
                class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition
                       {{ $item['active'] ? 'bg-zinc-100 text-slate-900' : 'text-slate-700 hover:bg-zinc-200' }}">
